@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TryHeroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
@@ -10,3 +11,6 @@ java -jar target/dependency/webapp-runner.jar target/*.war
 
 Execucao
 C:\Projects\java\maven-jsf-primefaces-heroku>java -jar target/dependency/webapp-runner.jar target/*.war
+=======
+# contribua
+>>>>>>> 5ace5529f0deb267ba32adc8ee804af3441650f3
