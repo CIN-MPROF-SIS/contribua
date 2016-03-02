@@ -1,11 +1,7 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-<<<<<<< HEAD
-             
-             
-=======
->>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
+
     <!--
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
         <properties>
@@ -19,27 +15,6 @@
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
         </properties>
     </persistence-unit>
-<<<<<<< HEAD
-    
-=======
-    -->
->>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
-    <persistence-unit name="test1" transaction-type="RESOURCE_LOCAL">
-        <class>model.User</class>
-        <class>model.Contact</class>
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.FirebirdDialect" />
-            <property name="javax.persistence.jdbc.driver" value="org.firebirdsql.jdbc.FBDriver" />
-            <property name="javax.persistence.jdbc.user" value="SYSDBA" />
-            <property name="javax.persistence.jdbc.password" value="masterke" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:firebirdsql:localhost:app" />
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-        </properties>
-    </persistence-unit>
-<<<<<<< HEAD
     
     -->
     
@@ -60,9 +35,6 @@
         </properties>
   </persistence-unit>
     
+  
 
-    
-    
-=======
->>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
 </persistence>

@@ -21,10 +21,5 @@
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
-<<<<<<< HEAD
-	
-		
-	
-=======
->>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
+
 </web-app>
