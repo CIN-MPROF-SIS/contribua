@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition>
+        <div id="topo">
+            <div class="data">
+                <script type="text/javascript">
+                    function returnData() {
+                        var day_nme = new Array("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado");
+                        var month_nme = new Array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro");
+
+                        var now = new Date();
+                        var nowDay = now.getDay();
+                        var nowDate = now.getDate();
+                        var nowMonth = now.getMonth();
+                        var nowYear = now.getFullYear();
+                        var nowTime = now.getTime();
+
+                        return nowDate + ' de ' + month_nme[nowMonth] + ' de ' + nowYear;
+                    }
+                    document.write(returnData());
+                </script>
+            </div><br/><br/><br/>
+        </div>
+
+        <div id="nav">
+            <ul>
+                <c:if test="#{loginBean.log != false}">
+                    <li><a href="#"><img src="images/home.png" alt="Página Inicial" border="0" align="left"/>P&aacute;gina Inicial</a></li>
+                    <li><a href="instituicao.xhtml">Institui&ccedil;&atilde;o</a></li>                        
+                    <li><a href="#">Evento Social</a></li>                        
+                    <li><a href="#">Volunt&aacute;rios</a></li>                        
+                    <li><a href="#">Divulga&ccedil;&atilde;o</a></li>  
+                </c:if>
+                <li class="link">
+                    <h:outputText rendered="#{loginBean.log != false}" value="Logado como: #{loginBean.logon}"/>
+                    <h:form><h:commandLink rendered="#{loginBean.log != false}" value="Sair" action="#{logoutBean.doLogout}" /></h:form>
+                </li>
+            </ul>
+        </div>
+    </ui:composition>
+
+</html>

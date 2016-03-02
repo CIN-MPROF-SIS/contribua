@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+        <ui:composition template="/_template.xhtml">
+            <ui:define name="corpo">
+                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
+                          draggable="false" closable="false">  
+                    <p:graphicImage value="images/ajax-loading-bar.gif" />  
+                </p:dialog>
+                <fieldset>
+                    <legend>Cadastro de Intituição</legend>
+                    <br/>
+                    <p:growl id="growl"/>
+                    <h:form id="cadastro" >                        
+                        <h:outputLabel value="P&aacute;gina da Institui&ccedil;&atilde;o: "/>
+                        <p:inputText value="#{instituicaoBean.instituicao.paginaInstituicao}" required="true" requiredMessage="Campo P&aacute;gina da Institui&ccedil;&atilde;o obrigatório."/><br/>
+                        <br/>
+                        <p:commandButton value="Salvar" action="#{instituicaoBean.gravar()}" update="@form :growl"/>
+                    </h:form>
+                </fieldset>                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
