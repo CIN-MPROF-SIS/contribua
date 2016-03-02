@@ -1,8 +1,11 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+<<<<<<< HEAD
              
              
+=======
+>>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
     <!--
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
         <properties>
@@ -16,7 +19,11 @@
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
         </properties>
     </persistence-unit>
+<<<<<<< HEAD
     
+=======
+    -->
+>>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
     <persistence-unit name="test1" transaction-type="RESOURCE_LOCAL">
         <class>model.User</class>
         <class>model.Contact</class>
@@ -32,6 +39,7 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+<<<<<<< HEAD
     
     -->
     
@@ -55,4 +63,6 @@
 
     
     
+=======
+>>>>>>> 41c8c8c848e78e9fc8bdaa7abd84d02df8776a59
 </persistence>
