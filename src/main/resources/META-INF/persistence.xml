@@ -16,9 +16,7 @@
         </properties>
     </persistence-unit>
     
-    -->
-    
-    <persistence-unit name="contribuaPU" transaction-type="JTA">
+      <persistence-unit name="contribuaPU" transaction-type="JTA">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<class>br.cin.ufpe.contribua.model.Instituicao</class>
         
@@ -34,6 +32,30 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
   </persistence-unit>
+    
+    -->
+    
+  
+  
+  
+    <persistence-unit name="contribuaPU" transaction-type="JTA">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<jta-data-source>contribuaDS</jta-data-source>
+    	
+    	
+    	<class>br.cin.ufpe.contribua.model.Instituicao</class>
+        
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+  </persistence-unit>
+  
+  
+  
     
   
 
