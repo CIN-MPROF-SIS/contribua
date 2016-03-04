@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * Created by NTI-Sistema on 29/06/2015.
  */
-@Entity
+@Entity(name = "usuario")
 public class User {
     @Id
     @GeneratedValue

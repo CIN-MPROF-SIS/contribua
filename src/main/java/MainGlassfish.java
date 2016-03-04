@@ -25,7 +25,6 @@ public class MainGlassfish {
 			webPort = "8080";
 		}
 
-		/** Create and start GlassFish which listens at 8080 http port */
 		GlassFishProperties gfProps = new GlassFishProperties();
 		gfProps.setPort("http-listener", Integer.valueOf(webPort)); // refer
 																	// JavaDocs
@@ -41,7 +40,7 @@ public class MainGlassfish {
 		
 	    CommandRunner runner = glassfish.getCommandRunner();
 	    
-        /*String dbUrl = System.getenv("DATABASE_URL");
+        String dbUrl = System.getenv("DATABASE_URL");
         
         System.out.println("-------db url: " + dbUrl);
         Matcher matcher = Pattern.compile("postgres://(.*):(.*)@(.*)/(.*)").matcher(dbUrl);
@@ -50,11 +49,14 @@ public class MainGlassfish {
         String host = matcher.group(3);
         String database = matcher.group(4);
         String user = matcher.group(1);
-        String password = matcher.group(2);*/
+        String password = matcher.group(2);
+        
+        /*
         String host = "localhost";
         String database = "contribua";
         String user = "postgres";
-        String password = "postgres";
+        String password = "postgres";*/
+        
         
         String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
         
@@ -76,9 +78,9 @@ public class MainGlassfish {
 	    
         System.out.println("------output of create jdbc: " + result.getOutput());
 
-//        result = runner.run("set-log-level", "javax.enterprise.system.container.web=INFO:javax.enterprise.system.container.ejb=FINEST");
+      //  result = runner.run("set-log-level", "javax.enterprise.system.container.web=INFO:javax.enterprise.system.container.ejb=FINEST");
 //        
-//        System.out.println("------output of set log level: " + result.getOutput());
+//       System.out.println("------output of set log level: " + result.getOutput());
 	    
 		Deployer deployer = glassfish.getDeployer();
 
