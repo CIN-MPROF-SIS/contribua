@@ -52,13 +52,13 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.1</version>
 		</dependency>
-		
+
 		<!-- Glassfish -->
-        <dependency>
-            <groupId>org.glassfish.extras</groupId>
-            <artifactId>glassfish-embedded-web</artifactId>
-            <version>3.1.1</version>
-        </dependency>	
+		<dependency>
+			<groupId>org.glassfish.extras</groupId>
+			<artifactId>glassfish-embedded-web</artifactId>
+			<version>3.1.1</version>
+		</dependency>
 
 		<!-- EL -->
 		<dependency>
@@ -88,12 +88,12 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.0.Final</version>
 		</dependency>
-		
+
 		<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-entitymanager</artifactId>
-    <version>4.3.0.Final</version>
-</dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.3.0.Final</version>
+		</dependency>
 
 		<!-- optional -->
 
@@ -130,7 +130,7 @@
 
 		<!-- fim hibernate -->
 		<!-- database -->
-	
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -139,101 +139,80 @@
 
 
 	</dependencies>
-<!--	<build>
+	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-compiler-plugin</artifactId> <version>3.3</version> <inherited>true</inherited> 
+		<configuration> <source>1.8</source> <target>1.8</target> </configuration> 
+		</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
+		<version>2.3</version> <executions> <execution> <phase>package</phase> <goals> 
+		<goal>copy</goal> </goals> <configuration> <artifactItems> <artifactItem> 
+		<groupId>com.github.jsimone</groupId> <artifactId>webapp-runner</artifactId> 
+		<version>7.0.57.2</version> <destFileName>webapp-runner.jar</destFileName> 
+		</artifactItem> </artifactItems> <outputDirectory>${project.build.directory}/dependency</outputDirectory> 
+		<overWriteReleases>false</overWriteReleases> <overWriteSnapshots>false</overWriteSnapshots> 
+		<overWriteIfNewer>true</overWriteIfNewer> </configuration> </execution> </executions> 
+		</plugin> <plugin> <inherited>true</inherited> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-compiler-plugin</artifactId> </plugin> </plugins> </build> -->
+
+	<build>
+		<finalName>contribua</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<inherited>true</inherited>
+				<version>2.3.2</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<!-- The maven app assembler plugin will generate a script that sets up 
+				the classpath and runs your project -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.3</version>
+
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.10</version>
+					<configuration>
+					<assembleDirectory>target</assembleDirectory>
+					<generateRepository>false</generateRepository>
+					<programs>
+						<program>
+							<mainClass>root.MainGlassfish</mainClass>
+							<name>webapp</name>
+						</program>
+						<program>
+							<mainClass>Main</mainClass>
+							<name>dbTest</name>
+						</program>
+					</programs>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>package</phase>
 						<goals>
-							<goal>copy</goal>
+							<goal>assemble</goal>
 						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.github.jsimone</groupId>
-									<artifactId>webapp-runner</artifactId>
-									<version>7.0.57.2</version>
-									<destFileName>webapp-runner.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-
-							<outputDirectory>${project.build.directory}/dependency</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-
 		</plugins>
 	</build>
--->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<repositories>
+		<repository>
+			<id>java.net</id>
+			<url>http://download.java.net/maven/glassfish</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven2.java.net</id>
+			<url>http://download.java.net/maven/glassfish</url>
+		</pluginRepository>
+	</pluginRepositories>
 
-<build>
-        <finalName>contribua</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <!-- The maven app assembler plugin will generate a script that sets up the classpath and runs your project -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <version>1.1.1</version>
-                <configuration>
-                    <assembleDirectory>target</assembleDirectory> 
-                    <generateRepository>false</generateRepository>
-                    <programs>
-                        <program>
-                            <mainClass>MainGlassfish</mainClass>
-                            <name>webapp</name>
-                        </program>
-                        <program>
-                            <mainClass>Main</mainClass>
-                            <name>dbTest</name>
-                        </program>
-                    </programs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assemble</goal>
-                        </goals>
-                    </execution>				
-                </executions>
-            </plugin>			
-        </plugins>
-    </build>
-	
-	
+
 	<name>contribua</name>
 </project>
