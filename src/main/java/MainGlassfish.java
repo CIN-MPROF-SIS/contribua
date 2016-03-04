@@ -39,31 +39,31 @@ public class MainGlassfish {
 		glassfish.start();
 		
 	    CommandRunner runner = glassfish.getCommandRunner();
-	    
-        String dbUrl = System.getenv("DATABASE_URL");
+
+
+//  Heroku        	    
+//        String dbUrl = System.getenv("DATABASE_URL");
+//        
+//        System.out.println("-------db url: " + dbUrl);
+//        Matcher matcher = Pattern.compile("postgres://(.*):(.*)@(.*)/(.*)").matcher(dbUrl);
+//        matcher.find();
+//        
+//        String host = matcher.group(3);
+//        String database = matcher.group(4);
+//        String user = matcher.group(1);
+//        String password = matcher.group(2);
+//        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + "ec2-54-197-245-93.compute-1.amazonaws.com";
+//        
+      
         
-        System.out.println("-------db url: " + dbUrl);
-        Matcher matcher = Pattern.compile("postgres://(.*):(.*)@(.*)/(.*)").matcher(dbUrl);
-        matcher.find();
         
-        String host = matcher.group(3);
-        String database = matcher.group(4);
-        String user = matcher.group(1);
-        String password = matcher.group(2);
-        
-        System.out.println(host);
-        System.out.println(database);
-        System.out.println(user);
-        System.out.println(password);
-        
-        /*
+      
+        // LOCAL
         String host = "localhost";
         String database = "contribua";
         String user = "postgres";
-        String password = "postgres";*/
-        
-        
-        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + "ec2-54-197-245-93.compute-1.amazonaws.com";
+        String password = "postgres";        
+        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
         
 	    
         System.out.println("-------properties: " + properties);
