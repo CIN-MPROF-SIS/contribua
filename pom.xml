@@ -4,7 +4,6 @@
 	<groupId>com.example</groupId>
 	<artifactId>contribua</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<dependencies>
 
 		<dependency>
@@ -168,33 +167,27 @@
 			<!-- The maven app assembler plugin will generate a script that sets up 
 				the classpath and runs your project -->
 			<plugin>
-
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>appassembler-maven-plugin</artifactId>
-				<version>1.10</version>
-					<configuration>
-					<assembleDirectory>target</assembleDirectory>
-					<generateRepository>false</generateRepository>
-					<programs>
-						<program>
-							<mainClass>root.MainGlassfish</mainClass>
-							<name>webapp</name>
-						</program>
-						<program>
-							<mainClass>Main</mainClass>
-							<name>dbTest</name>
-						</program>
-					</programs>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>assemble</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>appassembler-maven-plugin</artifactId>
+                            <version>1.1.1</version>
+                            <executions>
+                                <execution>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>assemble</goal>
+                                    </goals>
+                                    <configuration>
+                                        <assembleDirectory>target</assembleDirectory>
+                                        <programs>
+                                            <program>
+                                                <mainClass>MainGlassfish</mainClass>
+                                                <name>webapp</name>
+                                            </program>
+                                        </programs>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
 		</plugins>
 	</build>
 	<properties>

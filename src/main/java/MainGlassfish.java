@@ -1,4 +1,3 @@
-package root;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -27,8 +26,12 @@ public class MainGlassfish {
 
 		/** Create and start GlassFish which listens at 8080 http port */
 		GlassFishProperties gfProps = new GlassFishProperties();
-		gfProps.setPort("http-listener", Integer.valueOf(webPort)); 
-		// refer JavaDocs for the  details  of this API.
+		gfProps.setPort("http-listener", Integer.valueOf(webPort)); // refer
+																	// JavaDocs
+																	// for the
+																	// details
+																	// of this
+																	// API.
 		gfProps.setProperty("domain-dir", "glassfishDomain");
 
 		GlassFish glassfish = GlassFishRuntime.bootstrap()
@@ -59,12 +62,12 @@ public class MainGlassfish {
         		//"--steadypoolsize", "1",
         		//"--maxpoolsize", "1",
         		"--property", properties,
-        		"contribuaDS");
+        		"app/jdbc/petcatalog_pool");
         
         System.out.println("------output of create conn pool: " + result.getOutput());
         
-	    result = runner.run("create-jdbc-resource", "--connectionpoolid", "contribuaDS", 
-	    		"contribuaDS");
+	    result = runner.run("create-jdbc-resource", "--connectionpoolid", "app/jdbc/petcatalog_pool", 
+	    		"app/jdbc/petcatalog");
 	    
         System.out.println("------output of create jdbc: " + result.getOutput());
 
@@ -76,7 +79,7 @@ public class MainGlassfish {
 
 		// Create a scattered web application.
 		ScatteredArchive archive = new ScatteredArchive("myApp",
-				ScatteredArchive.Type.WAR, new File(webappDirLocation));
+				ScatteredArchive.Type.JAR, new File(webappDirLocation));
 		// target/classes directory contains my complied servlets
 		archive.addClassPath(new File("target", "classes"));
 
