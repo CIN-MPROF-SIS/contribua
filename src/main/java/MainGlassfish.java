@@ -51,6 +51,11 @@ public class MainGlassfish {
         String user = matcher.group(1);
         String password = matcher.group(2);
         
+        System.out.println(host);
+        System.out.println(database);
+        System.out.println(user);
+        System.out.println(password);
+        
         /*
         String host = "localhost";
         String database = "contribua";
