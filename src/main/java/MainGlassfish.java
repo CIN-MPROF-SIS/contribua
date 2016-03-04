@@ -63,7 +63,7 @@ public class MainGlassfish {
         String password = "postgres";*/
         
         
-        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
+        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + "ec2-54-197-245-93.compute-1.amazonaws.com";
         
 	    
         System.out.println("-------properties: " + properties);
