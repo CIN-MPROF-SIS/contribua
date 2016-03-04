@@ -88,12 +88,6 @@
 			<version>4.3.0.Final</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.3.0.Final</version>
-		</dependency>
-
 		<!-- optional -->
 
 		<dependency>
@@ -167,27 +161,27 @@
 			<!-- The maven app assembler plugin will generate a script that sets up 
 				the classpath and runs your project -->
 			<plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>appassembler-maven-plugin</artifactId>
-                            <version>1.1.1</version>
-                            <executions>
-                                <execution>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>assemble</goal>
-                                    </goals>
-                                    <configuration>
-                                        <assembleDirectory>target</assembleDirectory>
-                                        <programs>
-                                            <program>
-                                                <mainClass>MainGlassfish</mainClass>
-                                                <name>webapp</name>
-                                            </program>
-                                        </programs>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>appassembler-maven-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>assemble</goal>
+                                </goals>
+                                <configuration>
+                                    <assembleDirectory>target</assembleDirectory>
+                                    <programs>
+                                        <program>
+                                            <mainClass>MainGlassfish</mainClass>
+                                            <name>webapp</name>
+                                        </program>
+                                    </programs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 		</plugins>
 	</build>
 	<properties>

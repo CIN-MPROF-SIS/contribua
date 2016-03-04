@@ -1,4 +1,5 @@
 
+import com.sun.enterprise.deployment.node.web.WebBundleNode;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +41,7 @@ public class MainGlassfish {
 		
 	    CommandRunner runner = glassfish.getCommandRunner();
 	    
-        String dbUrl = System.getenv("DATABASE_URL");
+        /*String dbUrl = System.getenv("DATABASE_URL");
         
         System.out.println("-------db url: " + dbUrl);
         Matcher matcher = Pattern.compile("postgres://(.*):(.*)@(.*)/(.*)").matcher(dbUrl);
@@ -49,7 +50,11 @@ public class MainGlassfish {
         String host = matcher.group(3);
         String database = matcher.group(4);
         String user = matcher.group(1);
-        String password = matcher.group(2);
+        String password = matcher.group(2);*/
+        String host = "localhost";
+        String database = "contribua";
+        String user = "postgres";
+        String password = "postgres";
         
         String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
         
@@ -62,12 +67,12 @@ public class MainGlassfish {
         		//"--steadypoolsize", "1",
         		//"--maxpoolsize", "1",
         		"--property", properties,
-        		"app/jdbc/petcatalog_pool");
+        		"jdbc/contribua_pool");
         
         System.out.println("------output of create conn pool: " + result.getOutput());
         
-	    result = runner.run("create-jdbc-resource", "--connectionpoolid", "app/jdbc/petcatalog_pool", 
-	    		"app/jdbc/petcatalog");
+	    result = runner.run("create-jdbc-resource", "--connectionpoolid", "jdbc/contribua_pool", 
+	    		"contribuaDS");
 	    
         System.out.println("------output of create jdbc: " + result.getOutput());
 
@@ -78,11 +83,11 @@ public class MainGlassfish {
 		Deployer deployer = glassfish.getDeployer();
 
 		// Create a scattered web application.
-		ScatteredArchive archive = new ScatteredArchive("myApp",
-				ScatteredArchive.Type.JAR, new File(webappDirLocation));
+		ScatteredArchive archive = new ScatteredArchive("contribua",
+				ScatteredArchive.Type.WAR, new File(webappDirLocation));
 		// target/classes directory contains my complied servlets
 		archive.addClassPath(new File("target", "classes"));
-
+                System.out.println("URI " + archive.toURI());
 		deployer.deploy(archive.toURI());
 
 	}
