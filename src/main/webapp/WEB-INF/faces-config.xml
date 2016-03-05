@@ -5,4 +5,22 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
         version="2.0">
 
+    <navigation-rule>
+      <navigation-case>
+         <from-outcome>QualificacaoListar</from-outcome>
+         <to-view-id>/pages/qualificacao/lista.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+         <from-outcome>QualificacaoManter</from-outcome>
+         <to-view-id>/pages/qualificacao/qualificacao.xhtml</to-view-id>
+      </navigation-case>
+    </navigation-rule>
+   
+   
+    <managed-bean>
+        <managed-bean-name>QualificacaoBean</managed-bean-name>
+        <managed-bean-class>br.cin.ufpe.contribua.controller.QualificacaoBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
 </faces-config>

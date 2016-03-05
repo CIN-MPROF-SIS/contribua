@@ -8,6 +8,7 @@
     	
     	
     	<class>br.cin.ufpe.contribua.model.Instituicao</class>
+        <class>br.cin.ufpe.contribua.model.Qualificacao</class>
         
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>

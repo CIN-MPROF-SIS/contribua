@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <title>.:: CONTRIBUA ::.</title>
+            <link href="../../css/estilo.css" type="text/css" rel="stylesheet" />
+            <script type="text/javascript" src="../../js/calendar.js"/>  
+        </h:head>
+
+        <h:body>
+            <div id="geral">
+                <ui:include src="../incs/topo.xhtml" />
+                
+                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
+                          draggable="false" closable="false">  
+                    <p:graphicImage value="../images/ajax-loading-bar.gif" />  
+                </p:dialog>
+                <p:growl id="growl"/>
+                <!--ui:include src="../incs/menu.xhtml"/-->
+
+                <div id="conteudo">
+                    <fieldset>
+                        <h:form id="form" >
+                            <legend>#{bean.titulo}</legend>
+                            <p:commandButton value="Incluir" styleClass="incluir" action="#{bean.exibirInclusao()}" update="@form :growl"/>
+                            <br/>
+                            <br/>
+                        
+                            <p:dataTable id="lista" var="item" value="#{bean.listaModel}" selection="#{bean.entidadesSelecionadas}" rowKey="#{item.id}" style="margin-bottom:0">
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                
+                                <ui:insert name="colunas" />
+                                
+                                <f:facet name="footer">
+                                    <p:commandButton process="lista" update="@form :growl" value="Excluir Selecionados" />
+                                </f:facet>
+                            </p:dataTable>
+                            
+                            <ui:insert name="corpo" />
+                            
+                        </h:form>
+                    </fieldset>
+                </div>
+            </div>
+
+            <ui:include src="../incs/rodape.xhtml" />
+        </h:body>
+    </f:view>
+</html>
+

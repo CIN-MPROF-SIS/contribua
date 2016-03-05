@@ -41,7 +41,7 @@ public class MainGlassfish {
 
 
 //  Heroku        	    
-        String dbUrl = System.getenv("DATABASE_URL");
+/*        String dbUrl = System.getenv("DATABASE_URL");
         
         System.out.println("-------db url: " + dbUrl);
         Matcher matcher = Pattern.compile("postgres://(.*):(.*)@(.*)/(.*)").matcher(dbUrl);
@@ -54,17 +54,18 @@ public class MainGlassfish {
         String user = matcher.group(1);
         String password = matcher.group(2);
         String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
+*/
 //Fim heroku        
       
         
         
       
 // LOCAL
-//        String host = "localhost";
-//        String database = "contribua";
-//        String user = "postgres";
-//        String password = "postgres";        
-//        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
+        String host = "localhost";
+        String database = "contribua";
+        String user = "postgres";
+        String password = "postgres";        
+        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
 //Fim LOCAL     
 	    
         System.out.println("-------properties: " + properties);
