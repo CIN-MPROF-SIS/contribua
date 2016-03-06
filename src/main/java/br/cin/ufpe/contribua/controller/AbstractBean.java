@@ -23,14 +23,6 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     protected List<AbstractModel> listaModel;
     
     protected List<Entidade> entidadesSelecionadas;
-
-    public List<Entidade> getEntidadesSelecionadas() {
-        return entidadesSelecionadas;
-    }
-
-    public void setEntidadesSelecionadas(List<Entidade> entidadesSelecionadas) {
-        this.entidadesSelecionadas = entidadesSelecionadas;
-    }
     
     private Class<Entidade> clazzEntidade;
     
@@ -76,9 +68,10 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     
     public void excluir() {
         if(entidadesSelecionadas != null){
-            for(Entidade entidade : entidadesSelecionadas){
+            for(Entidade entidade : entidadesSelecionadas)
                 this.getManager().remove(entidade);
-            }
+            
+            this.listaModel= getManager().findAll();
             
             Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
         }
@@ -100,9 +93,8 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     }
     
     public String exibirAlteracao(){
-        this.limpar();
         incluindo = false;
-        this.model = (Entidade) this.getManager().find(this.model.getId());
+        //this.model = (Entidade) this.getManager().find(this.model.getId());
 
         return getPaginaManutencao();
     }
@@ -121,11 +113,20 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     
     public abstract String getTitulo();
     
+    public List<Entidade> getEntidadesSelecionadas() {
+        return entidadesSelecionadas;
+    }
+
+    public void setEntidadesSelecionadas(List<Entidade> entidadesSelecionadas) {
+        this.entidadesSelecionadas = entidadesSelecionadas;
+    }
+    
     public Entidade getModel() {
         return model;
     }
     
     public void setModel(Entidade model) {
+        System.out.println("1====" + model.getId());
         this.model = model;
     }
 

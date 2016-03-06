@@ -34,12 +34,18 @@
                             <br/>
                         
                             <p:dataTable id="lista" var="item" value="#{bean.listaModel}" selection="#{bean.entidadesSelecionadas}" rowKey="#{item.id}" style="margin-bottom:0">
-                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column style="width:32px;text-align: center" selectionMode="multiple"/>
                                 
                                 <ui:insert name="colunas" />
                                 
+                                <p:column style="width:80px;text-align: center">
+                                    <p:commandButton action="#{bean.exibirAlteracao()}" title="Editar" value="Editar">
+                                       <f:setPropertyActionListener value="#{item}" target="#{bean.model}" />
+                                   </p:commandButton>
+                               </p:column>
+                                
                                 <f:facet name="footer">
-                                    <p:commandButton process="lista" update="@form :growl" value="Excluir Selecionados" />
+                                    <p:commandButton process="lista" update="@form :growl" value="Excluir Selecionados" action="#{bean.excluir()}" />
                                 </f:facet>
                             </p:dataTable>
                             

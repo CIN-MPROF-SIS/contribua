@@ -6,23 +6,23 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.cin.ufpe.contribua.manager.InstituicaoManager;
-import br.cin.ufpe.contribua.model.Instituicao;
+import br.cin.ufpe.contribua.manager.HabilidadeManager;
+import br.cin.ufpe.contribua.model.Habilidade;
 
 @ManagedBean
 @ViewScoped
-public class InstituicaoBean extends AbstractBean<Instituicao> {
-
+public class HabilidadeBean extends AbstractBean<Habilidade> {
+	
     @EJB
-    InstituicaoManager instituicaoManager;
+    HabilidadeManager habilidadeManager;
 
     @Override
     public AbstractManager getManager() {
-        return instituicaoManager;
+        return habilidadeManager;
     }
 
     @Override
     public String getTitulo() {
-        return "Instituição";
+        return "Habilidade";
     }
 }

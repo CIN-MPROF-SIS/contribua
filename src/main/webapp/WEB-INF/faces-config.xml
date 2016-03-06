@@ -15,11 +15,28 @@
          <to-view-id>/pages/qualificacao/qualificacao.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+      <navigation-case>
+         <from-outcome>HabilidadeListar</from-outcome>
+         <to-view-id>/pages/habilidade/lista.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+         <from-outcome>HabilidadeManter</from-outcome>
+         <to-view-id>/pages/habilidade/habilidade.xhtml</to-view-id>
+      </navigation-case>
+    </navigation-rule>
    
    
     <managed-bean>
         <managed-bean-name>QualificacaoBean</managed-bean-name>
         <managed-bean-class>br.cin.ufpe.contribua.controller.QualificacaoBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>HabilidadeBean</managed-bean-name>
+        <managed-bean-class>br.cin.ufpe.contribua.controller.HabilidadeBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
