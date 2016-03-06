@@ -13,7 +13,11 @@ import br.cin.ufpe.contribua.model.Qualificacao;
 @ViewScoped
 public class QualificacaoBean extends AbstractBean<Qualificacao> {
 	
-    @EJB
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7200014098752166020L;
+	@EJB
     QualificacaoManager qualificacaoManager;
 
     @Override

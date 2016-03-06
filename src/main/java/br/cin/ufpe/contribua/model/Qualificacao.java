@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 @Entity(name = "qualificacao")
 public class Qualificacao extends AbstractModel {
    
-    @Column(length = 100, nullable=false)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7984246395515003274L;
+	@Column(length = 100, nullable=false)
     private String descricao;
 
     public String getDescricao() {

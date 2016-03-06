@@ -9,6 +9,7 @@
     	
     	<class>br.cin.ufpe.contribua.model.Instituicao</class>
         <class>br.cin.ufpe.contribua.model.Qualificacao</class>
+        <class>br.cin.ufpe.contribua.model.EventoSocial</class>
         
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>

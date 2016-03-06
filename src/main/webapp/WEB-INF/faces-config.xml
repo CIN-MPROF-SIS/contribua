@@ -16,11 +16,30 @@
       </navigation-case>
     </navigation-rule>
    
+   <navigation-rule>
+      <navigation-case>
+         <from-outcome>EventoSocialListar</from-outcome>
+         <to-view-id>/pages/eventoSocial/lista.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+         <from-outcome>EventoSocialManter</from-outcome>
+         <to-view-id>/pages/eventoSocial/eventoSocial.xhtml</to-view-id>
+      </navigation-case>
+    </navigation-rule>
+   
    
     <managed-bean>
         <managed-bean-name>QualificacaoBean</managed-bean-name>
         <managed-bean-class>br.cin.ufpe.contribua.controller.QualificacaoBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>EventoSocialBean</managed-bean-name>
+        <managed-bean-class>br.cin.ufpe.contribua.controller.EventoSocialBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    
     
 </faces-config>
