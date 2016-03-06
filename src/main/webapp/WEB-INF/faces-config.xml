@@ -1,45 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faces-config
-        xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
-        version="2.0">
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
 
-    <navigation-rule>
-      <navigation-case>
-         <from-outcome>QualificacaoListar</from-outcome>
-         <to-view-id>/pages/qualificacao/lista.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-         <from-outcome>QualificacaoManter</from-outcome>
-         <to-view-id>/pages/qualificacao/qualificacao.xhtml</to-view-id>
-      </navigation-case>
-    </navigation-rule>
-   
-   <navigation-rule>
-      <navigation-case>
-         <from-outcome>EventoSocialListar</from-outcome>
-         <to-view-id>/pages/eventoSocial/lista.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-         <from-outcome>EventoSocialManter</from-outcome>
-         <to-view-id>/pages/eventoSocial/eventoSocial.xhtml</to-view-id>
-      </navigation-case>
-    </navigation-rule>
-   
-   
-    <managed-bean>
-        <managed-bean-name>QualificacaoBean</managed-bean-name>
-        <managed-bean-class>br.cin.ufpe.contribua.controller.QualificacaoBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    <managed-bean>
-        <managed-bean-name>EventoSocialBean</managed-bean-name>
-        <managed-bean-class>br.cin.ufpe.contribua.controller.EventoSocialBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    
-    
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>QualificacaoListar</from-outcome>
+			<to-view-id>/pages/qualificacao/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>QualificacaoManter</from-outcome>
+			<to-view-id>/pages/qualificacao/qualificacao.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>HabilidadeListar</from-outcome>
+			<to-view-id>/pages/habilidade/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>HabilidadeManter</from-outcome>
+			<to-view-id>/pages/habilidade/habilidade.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>EventoSocialListar</from-outcome>
+			<to-view-id>/pages/eventoSocial/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>EventoSocialManter</from-outcome>
+			<to-view-id>/pages/eventoSocial/eventoSocial.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<managed-bean>
+		<managed-bean-name>QualificacaoBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.QualificacaoBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+
+		<managed-bean-name>EventoSocialBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.EventoSocialBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>HabilidadeBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.HabilidadeBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+
 </faces-config>

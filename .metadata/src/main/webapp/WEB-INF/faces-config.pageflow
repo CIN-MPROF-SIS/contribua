@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14569220352960" configfile="/contribua/src/main/webapp/WEB-INF/faces-config.xml">
   <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="370" id="pf14572309700200" outlinks="pf14572309700201 pf14572309700202 pf14572309700203 pf14572309700204" path="*"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/qualificacao/lista.xhtml" x="338" y="178" id="pf14572309700205" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14572309700201" path="/pages/qualificacao/lista.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/qualificacao/qualificacao.xhtml" x="338" y="562" id="pf14572309700216" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14572309700202" path="/pages/qualificacao/qualificacao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/qualificacao/lista.xhtml" x="338" y="178" id="pf14572309700205" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14572309700201" path="/pages/qualificacao/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/qualificacao/qualificacao.xhtml" x="338" y="562" id="pf14572309700216" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14572309700202" path="/pages/qualificacao/qualificacao.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/eventoSocial/lista.xhtml" id="pf14572309700217" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14572309700203" path="/pages/eventoSocial/lista.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/eventoSocial/eventoSocial.xhtml" id="pf14572309700218" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14572309700204" path="/pages/eventoSocial/eventoSocial.xhtml"/>
   <links id="pf14572309700201" target="pf14572309700205" source="pf14572309700200" outcome="QualificacaoListar"/>

@@ -1,20 +1,38 @@
 package br.cin.ufpe.contribua.manager;
 
+import br.cin.ufpe.contribua.model.AbstractModel;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public abstract class AbstractManager<T> {
+@Stateless
+public abstract class AbstractManager<T extends AbstractModel> {
 
     private Class<T> entityClass;
+    
+    @PersistenceContext
+    private EntityManager em;
 
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+    
+    /*public AbstractManager(){
+        //System.out.println("------" + getClass().getGenericSuperclass().toString());
+        //ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+        //this.manager = (Class<Manager>) parameterizedType.getActualTypeArguments()[0];
+        //T entidade = (T)getClass().getGenericSuperclass();
+        //this.entityClass = (Class<T>)parameterizedType.getActualTypeArguments()[0];
+    }*/
+    
     public AbstractManager(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
-
-    protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
         getEntityManager().persist(entity);
