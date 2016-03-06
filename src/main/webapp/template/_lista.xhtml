@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -15,13 +16,13 @@
         <h:body>
             <div id="geral">
                 <ui:include src="../incs/topo.xhtml" />
-                
-                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
 
                 <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
                           draggable="false" closable="false">  
-                    <p:graphicImage value="../images/ajax-loading-bar.gif" />  
+                    <p:graphicImage value="../../images/ajax-loading-bar.gif" />  
                 </p:dialog>
+                
+                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
                 <p:growl id="growl"/>
                 <!--ui:include src="../incs/menu.xhtml"/-->
 
@@ -29,7 +30,7 @@
                     <fieldset>
                         <h:form id="form" >
                             <legend>#{bean.titulo}</legend>
-                            <p:commandButton value="Incluir" styleClass="incluir" action="#{bean.exibirInclusao()}" update="@form :growl"/>
+                            <p:commandButton value="Incluir" styleClass="incluir" action="#{bean.exibirInclusao()}" ajax='false'/>
                             <br/>
                             <br/>
                         
@@ -39,13 +40,13 @@
                                 <ui:insert name="colunas" />
                                 
                                 <p:column style="width:80px;text-align: center">
-                                    <p:commandButton action="#{bean.exibirAlteracao()}" title="Editar" value="Editar">
+                                    <p:commandButton action="#{bean.exibirAlteracao()}" title="Editar" value="Editar" ajax="false">
                                        <f:setPropertyActionListener value="#{item}" target="#{bean.model}" />
                                    </p:commandButton>
                                </p:column>
                                 
                                 <f:facet name="footer">
-                                    <p:commandButton process="lista" update="@form :growl" value="Excluir Selecionados" action="#{bean.excluir()}" />
+                                    <p:commandButton process="lista" update="@form :growl" value="Excluir Selecionados" action="#{bean.excluirSelecionados()}" />
                                 </f:facet>
                             </p:dataTable>
                             

@@ -25,6 +25,17 @@
 			<to-view-id>/pages/habilidade/habilidade.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+        
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>VoluntarioListar</from-outcome>
+			<to-view-id>/pages/voluntario/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>VoluntarioManter</from-outcome>
+			<to-view-id>/pages/voluntario/voluntario.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<navigation-case>
@@ -54,6 +65,12 @@
 	<managed-bean>
 		<managed-bean-name>HabilidadeBean</managed-bean-name>
 		<managed-bean-class>br.cin.ufpe.contribua.controller.HabilidadeBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+        
+	<managed-bean>
+		<managed-bean-name>VoluntarioBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.VoluntarioBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

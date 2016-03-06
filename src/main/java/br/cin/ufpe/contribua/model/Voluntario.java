@@ -1,5 +1,6 @@
 package br.cin.ufpe.contribua.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -24,6 +25,12 @@ public class Voluntario extends AbstractModel {
     
     @Column(length = 14, nullable=false)
     private String telefone;
+    
+    @Column(nullable=false)
+    private double latitude;
+    
+    @Column(nullable=false)
+    private double longitude;
     
     @ManyToOne(fetch = FetchType.LAZY)
     private Voluntario indicador;
@@ -75,6 +82,22 @@ public class Voluntario extends AbstractModel {
 
     public void setIndicador(Voluntario indicador) {
         this.indicador = indicador;
+    }
+    
+   public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
     
     public List<HorarioDisponivel> getHorariosDisponiveis() {

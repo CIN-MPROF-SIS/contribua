@@ -66,7 +66,7 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
         return null;
     }
     
-    public void excluir() {
+    public void excluirSelecionados() {
         if(entidadesSelecionadas != null){
             for(Entidade entidade : entidadesSelecionadas)
                 this.getManager().remove(entidade);
@@ -75,6 +75,15 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
             
             Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
         }
+    }
+    
+    public void excluir() {
+        
+        this.getManager().remove(this.model);
+        
+        this.listaModel= getManager().findAll();
+            
+        Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
     }
     
     public String exibirLista(){
@@ -97,6 +106,14 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
         //this.model = (Entidade) this.getManager().find(this.model.getId());
 
         return getPaginaManutencao();
+    }
+    
+    public boolean isIncluindo() {
+        return incluindo;
+    }
+
+    public void setIncluindo(boolean incluindo) {
+        this.incluindo = incluindo;
     }
     
     public String getPaginaManutencao(){

@@ -15,13 +15,13 @@
         <h:body>
             <div id="geral">
                 <ui:include src="../incs/topo.xhtml" />
-                
-                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
 
                 <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
                           draggable="false" closable="false">  
-                    <p:graphicImage value="images/ajax-loading-bar.gif" />  
+                    <p:graphicImage value="../../images/ajax-loading-bar.gif" />  
                 </p:dialog>
+                
+                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
                 <p:growl id="growl"/>
                 <!--ui:include src="../incs/menu.xhtml"/-->
 
@@ -34,12 +34,17 @@
                             </fieldset>
                             
                             <div class="submit-row">
-                                <p:commandButton value="Excluir" styleClass="excluir" action="#{bean.excuir()}" update="@form :growl"/>
-                                <p:commandButton value="Salvar" styleClass="salvar" action="#{bean.gravar()}" update="@form :growl"/>
+                                <p:commandButton value="Excluir" styleClass="excluir" action="#{bean.excuir()}" ajax='false' rendered="#{!bean.incluindo}"/>
+                                <p:commandButton value="Salvar" styleClass="salvar" action="#{bean.gravar()}" ajax='false'/>
                             </div>
                         </h:form>
                     </fieldset>
                 </div>
+            </div>
+            <div>
+                <h:form prependId="false" id="formSecundario">
+                    <ui:insert name="corpoForaForm" />
+                </h:form>
             </div>
 
             <ui:include src="../incs/rodape.xhtml" />
