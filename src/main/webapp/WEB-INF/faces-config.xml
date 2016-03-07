@@ -5,6 +5,11 @@
 	version="2.0">
     
 	<converter>
+		<converter-id>DefaultConverter</converter-id>
+		<converter-class>br.cin.ufpe.contribua.converter.DefaultConverter</converter-class>
+	</converter>
+        
+	<converter>
 		<converter-id>SimpleIndexConverter</converter-id>
 		<converter-class>br.cin.ufpe.contribua.converter.SimpleIndexConverter</converter-class>
 	</converter>
