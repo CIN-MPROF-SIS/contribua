@@ -3,6 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
 	version="2.0">
+    
+	<converter>
+		<converter-id>SimpleIndexConverter</converter-id>
+		<converter-class>br.cin.ufpe.contribua.converter.SimpleIndexConverter</converter-class>
+	</converter>
 
 	<navigation-rule>
 		<navigation-case>
@@ -23,6 +28,17 @@
 		<navigation-case>
 			<from-outcome>HabilidadeManter</from-outcome>
 			<to-view-id>/pages/habilidade/habilidade.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+        
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>DiaSemanaListar</from-outcome>
+			<to-view-id>/pages/diaSemana/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>DiaSemanaManter</from-outcome>
+			<to-view-id>/pages/diaSemana/diaSemana.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
         
@@ -65,6 +81,12 @@
 	<managed-bean>
 		<managed-bean-name>HabilidadeBean</managed-bean-name>
 		<managed-bean-class>br.cin.ufpe.contribua.controller.HabilidadeBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+        
+	<managed-bean>
+		<managed-bean-name>DiaSemanaBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.DiaSemanaBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
         

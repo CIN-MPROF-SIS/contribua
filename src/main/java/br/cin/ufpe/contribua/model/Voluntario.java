@@ -38,11 +38,11 @@ public class Voluntario extends AbstractModel {
     @OneToMany(mappedBy = "voluntario", fetch = FetchType.LAZY)
     private List<HorarioDisponivel> horariosDisponiveis;
    
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name="voluntario_habilidade", joinColumns={@JoinColumn(name="voluntario_id")}, inverseJoinColumns={@JoinColumn(name="habilidade_id")})
     private List<Habilidade> habilidades;
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name="voluntario_qualificacao", joinColumns={@JoinColumn(name="voluntario_id")}, inverseJoinColumns={@JoinColumn(name="qualificacao_id")})
     private List<Qualificacao> qualificacoes;
     
@@ -113,6 +113,9 @@ public class Voluntario extends AbstractModel {
     }
 
     public void setHabilidades(List<Habilidade> habilidades) {
+        if(this.habilidades == null)
+            this.habilidades = new ArrayList<Habilidade>();
+        
         this.habilidades = habilidades;
     }
 
@@ -121,6 +124,9 @@ public class Voluntario extends AbstractModel {
     }
 
     public void setQualificacoes(List<Qualificacao> qualificacoes) {
+        if(this.qualificacoes == null)
+            this.qualificacoes = new ArrayList<Qualificacao>();
+        
         this.qualificacoes = qualificacoes;
     }
 
