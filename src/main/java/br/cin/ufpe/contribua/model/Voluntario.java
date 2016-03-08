@@ -32,22 +32,22 @@ public class Voluntario extends AbstractModel {
     @Column(nullable=false)
     private double longitude;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Voluntario indicador;
     
-    @OneToMany(mappedBy = "voluntario", fetch = FetchType.LAZY)
-    private List<HorarioDisponivel> horariosDisponiveis;
+    @OneToMany(mappedBy = "voluntario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Disponibilidade> disponibilidades;
    
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="voluntario_habilidade", joinColumns={@JoinColumn(name="voluntario_id")}, inverseJoinColumns={@JoinColumn(name="habilidade_id")})
     private List<Habilidade> habilidades;
     
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="voluntario_qualificacao", joinColumns={@JoinColumn(name="voluntario_id")}, inverseJoinColumns={@JoinColumn(name="qualificacao_id")})
     private List<Qualificacao> qualificacoes;
     
     public Voluntario() {
-        this.horariosDisponiveis = new ArrayList<HorarioDisponivel>();
+        this.disponibilidades = new ArrayList<Disponibilidade>();
         this.habilidades = new ArrayList<Habilidade>();
         this.qualificacoes = new ArrayList<Qualificacao>();
     }
@@ -100,12 +100,12 @@ public class Voluntario extends AbstractModel {
         this.longitude = longitude;
     }
     
-    public List<HorarioDisponivel> getHorariosDisponiveis() {
-        return horariosDisponiveis;
+    public List<Disponibilidade> getDisponibilidades() {
+        return disponibilidades;
     }
 
-    public void setHorariosDisponiveis(List<HorarioDisponivel> horariosDisponiveis) {
-        this.horariosDisponiveis = horariosDisponiveis;
+    public void setDisponibilidades(List<Disponibilidade> horariosDisponiveis) {
+        this.disponibilidades = horariosDisponiveis;
     }
     
     public List<Habilidade> getHabilidades() {
