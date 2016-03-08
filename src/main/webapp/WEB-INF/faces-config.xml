@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
 	version="2.0">
-    
+
 	<converter>
 		<converter-id>DefaultConverter</converter-id>
 		<converter-class>br.cin.ufpe.contribua.converter.DefaultConverter</converter-class>
 	</converter>
-        
+
 	<converter>
 		<converter-id>SimpleIndexConverter</converter-id>
 		<converter-class>br.cin.ufpe.contribua.converter.SimpleIndexConverter</converter-class>
@@ -35,7 +35,7 @@
 			<to-view-id>/pages/habilidade/habilidade.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-        
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>DiaSemanaListar</from-outcome>
@@ -46,7 +46,7 @@
 			<to-view-id>/pages/diaSemana/diaSemana.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-        
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>VoluntarioListar</from-outcome>
@@ -69,6 +69,29 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>CausaListar</from-outcome>
+			<to-view-id>/pages/causa/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>CausaManter</from-outcome>
+			<to-view-id>/pages/causa/causa.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>PublicoAlvoListar</from-outcome>
+			<to-view-id>/pages/publicoAlvo/lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicoAlvoManter</from-outcome>
+			<to-view-id>/pages/publicoAlvo/publicoAlvo.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 
 	<managed-bean>
 		<managed-bean-name>QualificacaoBean</managed-bean-name>
@@ -88,16 +111,28 @@
 		<managed-bean-class>br.cin.ufpe.contribua.controller.HabilidadeBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-        
+
 	<managed-bean>
 		<managed-bean-name>DiaSemanaBean</managed-bean-name>
 		<managed-bean-class>br.cin.ufpe.contribua.controller.DiaSemanaBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-        
+
 	<managed-bean>
 		<managed-bean-name>VoluntarioBean</managed-bean-name>
 		<managed-bean-class>br.cin.ufpe.contribua.controller.VoluntarioBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>CausaBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.CausaBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>PublicoAlvoBean</managed-bean-name>
+		<managed-bean-class>br.cin.ufpe.contribua.controller.PublicoAlvoBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

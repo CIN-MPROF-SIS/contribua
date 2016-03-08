@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14569220352960" configfile="/contribua/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="370" id="pf14572309700200" outlinks="pf14572309700201 pf14572309700202 pf14572309700203 pf14572309700204" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1906" id="pf14572309700200" outlinks="pf14572309700201 pf14572309700202 pf14572309700203 pf14572309700204 pf14574687518460 pf14574687518461 pf14574687518462 pf14574687518463 pf14574687518464 pf14574687518465 pf145746889525612 pf145746889525613 pf145746988492316 pf145746988492317" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/qualificacao/lista.xhtml" x="338" y="178" id="pf14572309700205" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14572309700201" path="/pages/qualificacao/lista.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/qualificacao/qualificacao.xhtml" x="338" y="562" id="pf14572309700216" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14572309700202" path="/pages/qualificacao/qualificacao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/eventoSocial/lista.xhtml" id="pf14572309700217" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14572309700203" path="/pages/eventoSocial/lista.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/eventoSocial/eventoSocial.xhtml" id="pf14572309700218" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14572309700204" path="/pages/eventoSocial/eventoSocial.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/eventoSocial/lista.xhtml" x="338" y="946" id="pf14572309700217" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf14572309700203" path="/pages/eventoSocial/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/eventoSocial/eventoSocial.xhtml" x="338" y="1330" id="pf14572309700218" referenceLink="//@navigationRule.5/@navigationCase.1/@toViewId|" inlinks="pf14572309700204" path="/pages/eventoSocial/eventoSocial.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/habilidade/lista.xhtml" x="338" y="1714" id="pf14574687518566" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14574687518460" path="/pages/habilidade/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/habilidade/habilidade.xhtml" x="338" y="2098" id="pf14574687518567" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14574687518461" path="/pages/habilidade/habilidade.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/diaSemana/lista.xhtml" x="338" y="2482" id="pf14574687518568" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14574687518462" path="/pages/diaSemana/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/diaSemana/diaSemana.xhtml" x="338" y="2866" id="pf14574687518569" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf14574687518463" path="/pages/diaSemana/diaSemana.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/voluntario/lista.xhtml" x="338" y="3250" id="pf145746875185610" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf14574687518464" path="/pages/voluntario/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/voluntario/voluntario.xhtml" x="338" y="3634" id="pf145746875185611" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" inlinks="pf14574687518465" path="/pages/voluntario/voluntario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/causa/lista.xhtml" id="pf145746889525714" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf145746889525612" path="/pages/causa/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/causa/causa.xhtml" id="pf145746889525815" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" inlinks="pf145746889525613" path="/pages/causa/causa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/publicoAlvo/lista.xhtml" id="pf145746988492318" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf145746988492316" path="/pages/publicoAlvo/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/publicoAlvo/publicoAlvo.xhtml" id="pf145746988492319" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" inlinks="pf145746988492317" path="/pages/publicoAlvo/publicoAlvo.xhtml"/>
   <links id="pf14572309700201" target="pf14572309700205" source="pf14572309700200" outcome="QualificacaoListar"/>
   <links id="pf14572309700202" target="pf14572309700216" source="pf14572309700200" outcome="QualificacaoManter"/>
   <links id="pf14572309700203" target="pf14572309700217" source="pf14572309700200" outcome="EventoSocialListar"/>
   <links id="pf14572309700204" target="pf14572309700218" source="pf14572309700200" outcome="EventoSocialManter"/>
+  <links id="pf14574687518460" target="pf14574687518566" source="pf14572309700200" outcome="HabilidadeListar"/>
+  <links id="pf14574687518461" target="pf14574687518567" source="pf14572309700200" outcome="HabilidadeManter"/>
+  <links id="pf14574687518462" target="pf14574687518568" source="pf14572309700200" outcome="DiaSemanaListar"/>
+  <links id="pf14574687518463" target="pf14574687518569" source="pf14572309700200" outcome="DiaSemanaManter"/>
+  <links id="pf14574687518464" target="pf145746875185610" source="pf14572309700200" outcome="VoluntarioListar"/>
+  <links id="pf14574687518465" target="pf145746875185611" source="pf14572309700200" outcome="VoluntarioManter"/>
+  <links id="pf145746889525612" target="pf145746889525714" source="pf14572309700200" outcome="CausaListar"/>
+  <links id="pf145746889525613" target="pf145746889525815" source="pf14572309700200" outcome="CausaManter"/>
+  <links id="pf145746988492316" target="pf145746988492318" source="pf14572309700200" outcome="PublicoAlvoListar"/>
+  <links id="pf145746988492317" target="pf145746988492319" source="pf14572309700200" outcome="PublicoAlvoManter"/>
 </pageflow:Pageflow>
