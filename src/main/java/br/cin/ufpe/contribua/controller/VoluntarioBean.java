@@ -92,15 +92,16 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     
     @Override
     public String gravar() {
+        System.out.println("-----------1");
         this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
-        
+        System.out.println("-----------2");
         for(Disponibilidade disponibilidade : this.disponibilidades){
             if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
                     !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
                 this.model.getDisponibilidades().add(disponibilidade);
         }
         
-        System.out.println("-----------" + this.model.getDisponibilidades().size());
+        System.out.println("-----------3" + this.model.getDisponibilidades().size());
         return super.gravar();
     }
     

@@ -103,7 +103,7 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     
     public String exibirAlteracao(){
         incluindo = false;
-        //this.model = (Entidade) this.getManager().find(this.model.getId());
+        this.model = (Entidade) this.getManager().find(this.model.getId());
 
         return getPaginaManutencao();
     }
@@ -143,7 +143,6 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     }
     
     public void setModel(Entidade model) {
-        System.out.println("1====" + model.getId());
         this.model = model;
     }
 

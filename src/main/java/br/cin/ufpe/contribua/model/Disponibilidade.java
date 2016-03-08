@@ -9,10 +9,10 @@ import javax.persistence.ManyToOne;
 @Entity(name = "disponibilidade")
 public class Disponibilidade extends AbstractModel {
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private DiaSemana diaSemana;
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Voluntario voluntario;
    
     @Column(length = 5, nullable=false)
