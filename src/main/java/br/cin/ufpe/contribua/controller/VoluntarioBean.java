@@ -1,7 +1,6 @@
 package br.cin.ufpe.contribua.controller;
 
 import br.cin.ufpe.contribua.manager.AbstractManager;
-import br.cin.ufpe.contribua.manager.DiaSemanaManager;
 import br.cin.ufpe.contribua.manager.HabilidadeManager;
 import br.cin.ufpe.contribua.manager.QualificacaoManager;
 
@@ -10,12 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.cin.ufpe.contribua.manager.VoluntarioManager;
-import br.cin.ufpe.contribua.model.DiaSemana;
-import br.cin.ufpe.contribua.model.Disponibilidade;
 import br.cin.ufpe.contribua.model.Habilidade;
 import br.cin.ufpe.contribua.model.Qualificacao;
 import br.cin.ufpe.contribua.model.Voluntario;
-import java.util.ArrayList;
 import java.util.List;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -37,19 +33,12 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     @EJB
     QualificacaoManager qualificacaoManager;
     
-    @EJB
-    DiaSemanaManager diaSemanaManager;
-    
     private MapModel geoModel;
     private String centerGeoMap = "41.850033, -87.6500523";
     
     private List<Habilidade> habilidades;
     
     private List<Qualificacao> qualificacoes;
-    
-    private List<Disponibilidade> disponibilidades;
-    
-    private List<DiaSemana> diasSemana;
 
     @Override
     public String exibirInclusao(){
@@ -59,8 +48,6 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
         
-        this.montarDisponibilidades();
-        
         return retorno;
     }
     
@@ -68,10 +55,10 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     public String exibirAlteracao(){
         String retorno = super.exibirAlteracao();
         
+        System.out.println("----" + this.model.getId() + " - " + this.model.getHabilidades().size());
+        
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
-        
-        this.montarDisponibilidades();
         
         geoModel = new DefaultMapModel();
         adicionarMarcador();
@@ -90,40 +77,6 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         return "Voluntario";
     }
     
-    @Override
-    public String gravar() {
-        this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
-        
-        for(Disponibilidade disponibilidade : this.disponibilidades){
-            if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
-                    !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
-                this.model.getDisponibilidades().add(disponibilidade);
-        }
-        
-        System.out.println("-----------" + this.model.getDisponibilidades().size());
-        return super.gravar();
-    }
-    
-    private void montarDisponibilidades(){
-        this.disponibilidades = new ArrayList<Disponibilidade>();
-        this.diasSemana = diaSemanaManager.findAll();
-        
-        for(DiaSemana diaSemana : this.diasSemana){
-            Disponibilidade disponibilidade = new Disponibilidade();
-            disponibilidade.setVoluntario(this.model);
-            for(Disponibilidade disponibilidadeModel : this.model.getDisponibilidades()){
-                if(disponibilidadeModel.getDiaSemana().equals(diaSemana)){
-                    disponibilidade = disponibilidadeModel;
-                    break;
-                }
-            }
-            
-            disponibilidade.setDiaSemana(diaSemana);
-            
-            this.disponibilidades.add(disponibilidade);
-        }
-    }
-    
     public String adicionarMarcador() {
         Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
         geoModel.addOverlay(marker);
@@ -131,22 +84,6 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
         
         return null;
-    }
-    
-    public List<Disponibilidade> getDisponibilidades() {
-        return disponibilidades;
-    }
-
-    public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
-        this.disponibilidades = disponibilidades;
-    }
-
-    public List<DiaSemana> getDiasSemana() {
-        return diasSemana;
-    }
-
-    public void setDiasSemana(List<DiaSemana> diasSemana) {
-        this.diasSemana = diasSemana;
     }
     
     public List<Habilidade> getHabilidades() {

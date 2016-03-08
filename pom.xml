@@ -4,7 +4,6 @@
 	<groupId>br.cin.ufpe</groupId>
 	<artifactId>contribua</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-        <packaging>war</packaging>
 	<dependencies>
 
 		<dependency>
@@ -28,7 +27,11 @@
 		
 		
 		<!-- Glassfish -->
-
+		<dependency>
+			<groupId>org.glassfish.extras</groupId>
+			<artifactId>glassfish-embedded-web</artifactId>
+			<version>3.2-b06</version>
+		</dependency>
 		
 		<!-- PrimeFaces-->
         <dependency>

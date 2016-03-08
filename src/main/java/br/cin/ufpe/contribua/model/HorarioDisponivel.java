@@ -6,8 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "disponibilidade")
-public class Disponibilidade extends AbstractModel {
+@Entity(name = "horario_disponivel")
+public class HorarioDisponivel extends AbstractModel {
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DiaSemana diaSemana;
@@ -53,6 +53,6 @@ public class Disponibilidade extends AbstractModel {
         this.horarioTermino = horarioTermino;
     }
 
-    public Disponibilidade() {
+    public HorarioDisponivel() {
     }
 }
