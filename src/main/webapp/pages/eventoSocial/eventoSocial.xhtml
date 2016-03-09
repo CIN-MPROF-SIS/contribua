@@ -17,24 +17,25 @@
 			<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
 			<div class=" col-md-12 ">
-				<h:outputLabel value="Nome " />
+				<h:outputLabel value="Nome : " />
 				<p:inputText value="#{bean.model.nome}" required="true"
 					requiredMessage="Campo Nome obrigatório." />
 				<br />
 			</div>
 			
 			<div class=" col-md-6 ">
-				<p:outputLabel for="causa" value="Causa" />
+				<h:outputLabel for="causa" value="Causa :  " />
 				<p:selectOneMenu id="causa" style="width:150px"
-					value="#{bean.causa}">					
+					value="#{bean.model.causa}">					
 					<f:selectItem itemLabel="Selecione" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{bean.causas}" var="causa"
 						itemLabel="#{causa.descricao}" itemValue="#{causa}"></f:selectItems>
 				</p:selectOneMenu>
 			</div>
+			
 			<div class=" col-md-6 ">
-				<p:outputLabel for="publicoAlvo" value="Público Alvo" />
+				<h:outputLabel for="publicoAlvo" value="Público Alvo :  " />
 				<p:selectOneMenu id="publicoAlvo" style="width:150px"
 					value="#{bean.model.publicoAlvo}">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
