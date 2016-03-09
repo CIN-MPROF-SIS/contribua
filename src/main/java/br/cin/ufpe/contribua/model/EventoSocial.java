@@ -17,11 +17,11 @@ public class EventoSocial extends AbstractModel {
 	@Column(length = 14, nullable = false)
 	private String nome;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "causa_id")
 	private Causa causa;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "publico_alvo_id")
 	private PublicoAlvo publicoAlvo;
 

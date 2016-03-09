@@ -58,7 +58,8 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	
 	 @Override
 	    public String exibirAlteracao(){
-	        String retorno = super.exibirAlteracao();	        
+	        String retorno = super.exibirAlteracao();	
+	      
 	        
 	        this.causas = causaManager.findAll();
 	        this.publicoAlvos = publicoAlvoManager.findAll();

@@ -26,13 +26,13 @@
 		
 		
 		
-		<!-- Glassfish -->
+		<!-- Glassfish
 		<dependency>
 			<groupId>org.glassfish.extras</groupId>
 			<artifactId>glassfish-embedded-web</artifactId>
 			<version>3.2-b06</version>
 		</dependency>
-		
+		 -->
 		<!-- PrimeFaces-->
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -231,4 +231,5 @@
 
 
 	<name>contribua</name>
+	<packaging>war</packaging>
 </project>

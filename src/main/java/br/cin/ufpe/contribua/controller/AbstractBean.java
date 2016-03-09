@@ -45,7 +45,8 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
         }
     }
     
-    @PostConstruct
+    @SuppressWarnings("unchecked")
+	@PostConstruct
     public void inicializar(){
         this.listaModel= getManager().findAll();
     }
