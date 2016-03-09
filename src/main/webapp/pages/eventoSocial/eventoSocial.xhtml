@@ -57,7 +57,7 @@
 					required="true" requiredMessage="Campo Data Fim é obrigatório." />
 			</div>
 			<div class=" col-md-6 ">
-				<h:outputLabel value="Habilidades: " />
+				<p:outputLabel value="Habilidades: " />
 				<p:selectManyCheckbox value="#{bean.model.habilidades}"
 					id="habilidades" converter="DefaultConverter" layout="grid"
 					columns="3" collectionType="java.util.ArrayList" required="true"
@@ -68,7 +68,7 @@
 
 			</div>
 			<div class=" col-md-6 ">
-                   
+                   <p:outputLabel value="Qualificações: " />
                     <p:selectManyCheckbox
                             value="#{bean.model.qualificacoes}"
                             id="qualificacoes"
