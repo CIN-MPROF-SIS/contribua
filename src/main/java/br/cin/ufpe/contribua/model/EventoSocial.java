@@ -21,7 +21,7 @@ public class EventoSocial extends AbstractModel {
 	 */
 	private static final long serialVersionUID = 3623372317244989081L;
 
-	@Column(length = 14, nullable = false)
+	@Column(length = 150, nullable = false)
 	private String nome;
 
 	@ManyToOne(fetch = FetchType.EAGER)
