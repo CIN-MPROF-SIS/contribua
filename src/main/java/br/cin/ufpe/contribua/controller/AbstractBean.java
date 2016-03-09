@@ -44,11 +44,6 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
             Logger.getLogger(AbstractBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    @PostConstruct
-    public void inicializar(){
-        this.listaModel= getManager().findAll();
-    }
 
     public String gravar() {
         try {
@@ -103,7 +98,7 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     
     public String exibirAlteracao(){
         incluindo = false;
-        this.model = (Entidade) this.getManager().find(this.model.getId());
+        //this.model = (Entidade) this.getManager().find(this.model.getId());
 
         return getPaginaManutencao();
     }

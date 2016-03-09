@@ -32,10 +32,16 @@ public class Voluntario extends AbstractModel {
     @Column(nullable=false)
     private double longitude;
     
+    @Column(length = 100, nullable=false)
+    private String endereco;
+    
+    @Column(length = 9, nullable=false)
+    private String cep;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     private Voluntario indicador;
     
-    @OneToMany(mappedBy = "voluntario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "voluntario", fetch = FetchType.EAGER)
     private List<Disponibilidade> disponibilidades;
    
     @ManyToMany(fetch = FetchType.EAGER)
@@ -113,9 +119,6 @@ public class Voluntario extends AbstractModel {
     }
 
     public void setHabilidades(List<Habilidade> habilidades) {
-        if(this.habilidades == null)
-            this.habilidades = new ArrayList<Habilidade>();
-        
         this.habilidades = habilidades;
     }
 
@@ -124,10 +127,24 @@ public class Voluntario extends AbstractModel {
     }
 
     public void setQualificacoes(List<Qualificacao> qualificacoes) {
-        if(this.qualificacoes == null)
-            this.qualificacoes = new ArrayList<Qualificacao>();
-        
         this.qualificacoes = qualificacoes;
     }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+    
 
 }

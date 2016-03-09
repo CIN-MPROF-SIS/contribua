@@ -15,54 +15,57 @@
                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
                 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
-                    <div class=" col-md-12 ">
-                        <h:outputLabel value="Nome: "/>
-                        <p:inputText value="#{bean.model.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
-                    </div>
-                    <div class=" col-md-6 ">
-                        <h:outputLabel value="Email: "/>
-                        <p:inputText value="#{bean.model.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
-                    </div>
-                    <div class=" col-md-6 ">
-                        <h:outputLabel value="Telefone: "/>
-                        <p:inputText value="#{bean.model.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
-                    </div>
-                    <div class=" col-md-6 ">
-                        <h:outputLabel value="Habilidades: "/>
-                        <p:selectManyCheckbox
-                                value="#{bean.model.habilidades}"
-                                id="habilidades"
-                                converter="DefaultConverter"
-                                layout="grid" columns="3">
-                                <f:selectItems
-                                        value="#{bean.habilidades}" var="item"
-                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
-                        </p:selectManyCheckbox>
+                <div class=" col-md-12 ">
+                    <h:outputLabel value="Nome: "/>
+                    <p:inputText value="#{bean.model.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Email: "/>
+                    <p:inputText value="#{bean.model.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Telefone: "/>
+                    <p:inputText value="#{bean.model.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Endereço: "/>
+                    <p:inputText value="#{bean.model.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="CEP: "/>
+                    <p:inputText value="#{bean.model.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Habilidades: "/>
+                    <p:selectManyCheckbox
+                            value="#{bean.model.habilidades}"
+                            id="habilidades"
+                            converter="DefaultConverter"
+                            layout="grid" columns="3"
+                            collectionType="java.util.ArrayList"
+                            required="true" requiredMessage="Campo Habilidades obrigatório.">
+                            <f:selectItems
+                                    value="#{bean.habilidades}" var="item"
+                                    itemLabel="#{item.descricao}" itemValue="#{item}" />
+                    </p:selectManyCheckbox>
 
-                    </div>
-                    <div class=" col-md-6 ">
-                        <h:outputLabel value="Qualificações: "/>
-                        <p:selectManyCheckbox
-                                value="#{bean.model.qualificacoes}"
-                                id="qualificacoes"
-                                converter="DefaultConverter"
-                                layout="grid" columns="3">
-                                <f:selectItems
-                                        value="#{bean.qualificacoes}" var="item"
-                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
-                        </p:selectManyCheckbox>
-                    </div>
-                    <div class=" col-md-12 ">
-                        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
-                            <p:outputLabel for="address" value="Endereço:" />
-                            <p:inputText id="address" />
-                            <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
-                        </h:panelGrid>
-                        <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
-                            <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
-                        </p:gmap>
-                    </div>
-                <div class=" col-md-12">
+                </div>
+                <div class=" col-md-6 ">
+                   
+                    <p:selectManyCheckbox
+                            value="#{bean.model.qualificacoes}"
+                            id="qualificacoes"
+                            converter="DefaultConverter"
+                            layout="grid" columns="3"
+                            collectionType="java.util.ArrayList"
+                            required="true" requiredMessage="Campo Habilidades obrigatório.">
+                            <f:selectItems
+                                    value="#{bean.qualificacoes}" var="item"
+                                    itemLabel="#{item.descricao}" itemValue="#{item}" />
+                    </p:selectManyCheckbox>
+                </div>
+                <div class=" col-md-12" style="padding-top:20px">
+                    <legend>Disponibilidade</legend>
                     <p:dataTable id="disponibilidades" var="disponibilidade" value="#{bean.disponibilidades}" editable="true" style="margin-bottom:20px">
                        <f:facet name="header">
                            Disponibilidade
@@ -90,6 +93,17 @@
                            <p:rowEditor />
                        </p:column>
                    </p:dataTable>
+                </div>
+                <div class=" col-md-12 " style="padding-top:20px">
+                    <legend>Localização</legend>
+                    <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="address" value="Endereço:" />
+                        <p:inputText id="address" />
+                        <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
+                    </h:panelGrid>
+                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
+                        <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
+                    </p:gmap>
                 </div>
                 <h:inputHidden id="lat" value="#{bean.model.latitude}" />
                 <h:inputHidden id="lng" value="#{bean.model.longitude}" />

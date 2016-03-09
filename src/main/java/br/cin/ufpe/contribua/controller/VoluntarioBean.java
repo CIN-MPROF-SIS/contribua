@@ -71,7 +71,7 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
         
-        this.montarDisponibilidades();
+        //this.montarDisponibilidades();
         
         geoModel = new DefaultMapModel();
         adicionarMarcador();
