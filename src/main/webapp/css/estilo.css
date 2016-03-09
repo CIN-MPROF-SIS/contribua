@@ -30,13 +30,17 @@ input[type="text"], input[type="email"], input[type="password"], select, textare
     text-align: right;
 }
 
-.col-md-6, .col-md-12{
+.col-md-3, .col-md-6, .col-md-12{
     min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
     position: relative;
     float: left;
     padding-top:10px;
+}
+
+.col-md-3{
+    width: 25%;
 }
 
 .col-md-6{

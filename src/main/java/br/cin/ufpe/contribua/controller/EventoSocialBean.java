@@ -1,5 +1,6 @@
 package br.cin.ufpe.contribua.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,11 +16,18 @@ import org.primefaces.model.map.Marker;
 
 import br.cin.ufpe.contribua.manager.AbstractManager;
 import br.cin.ufpe.contribua.manager.CausaManager;
+import br.cin.ufpe.contribua.manager.DiaSemanaManager;
 import br.cin.ufpe.contribua.manager.EventoSocialManager;
+import br.cin.ufpe.contribua.manager.HabilidadeManager;
 import br.cin.ufpe.contribua.manager.PublicoAlvoManager;
+import br.cin.ufpe.contribua.manager.QualificacaoManager;
 import br.cin.ufpe.contribua.model.Causa;
+import br.cin.ufpe.contribua.model.DiaSemana;
+import br.cin.ufpe.contribua.model.Disponibilidade;
 import br.cin.ufpe.contribua.model.EventoSocial;
+import br.cin.ufpe.contribua.model.Habilidade;
 import br.cin.ufpe.contribua.model.PublicoAlvo;
+import br.cin.ufpe.contribua.model.Qualificacao;
 
 @ManagedBean
 @ViewScoped
@@ -31,14 +39,31 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	EventoSocialManager eventoSocialManager;
 	
 	@EJB
+	HabilidadeManager habilidadeManager;
+	
+	@EJB
 	PublicoAlvoManager publicoAlvoManager;
+	
+	@EJB
+	QualificacaoManager qualificacaoManager;
 	
 	@EJB
 	CausaManager causaManager;
 	
+	@EJB
+    DiaSemanaManager diaSemanaManager;
+	
     private List<Causa> causas;
     
     private List<PublicoAlvo> publicoAlvos;
+    
+    private List<Disponibilidade> disponibilidades;
+    
+    private List<Qualificacao> qualificacoes;
+    
+    private List<Habilidade> habilidades;
+    
+    private List<DiaSemana> diasSemana;
 
 	private MapModel geoModel;
 
@@ -50,6 +75,10 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 		
 		this.causas = causaManager.findAll();
         this.publicoAlvos = publicoAlvoManager.findAll();
+        this.habilidades = habilidadeManager.findAll();
+        this.qualificacoes = qualificacaoManager.findAll();
+        
+        this.montarDisponibilidades();
 		
 		geoModel = new DefaultMapModel();
 
@@ -62,6 +91,8 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	        
 	        this.causas = causaManager.findAll();
 	        this.publicoAlvos = publicoAlvoManager.findAll();
+	        this.habilidades = habilidadeManager.findAll();
+	        this.qualificacoes = qualificacaoManager.findAll();
 	        
 	       
 	        geoModel = new DefaultMapModel();
@@ -69,6 +100,21 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	        centerGeoMap = this.model.getLatitude() + ", " + this.model.getLongitude();
 	        
 	        return retorno;
+	    }
+	 
+	 @Override
+	    public String gravar() {
+	  
+	        this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
+	  
+	        
+	        for(Disponibilidade disponibilidade : this.disponibilidades){
+	            if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
+	                    !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
+	                this.model.getDisponibilidades().add(disponibilidade);
+	        }
+	        
+	        return super.gravar();
 	    }
 
 	 
@@ -91,6 +137,26 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	            for (GeocodeResult result : results) {
 	                geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
 	            }
+	        }
+	    }
+	 
+	 private void montarDisponibilidades(){
+	        this.disponibilidades = new ArrayList<Disponibilidade>();
+	        this.diasSemana = diaSemanaManager.findAll();
+	        
+	        for(DiaSemana diaSemana : this.diasSemana){
+	            Disponibilidade disponibilidade = new Disponibilidade();
+	            disponibilidade.setEventoSocial(this.model);
+	            for(Disponibilidade disponibilidadeModel : this.model.getDisponibilidades()){
+	                if(disponibilidadeModel.getDiaSemana().equals(diaSemana)){
+	                    disponibilidade = disponibilidadeModel;
+	                    break;
+	                }
+	            }
+	            
+	            disponibilidade.setDiaSemana(diaSemana);
+	            
+	            this.disponibilidades.add(disponibilidade);
 	        }
 	    }
 	 
@@ -135,6 +201,39 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	public void setPublicoAlvos(List<PublicoAlvo> publicoAlvos) {
 		this.publicoAlvos = publicoAlvos;
 	}
+
+	public List<Disponibilidade> getDisponibilidades() {
+		return disponibilidades;
+	}
+
+	public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
+		this.disponibilidades = disponibilidades;
+	}
+
+	public List<DiaSemana> getDiasSemana() {
+		return diasSemana;
+	}
+
+	public void setDiasSemana(List<DiaSemana> diasSemana) {
+		this.diasSemana = diasSemana;
+	}
+
+	public List<Habilidade> getHabilidades() {
+		return habilidades;
+	}
+
+	public void setHabilidades(List<Habilidade> habilidades) {
+		this.habilidades = habilidades;
+	}
+
+	public List<Qualificacao> getQualificacoes() {
+		return qualificacoes;
+	}
+
+	public void setQualificacoes(List<Qualificacao> qualificacoes) {
+		this.qualificacoes = qualificacoes;
+	}
+	
 	
 	
 

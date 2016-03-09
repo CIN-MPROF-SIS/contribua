@@ -28,7 +28,10 @@ import org.primefaces.model.map.Marker;
 @ViewScoped
 public class VoluntarioBean extends AbstractBean<Voluntario> {
 
-    @EJB
+ 
+	private static final long serialVersionUID = 3279239437982248478L;
+
+	@EJB
     VoluntarioManager voluntarioManager;
     
     @EJB
@@ -50,6 +53,8 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     private List<Disponibilidade> disponibilidades;
     
     private List<DiaSemana> diasSemana;
+    
+    
 
     @Override
     public String exibirInclusao(){
