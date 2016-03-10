@@ -1,16 +1,13 @@
 package br.cin.ufpe.contribua.manager;
 
 import br.cin.ufpe.contribua.model.AbstractModel;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-@Stateless
 public abstract class AbstractManager<T extends AbstractModel> {
 
     private Class<T> entityClass;
@@ -20,6 +17,10 @@ public abstract class AbstractManager<T extends AbstractModel> {
 
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public AbstractManager(){
+        
     }
     
     /*public AbstractManager(){

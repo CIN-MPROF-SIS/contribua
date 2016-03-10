@@ -14,7 +14,7 @@ public class Disponibilidade extends AbstractModel {
 	private DiaSemana diaSemana;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	private Voluntario voluntario;
+	private PessoaFisica pessoaFisica;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private EventoSocial eventoSocial;
@@ -33,13 +33,13 @@ public class Disponibilidade extends AbstractModel {
 		this.diaSemana = diaSemana;
 	}
 
-	public Voluntario getVoluntario() {
-		return voluntario;
-	}
+        public PessoaFisica getPessoaFisica() {
+            return pessoaFisica;
+        }
 
-	public void setVoluntario(Voluntario voluntario) {
-		this.voluntario = voluntario;
-	}
+        public void setPessoaFisica(PessoaFisica pessoaFisica) {
+            this.pessoaFisica = pessoaFisica;
+        }
 
 	public String getHorarioInicio() {
 		return horarioInicio;

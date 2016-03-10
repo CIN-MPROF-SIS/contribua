@@ -7,11 +7,17 @@
 
     <h:body>
         <ui:composition template="/template/_lista.xhtml">
-            <ui:param name="bean" value="#{DiaSemanaBean}" />
+            <ui:param name="bean" value="#{PessoaJuridicaBean}" />
             <ui:define name="colunas">
-                <p:column headerText="Descrição">
-                    <h:outputText value="#{item.descricao}" />
-                </p:column>             
+                <p:column headerText="Nome">
+                    <h:outputText value="#{item.pessoa.nome}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{item.pessoa.email}" />
+                </p:column>
+                <p:column headerText="Telefone">
+                    <h:outputText value="#{item.pessoa.telefone}" />
+                </p:column>  
             </ui:define>
         </ui:composition>
     </h:body>

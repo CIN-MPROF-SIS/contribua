@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html template="/template/_template.xhtml"
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui"
+                    xmlns:c="http://java.sun.com/jsp/jstl/core"
+                    xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+        <ui:composition template="/template/_template.xhtml">
+            <ui:param name="bean" value="#{PessoaJuridicaBean}" />
+            <ui:define name="corpo">  
+                
+                <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+                <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Nome: "/>
+                    <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Data Fundação "/><br/>
+                    <p:calendar id="inline" value="#{bean.model.dataFundacao}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="CNPJ: "/>
+                    <p:inputText value="#{bean.model.cnpj}" /><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Sigla: "/>
+                    <p:inputText value="#{bean.model.sigla}" /><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Diretoria: "/>
+                    <p:inputText value="#{bean.model.diretoria}" required="true" requiredMessage="Campo Diretoria obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Descrição Resumida: "/>
+                    <p:inputText value="#{bean.model.descricao}" required="true" requiredMessage="Campo Descrição Resumida obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Título: "/>
+                    <p:inputText value="#{bean.model.titulo}" required="true" requiredMessage="Campo Título obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Página: "/>
+                    <p:inputText value="#{bean.model.pagina}" required="true" requiredMessage="Campo Página obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Email: "/>
+                    <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Telefone: "/>
+                    <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Endereço: "/>
+                    <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="CEP: "/>
+                    <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Estado: "/>
+                    <p:selectOneMenu id="estado" value="#{bean.estado}" style="width:100%" converter="DefaultConverter" required="true" requiredMessage="Campo Estado obrigatório.">
+                        <f:selectItem itemLabel="Selecione um Estado" itemValue="" />
+                        <f:selectItems value="#{bean.estados}" var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
+                        <p:ajax event="change" listener="#{bean.selecionarEstado}" update="cidade"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class=" col-md-6 ">
+                    <h:outputLabel value="Cidade: "/>
+                    <p:selectOneMenu id="cidade" value="#{bean.model.pessoa.cidade}" style="width:100%"  converter="DefaultConverter" required="true" requiredMessage="Campo Cidade obrigatório.">
+                        <f:selectItem itemLabel="Selecione uma cidade" itemValue="" />
+                        <f:selectItems value="#{bean.cidades}"  var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class=" col-md-12 " style="padding-top:20px">
+                    <legend>Localização</legend>
+                    <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="address" value="Endereço:" />
+                        <p:inputText id="address" />
+                        <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
+                    </h:panelGrid>
+                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
+                        <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
+                    </p:gmap>
+                </div>
+                <h:inputHidden id="lat" value="#{bean.model.pessoa.latitude}" />
+                <h:inputHidden id="lng" value="#{bean.model.pessoa.longitude}" />
+                <p:commandButton id="btnAdicionaMarcador" value="Add" action="#{bean.adicionarMarcador}" update="@none" oncomplete="btnAdicionaMarcador_Complete()" style="display:none"/>
+
+                <script type="text/javascript">
+                    var currentMarker = null;
+                    <c:choose>
+                        <c:when test='#{bean.incluindo}'>
+                            if (navigator.geolocation) {
+                                checkGeolocationByHTML5();
+                            } else {
+                                checkGeolocationByLoaderAPI(); // HTML5 not supported! Fall back to Loader API.
+                            }
+
+                            function checkGeolocationByHTML5() {
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                    setMapCenter(position.coords.latitude, position.coords.longitude);
+                                }, function() {
+                                    checkGeolocationByLoaderAPI(); // Error! Fall back to Loader API.
+                                });
+                            }
+
+                            function checkGeolocationByLoaderAPI() {
+                                if (google.loader.ClientLocation) {
+                                    setMapCenter(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+                                } else {
+                                    // Unsupported! Show error/warning?
+                                }
+                            }
+
+                            function setMapCenter(latitude, longitude) {
+                                PF('geoMap').getMap().setCenter(new google.maps.LatLng(latitude, longitude));
+                            }
+                        </c:when>
+                        <c:otherwise>
+                            document.getElementById('form:lat').value = #{bean.model.pessoa.latitude};
+                            document.getElementById('form:lng').value = #{bean.model.pessoa.longitude};
+                            window.setTimeout(
+                                    function(){btnAdicionaMarcador_Complete();}, 300
+                                    ); 
+                        </c:otherwise>
+                    </c:choose>
+
+                    function geocode() {
+                        PF('geoMap').geocode(document.getElementById('form:address').value);
+                    }
+
+
+
+                    function handlePointClick(event) {
+                        document.getElementById('form:lat').value = event.latLng.lat();
+                        document.getElementById('form:lng').value = event.latLng.lng();
+
+                        document.getElementById('form:btnAdicionaMarcador').click();
+                    }
+
+                    function btnAdicionaMarcador_Complete(){
+                        if(currentMarker === null) {
+                            var lat = document.getElementById('form:lat').value;
+                            var lng = document.getElementById('form:lng').value;
+
+                            currentMarker = new google.maps.Marker({
+                                position:new google.maps.LatLng(lat, lng)
+                            });
+
+                            currentMarker.setTitle("Marcador");
+                            PF('geoMap').addOverlay(currentMarker);
+                        }
+                        else{
+                            currentMarker.setMap(null);
+                            currentMarker = null;
+
+                            btnAdicionaMarcador_Complete();
+                        }
+                    }
+
+                </script>
+            </ui:define>
+
+            <ui:define name="corpoForaForm">
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

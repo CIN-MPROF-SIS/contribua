@@ -133,6 +133,14 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     }
     
     public Entidade getModel() {
+        if(this.model == null){
+            try {
+                //implementação padrão do metodo limparDadosForm()
+                this.model = clazzEntidade.newInstance();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } 
+        }
         return model;
     }
     

@@ -7,16 +7,16 @@
 
     <h:body>
         <ui:composition template="/template/_lista.xhtml">
-            <ui:param name="bean" value="#{VoluntarioBean}" />
+            <ui:param name="bean" value="#{PessoaFisicaBean}" />
             <ui:define name="colunas">
                 <p:column headerText="Nome">
-                    <h:outputText value="#{item.nome}" />
+                    <h:outputText value="#{item.pessoa.nome}" />
                 </p:column>
                 <p:column headerText="Email">
-                    <h:outputText value="#{item.email}" />
+                    <h:outputText value="#{item.pessoa.email}" />
                 </p:column>
                 <p:column headerText="Telefone">
-                    <h:outputText value="#{item.telefone}" />
+                    <h:outputText value="#{item.pessoa.telefone}" />
                 </p:column>  
             </ui:define>
         </ui:composition>

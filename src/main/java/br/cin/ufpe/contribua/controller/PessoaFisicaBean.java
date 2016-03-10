@@ -1,20 +1,24 @@
 package br.cin.ufpe.contribua.controller;
 
 import br.cin.ufpe.contribua.manager.AbstractManager;
+import br.cin.ufpe.contribua.manager.CidadeManager;
 import br.cin.ufpe.contribua.manager.DiaSemanaManager;
+import br.cin.ufpe.contribua.manager.EstadoManager;
 import br.cin.ufpe.contribua.manager.HabilidadeManager;
+import br.cin.ufpe.contribua.manager.PessoaFisicaManager;
 import br.cin.ufpe.contribua.manager.QualificacaoManager;
+import br.cin.ufpe.contribua.model.Cidade;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.cin.ufpe.contribua.manager.VoluntarioManager;
 import br.cin.ufpe.contribua.model.DiaSemana;
 import br.cin.ufpe.contribua.model.Disponibilidade;
+import br.cin.ufpe.contribua.model.Estado;
 import br.cin.ufpe.contribua.model.Habilidade;
+import br.cin.ufpe.contribua.model.PessoaFisica;
 import br.cin.ufpe.contribua.model.Qualificacao;
-import br.cin.ufpe.contribua.model.Voluntario;
 import java.util.ArrayList;
 import java.util.List;
 import org.primefaces.event.map.GeocodeEvent;
@@ -26,13 +30,10 @@ import org.primefaces.model.map.Marker;
 
 @ManagedBean
 @ViewScoped
-public class VoluntarioBean extends AbstractBean<Voluntario> {
+public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
 
- 
-	private static final long serialVersionUID = 3279239437982248478L;
-
-	@EJB
-    VoluntarioManager voluntarioManager;
+    @EJB
+    PessoaFisicaManager pessoaFisicaManager;
     
     @EJB
     HabilidadeManager habilidadeManager;
@@ -42,6 +43,12 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     
     @EJB
     DiaSemanaManager diaSemanaManager;
+    
+    @EJB
+    EstadoManager estadoManager;
+    
+    @EJB
+    CidadeManager cidadeManager;
     
     private MapModel geoModel;
     private String centerGeoMap = "41.850033, -87.6500523";
@@ -54,7 +61,10 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     
     private List<DiaSemana> diasSemana;
     
+    private List<Estado> estados;
+    private Estado estado;
     
+    private List<Cidade> cidades;
 
     @Override
     public String exibirInclusao(){
@@ -63,6 +73,9 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
+        this.estados = estadoManager.findAll();
+        this.estado = null;
+        this.cidades = new ArrayList<Cidade>();
         
         this.montarDisponibilidades();
         
@@ -75,24 +88,26 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
+        this.estados = estadoManager.findAll();
+        this.estado = this.model.getPessoa().getCidade().getEstado();
         
         //this.montarDisponibilidades();
         
         geoModel = new DefaultMapModel();
         adicionarMarcador();
-        centerGeoMap = this.model.getLatitude() + ", " + this.model.getLongitude();
+        centerGeoMap = this.model.getPessoa().getLatitude() + ", " + this.model.getPessoa().getLongitude();
         
         return retorno;
     }
     
     @Override
     public AbstractManager getManager() {
-        return voluntarioManager;
+        return pessoaFisicaManager;
     }
 
     @Override
     public String getTitulo() {
-        return "Voluntario";
+        return "Pessoa Fisica";
     }
     
     @Override
@@ -116,7 +131,7 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
         
         for(DiaSemana diaSemana : this.diasSemana){
             Disponibilidade disponibilidade = new Disponibilidade();
-            disponibilidade.setVoluntario(this.model);
+            disponibilidade.setPessoaFisica(this.model);
             for(Disponibilidade disponibilidadeModel : this.model.getDisponibilidades()){
                 if(disponibilidadeModel.getDiaSemana().equals(diaSemana)){
                     disponibilidade = disponibilidadeModel;
@@ -131,12 +146,19 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
     }
     
     public String adicionarMarcador() {
-        Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
+        Marker marker = new Marker(new LatLng(this.model.getPessoa().getLatitude(), this.model.getPessoa().getLongitude()), "Marcador");
         geoModel.addOverlay(marker);
         
-        System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
+        System.out.println("lat " + this.model.getPessoa().getLatitude() + " - log " + this.model.getPessoa().getLongitude());
         
         return null;
+    }
+    
+    public void selecionarEstado(){
+        this.cidades = new ArrayList<Cidade>();
+        
+        if(this.estado != null)
+            this.cidades = this.cidadeManager.findByEstado(this.estado);
     }
     
     public List<Disponibilidade> getDisponibilidades() {
@@ -199,4 +221,31 @@ public class VoluntarioBean extends AbstractBean<Voluntario> {
             }
         }
     }
+
+    public List<Estado> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public List<Cidade> getCidades() {
+        return cidades;
+    }
+
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
+    }
+    
+    
+    
 }
