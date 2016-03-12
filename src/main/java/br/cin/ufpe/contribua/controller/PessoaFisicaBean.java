@@ -19,8 +19,11 @@ import br.cin.ufpe.contribua.model.Estado;
 import br.cin.ufpe.contribua.model.Habilidade;
 import br.cin.ufpe.contribua.model.PessoaFisica;
 import br.cin.ufpe.contribua.model.Qualificacao;
+import br.cin.ufpe.contribua.model.Usuario;
+import br.cin.ufpe.contribua.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
@@ -65,6 +68,31 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     private Estado estado;
     
     private List<Cidade> cidades;
+    
+    private Usuario usuario;
+    
+    private String confirmacaoSenha;
+    
+    public PessoaFisicaBean(){
+
+    }
+    
+    @PostConstruct
+    public void inicializar(){
+        this.limpar();
+        this.usuario = new Usuario();
+        
+        geoModel = new DefaultMapModel();
+        
+        this.habilidades = habilidadeManager.findAll();
+        this.qualificacoes = qualificacaoManager.findAll();
+        this.estados = estadoManager.findAll();
+        this.estado = null;
+        this.cidades = new ArrayList<Cidade>();
+        this.confirmacaoSenha = "";
+        
+        this.montarDisponibilidades();
+    }
 
     @Override
     public String exibirInclusao(){
@@ -112,17 +140,37 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     
     @Override
     public String gravar() {
-        System.out.println("-----------1");
         this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
-        System.out.println("-----------2");
+
         for(Disponibilidade disponibilidade : this.disponibilidades){
             if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
                     !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
                 this.model.getDisponibilidades().add(disponibilidade);
         }
         
-        System.out.println("-----------3" + this.model.getDisponibilidades().size());
         return super.gravar();
+    }
+    
+    public String gravarUsuario(){
+        
+        if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
+            Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
+            return null;
+        }
+        
+        for(Disponibilidade disponibilidade : this.disponibilidades){
+            if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
+                    !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
+                this.model.getDisponibilidades().add(disponibilidade);
+        }
+        
+        this.pessoaFisicaManager.gravarUsuario(this.model, this.usuario);
+        
+        Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        this.limpar();
+            
+                
+        return this.exibirLista();
     }
     
     private void montarDisponibilidades(){
@@ -244,6 +292,22 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
 
     public void setCidades(List<Cidade> cidades) {
         this.cidades = cidades;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getConfirmacaoSenha() {
+        return confirmacaoSenha;
+    }
+
+    public void setConfirmacaoSenha(String confirmacaoSenha) {
+        this.confirmacaoSenha = confirmacaoSenha;
     }
     
     

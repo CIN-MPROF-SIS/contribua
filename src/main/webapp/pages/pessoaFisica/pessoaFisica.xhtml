@@ -12,85 +12,98 @@
             <ui:param name="bean" value="#{PessoaFisicaBean}" />
             <ui:define name="corpo">  
                 
-                <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+                <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA2RzRgG-9yk86PFuS6LKoPUAKsGpuTUjM&amp;sensor=false"></script>
                 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
                 <div class=" col-md-12 ">
-                    <h:outputLabel value="Nome: "/>
-                    <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
+                    <legend>Dados Básicos</legend>
+                        <div class=" col-md-12 ">
+                        <h:outputLabel value="Nome: "/>
+                        <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Data Nascimento: "/><br/>
+                        <p:calendar id="inline" value="#{bean.model.dataNascimento}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Sexo: "/><br/>
+                        <p:selectOneMenu id="sexo" value="#{bean.model.sexo}" style="width:200px" required="true" requiredMessage="Campo Sexo obrigatório.">
+                            <f:selectItem itemLabel="Selecione um Sexo" itemValue="" />
+                            <f:selectItem itemLabel="Masculino" itemValue="M" />
+                            <f:selectItem itemLabel="Feminino" itemValue="F" />
+                        </p:selectOneMenu>
+                    </div>
                 </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Data Nascimento: "/><br/>
-                    <p:calendar id="inline" value="#{bean.model.dataNascimento}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                <div class=" col-md-12 ">
+                    <legend>Contato</legend>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Email: "/>
+                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Telefone: "/>
+                        <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                    </div>
                 </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Sexo: "/><br/>
-                    <p:selectOneMenu id="sexo" value="#{bean.model.sexo}" style="width:150px" required="true" requiredMessage="Campo Sexo obrigatório.">
-                        <f:selectItem itemLabel="Selecione um Sexo" itemValue="" />
-                        <f:selectItem itemLabel="Masculino" itemValue="M" />
-                        <f:selectItem itemLabel="Feminino" itemValue="F" />
-                    </p:selectOneMenu>
+                <div class=" col-md-12 ">
+                    <legend>Endereço</legend>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Endereço: "/>
+                        <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="CEP: "/>
+                        <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Estado: "/>
+                        <p:selectOneMenu id="estado" value="#{bean.estado}" style="width:100%" converter="DefaultConverter" required="true" requiredMessage="Campo Estado obrigatório.">
+                            <f:selectItem itemLabel="Selecione um Estado" itemValue="" />
+                            <f:selectItems value="#{bean.estados}" var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
+                            <p:ajax event="change" listener="#{bean.selecionarEstado}" update="cidade"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Cidade: "/>
+                        <p:selectOneMenu id="cidade" value="#{bean.model.pessoa.cidade}" style="width:100%"  converter="DefaultConverter" required="true" requiredMessage="Campo Cidade obrigatório.">
+                            <f:selectItem itemLabel="Selecione uma cidade" itemValue="" />
+                            <f:selectItems value="#{bean.cidades}"  var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
+                        </p:selectOneMenu>
+                    </div>
                 </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Email: "/>
-                    <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
-                </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Telefone: "/>
-                    <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
-                </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Endereço: "/>
-                    <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
-                </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="CEP: "/>
-                    <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
-                </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Estado: "/>
-                    <p:selectOneMenu id="estado" value="#{bean.estado}" style="width:100%" converter="DefaultConverter" required="true" requiredMessage="Campo Estado obrigatório.">
-                        <f:selectItem itemLabel="Selecione um Estado" itemValue="" />
-                        <f:selectItems value="#{bean.estados}" var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
-                        <p:ajax event="change" listener="#{bean.selecionarEstado}" update="cidade"/>
-                    </p:selectOneMenu>
-                </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Cidade: "/>
-                    <p:selectOneMenu id="cidade" value="#{bean.model.pessoa.cidade}" style="width:100%"  converter="DefaultConverter" required="true" requiredMessage="Campo Cidade obrigatório.">
-                        <f:selectItem itemLabel="Selecione uma cidade" itemValue="" />
-                        <f:selectItems value="#{bean.cidades}"  var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
-                    </p:selectOneMenu>
-                </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Habilidades: "/>
-                    <p:selectManyCheckbox
-                            value="#{bean.model.habilidades}"
-                            id="habilidades"
-                            converter="DefaultConverter"
-                            layout="grid" columns="3"
-                            collectionType="java.util.ArrayList"
-                            required="true" requiredMessage="Campo Habilidades obrigatório.">
-                            <f:selectItems
-                                    value="#{bean.habilidades}" var="item"
-                                    itemLabel="#{item.descricao}" itemValue="#{item}" />
-                    </p:selectManyCheckbox>
+                <div class=" col-md-12 ">
+                    <legend>Cacacterísticas Pessoais</legend>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Habilidades: "/>
+                        <p:selectManyCheckbox
+                                value="#{bean.model.habilidades}"
+                                id="habilidades"
+                                converter="DefaultConverter"
+                                layout="grid" columns="3"
+                                collectionType="java.util.ArrayList"
+                                required="true" requiredMessage="Campo Habilidades obrigatório.">
+                                <f:selectItems
+                                        value="#{bean.habilidades}" var="item"
+                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
 
+                    </div>
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Qualificação: "/>
+                        <p:selectManyCheckbox
+                                value="#{bean.model.qualificacoes}"
+                                id="qualificacoes"
+                                converter="DefaultConverter"
+                                layout="grid" columns="3"
+                                collectionType="java.util.ArrayList"
+                                required="true" requiredMessage="Campo Habilidades obrigatório.">
+                                <f:selectItems
+                                        value="#{bean.qualificacoes}" var="item"
+                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
+                    </div>
                 </div>
-                <div class=" col-md-6 ">
-                    <h:outputLabel value="Qualificação: "/>
-                    <p:selectManyCheckbox
-                            value="#{bean.model.qualificacoes}"
-                            id="qualificacoes"
-                            converter="DefaultConverter"
-                            layout="grid" columns="3"
-                            collectionType="java.util.ArrayList"
-                            required="true" requiredMessage="Campo Habilidades obrigatório.">
-                            <f:selectItems
-                                    value="#{bean.qualificacoes}" var="item"
-                                    itemLabel="#{item.descricao}" itemValue="#{item}" />
-                    </p:selectManyCheckbox>
-                </div>
+
                 <div class=" col-md-12" style="padding-top:20px">
                     <legend>Disponibilidade</legend>
                     <p:dataTable id="disponibilidades" var="disponibilidade" value="#{bean.disponibilidades}" editable="true" style="margin-bottom:20px">

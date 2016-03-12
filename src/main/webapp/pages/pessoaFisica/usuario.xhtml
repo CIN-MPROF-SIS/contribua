@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <title>.:: CONTRIBUA ::.</title>
+            <link href="../../css/estilo.css" type="text/css" rel="stylesheet" />
+            <script type="text/javascript" src="../../js/calendar.js"/>  
+        </h:head>
+
+        <h:body>
+            <ui:param name="bean" value="#{PessoaFisicaBean}" />
+            <div id="geral">
+                <ui:include src="../../incs/topo.xhtml" />
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
+                          draggable="false" closable="false">  
+                    <p:graphicImage value="../../images/ajax-loading-bar.gif" />  
+                </p:dialog>
+                
+                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+                <p:growl id="growl"/>
+                <!--ui:include src="../../incs/menu.xhtml"/-->
+
+                <div id="conteudo">
+                    <fieldset>
+                        <h:form id="form">
+                            <legend>#{bean.titulo}</legend>
+                            <fieldset>
+                                <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA2RzRgG-9yk86PFuS6LKoPUAKsGpuTUjM&amp;sensor=false"></script>
+                                <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+                                <div class=" col-md-12 ">
+                                    <legend>Dados de Acesso</legend>
+                                    <div class=" col-md-12 ">
+                                        <h:outputLabel value="Login: "/>
+                                        <p:inputText value="#{bean.usuario.login}" required="true" requiredMessage="Campo Descriçao obrigatório."/><br/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Senha: "/>
+                                        <h:inputSecret value="#{bean.usuario.senha}" required="true" requiredMessage="Campo Descriçao obrigatório."/><br/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Confirmar Senha: "/>
+                                        <h:inputSecret value="#{bean.confirmacaoSenha}" required="true" requiredMessage="Campo Descriçao obrigatório."/><br/>
+                                    </div>
+                                </div>
+
+                                <div class=" col-md-12 ">
+                                    <legend>Dados Básicos</legend>
+                                        <div class=" col-md-12 ">
+                                        <h:outputLabel value="Nome: "/>
+                                        <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Data Nascimento: "/><br/>
+                                        <p:calendar id="inline" value="#{bean.model.dataNascimento}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Sexo: "/><br/>
+                                        <p:selectOneMenu id="sexo" value="#{bean.model.sexo}" style="width:200px" required="true" requiredMessage="Campo Sexo obrigatório.">
+                                            <f:selectItem itemLabel="Selecione um Sexo" itemValue="" />
+                                            <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                            <f:selectItem itemLabel="Feminino" itemValue="F" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class=" col-md-12 ">
+                                    <legend>Contato</legend>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Email: "/>
+                                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Telefone: "/>
+                                        <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                                    </div>
+                                </div>
+
+                                <div class=" col-md-12 ">
+                                    <legend>Endereço</legend>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Endereço: "/>
+                                        <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="CEP: "/>
+                                        <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Estado: "/>
+                                        <p:selectOneMenu id="estado" value="#{bean.estado}" style="width:100%" converter="DefaultConverter" required="true" requiredMessage="Campo Estado obrigatório.">
+                                            <f:selectItem itemLabel="Selecione um Estado" itemValue="" />
+                                            <f:selectItems value="#{bean.estados}" var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
+                                            <p:ajax event="change" listener="#{bean.selecionarEstado}" update="cidade"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Cidade: "/>
+                                        <p:selectOneMenu id="cidade" value="#{bean.model.pessoa.cidade}" style="width:100%"  converter="DefaultConverter" required="true" requiredMessage="Campo Cidade obrigatório.">
+                                            <f:selectItem itemLabel="Selecione uma cidade" itemValue="" />
+                                            <f:selectItems value="#{bean.cidades}"  var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class=" col-md-12 ">
+                                    <legend>Cacacterísticas Pessoais</legend>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Habilidades: "/>
+                                        <p:selectManyCheckbox
+                                                value="#{bean.model.habilidades}"
+                                                id="habilidades"
+                                                converter="DefaultConverter"
+                                                layout="grid" columns="3"
+                                                collectionType="java.util.ArrayList"
+                                                required="true" requiredMessage="Campo Habilidades obrigatório.">
+                                                <f:selectItems
+                                                        value="#{bean.habilidades}" var="item"
+                                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                                        </p:selectManyCheckbox>
+
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <h:outputLabel value="Qualificação: "/>
+                                        <p:selectManyCheckbox
+                                                value="#{bean.model.qualificacoes}"
+                                                id="qualificacoes"
+                                                converter="DefaultConverter"
+                                                layout="grid" columns="3"
+                                                collectionType="java.util.ArrayList"
+                                                required="true" requiredMessage="Campo Habilidades obrigatório.">
+                                                <f:selectItems
+                                                        value="#{bean.qualificacoes}" var="item"
+                                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                                        </p:selectManyCheckbox>
+                                    </div>
+                                </div>
+
+                                <div class=" col-md-12" style="padding-top:20px">
+                                    <legend>Disponibilidade</legend>
+                                    <p:dataTable id="disponibilidades" var="disponibilidade" value="#{bean.disponibilidades}" editable="true" style="margin-bottom:20px">
+                                       <f:facet name="header">
+                                           Disponibilidade
+                                       </f:facet>
+
+                                        <p:column headerText="Dia">
+                                            <h:outputText value="#{disponibilidade.diaSemana.descricao}" />
+                                        </p:column>
+
+                                       <p:column headerText="Horário Início">
+                                           <p:cellEditor>
+                                               <f:facet name="output"><h:outputText value="#{disponibilidade.horarioInicio}" /></f:facet>
+                                               <f:facet name="input"><p:inputText value="#{disponibilidade.horarioInicio}" style="width:100%" label="Horario Início"/></f:facet>
+                                           </p:cellEditor>
+                                       </p:column>
+
+                                       <p:column headerText="Horário Término">
+                                           <p:cellEditor>
+                                               <f:facet name="output"><h:outputText value="#{disponibilidade.horarioTermino}" /></f:facet>
+                                               <f:facet name="input"><p:inputText value="#{disponibilidade.horarioTermino}" style="width:100%" label="Horario Início"/></f:facet>
+                                           </p:cellEditor>
+                                       </p:column>
+
+                                       <p:column style="width:32px">
+                                           <p:rowEditor />
+                                       </p:column>
+                                   </p:dataTable>
+                                </div>
+                                <div class=" col-md-12 " style="padding-top:20px">
+                                    <legend>Localização</legend>
+                                    <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                                        <p:outputLabel for="address" value="Endereço:" />
+                                        <p:inputText id="address" />
+                                        <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
+                                    </h:panelGrid>
+                                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
+                                        <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
+                                    </p:gmap>
+                                </div>
+                                <h:inputHidden id="lat" value="#{bean.model.pessoa.latitude}" />
+                                <h:inputHidden id="lng" value="#{bean.model.pessoa.longitude}" />
+                                <p:commandButton id="btnAdicionaMarcador" value="Add" action="#{bean.adicionarMarcador}" update="@none" oncomplete="btnAdicionaMarcador_Complete()" style="display:none"/>
+
+                                <script type="text/javascript">
+                                    var currentMarker = null;
+
+                                    if (navigator.geolocation) {
+                                        checkGeolocationByHTML5();
+                                    } else {
+                                        checkGeolocationByLoaderAPI(); // HTML5 not supported! Fall back to Loader API.
+                                    }
+
+                                    function checkGeolocationByHTML5() {
+                                        navigator.geolocation.getCurrentPosition(function(position) {
+                                            setMapCenter(position.coords.latitude, position.coords.longitude);
+                                        }, function() {
+                                            checkGeolocationByLoaderAPI(); // Error! Fall back to Loader API.
+                                        });
+                                    }
+
+                                    function checkGeolocationByLoaderAPI() {
+                                        if (google.loader.ClientLocation) {
+                                            setMapCenter(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+                                        } else {
+                                            // Unsupported! Show error/warning?
+                                        }
+                                    }
+
+                                    function setMapCenter(latitude, longitude) {
+                                        PF('geoMap').getMap().setCenter(new google.maps.LatLng(latitude, longitude));
+                                    }
+
+                                    function geocode() {
+                                        PF('geoMap').geocode(document.getElementById('form:address').value);
+                                    }
+
+
+
+                                    function handlePointClick(event) {
+                                        document.getElementById('form:lat').value = event.latLng.lat();
+                                        document.getElementById('form:lng').value = event.latLng.lng();
+
+                                        document.getElementById('form:btnAdicionaMarcador').click();
+                                    }
+
+                                    function btnAdicionaMarcador_Complete(){
+                                        if(currentMarker === null) {
+                                            var lat = document.getElementById('form:lat').value;
+                                            var lng = document.getElementById('form:lng').value;
+
+                                            currentMarker = new google.maps.Marker({
+                                                position:new google.maps.LatLng(lat, lng)
+                                            });
+
+                                            currentMarker.setTitle("Marcador");
+                                            PF('geoMap').addOverlay(currentMarker);
+                                        }
+                                        else{
+                                            currentMarker.setMap(null);
+                                            currentMarker = null;
+
+                                            btnAdicionaMarcador_Complete();
+                                        }
+                                    }
+
+                                </script>
+                            </fieldset>
+                            
+                            <div class="submit-row">
+                                <p:commandButton value="Salvar" styleClass="salvar" action="#{bean.gravarUsuario()}" ajax='false'/>
+                            </div>
+                        </h:form>
+                    </fieldset>
+                </div>
+            </div>
+
+            <ui:include src="../../incs/rodape.xhtml" />
+        </h:body>
+    </f:view>
+</html>
+

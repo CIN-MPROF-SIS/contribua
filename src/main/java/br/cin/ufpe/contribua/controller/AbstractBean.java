@@ -12,6 +12,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 
 @ManagedBean
 @ViewScoped
@@ -31,6 +32,13 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         //this.manager = (Class<Manager>) parameterizedType.getActualTypeArguments()[0];
         this.clazzEntidade = (Class<Entidade>) parameterizedType.getActualTypeArguments()[0];
+    }
+    
+    @PostConstruct
+    public void inicializar(){
+        this.limpar();
+        incluindo = false;
+        this.listaModel= getManager().findAll();
     }
     
     public void limpar(){

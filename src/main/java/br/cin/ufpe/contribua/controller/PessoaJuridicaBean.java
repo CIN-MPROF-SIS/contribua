@@ -6,6 +6,7 @@ import br.cin.ufpe.contribua.manager.DiaSemanaManager;
 import br.cin.ufpe.contribua.manager.EstadoManager;
 import br.cin.ufpe.contribua.manager.PessoaJuridicaManager;
 import br.cin.ufpe.contribua.model.Cidade;
+import br.cin.ufpe.contribua.model.Disponibilidade;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -13,8 +14,11 @@ import javax.faces.bean.ViewScoped;
 
 import br.cin.ufpe.contribua.model.Estado;
 import br.cin.ufpe.contribua.model.PessoaJuridica;
+import br.cin.ufpe.contribua.model.Usuario;
+import br.cin.ufpe.contribua.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
@@ -38,6 +42,10 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
     @EJB
     CidadeManager cidadeManager;
     
+    private Usuario usuario;
+    
+    private String confirmacaoSenha;
+    
     private MapModel geoModel;
     private String centerGeoMap = "41.850033, -87.6500523";
     
@@ -45,6 +53,20 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
     private Estado estado;
     
     private List<Cidade> cidades;
+    
+    @PostConstruct
+    public void inicializar(){
+        this.limpar();
+        this.usuario = new Usuario();
+        
+        geoModel = new DefaultMapModel();
+        
+        this.estados = estadoManager.findAll();
+        this.estado = null;
+        this.cidades = new ArrayList<Cidade>();
+        this.confirmacaoSenha = "";
+        
+    }
 
     @Override
     public String exibirInclusao(){
@@ -81,6 +103,22 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
     @Override
     public String getTitulo() {
         return "Pessoa Jurídica";
+    }
+    
+    public String gravarUsuario(){
+        
+        if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
+            Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
+            return null;
+        }
+        
+        this.pessoaJuridicaManager.gravarUsuario(this.model, this.usuario);
+        
+        Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        this.limpar();
+            
+                
+        return this.exibirLista();
     }
     
     public String adicionarMarcador() {
@@ -151,6 +189,22 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
 
     public void setCidades(List<Cidade> cidades) {
         this.cidades = cidades;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getConfirmacaoSenha() {
+        return confirmacaoSenha;
+    }
+
+    public void setConfirmacaoSenha(String confirmacaoSenha) {
+        this.confirmacaoSenha = confirmacaoSenha;
     }
     
     
