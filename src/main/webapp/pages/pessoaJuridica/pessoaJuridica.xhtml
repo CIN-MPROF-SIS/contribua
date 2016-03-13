@@ -23,11 +23,11 @@
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Data Fundação "/><br/>
-                        <p:calendar id="inline" value="#{bean.model.dataFundacao}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                        <p:calendar id="inline" value="#{bean.model.dataFundacao}" mask="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="CNPJ: "/>
-                        <p:inputText value="#{bean.model.cnpj}" /><br/>
+                        <p:inputMask mask="99.999.999/9999-99" value="#{bean.model.cnpj}" /><br/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Sigla: "/>
@@ -54,11 +54,13 @@
                     <legend>Contato</legend>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Email: "/>
-                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório." validatorMessage="Email inválido">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText><br/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Telefone: "/>
-                        <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                        <p:inputMask mask="(99)9999-9999" widgetVar="txtTelefone" value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
                     </div>
                 </div>
                 <div class=" col-md-12 ">
@@ -69,7 +71,7 @@
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="CEP: "/>
-                        <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                        <p:inputMask mask="99999-999" value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Estado: "/>

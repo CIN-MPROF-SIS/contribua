@@ -79,7 +79,7 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     
     @PostConstruct
     public void inicializar(){
-        this.limpar();
+        super.inicializar();
         this.usuario = new Usuario();
         
         geoModel = new DefaultMapModel();
@@ -119,7 +119,7 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
         this.estados = estadoManager.findAll();
         this.estado = this.model.getPessoa().getCidade().getEstado();
         
-        //this.montarDisponibilidades();
+        this.selecionarEstado();
         
         geoModel = new DefaultMapModel();
         adicionarMarcador();

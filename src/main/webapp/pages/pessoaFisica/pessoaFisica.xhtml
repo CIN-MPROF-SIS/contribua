@@ -23,7 +23,7 @@
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Data Nascimento: "/><br/>
-                        <p:calendar id="inline" value="#{bean.model.dataNascimento}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                        <p:calendar id="inline" value="#{bean.model.dataNascimento}" mask="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Sexo: "/><br/>
@@ -38,11 +38,13 @@
                     <legend>Contato</legend>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Email: "/>
-                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório." validatorMessage="Email inválido">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText><br/>
                     </div>
                     <div class=" col-md-6 ">
-                        <h:outputLabel value="Telefone: "/>
-                        <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                        <h:outputLabel value="Telefone: "/><br/>
+                        <p:inputMask mask="(99)9999-9999" widgetVar="txtTelefone" value="#{bean.model.pessoa.telefone}" style="width:150px" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
                     </div>
                 </div>
                 <div class=" col-md-12 ">
@@ -52,8 +54,8 @@
                         <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
                     </div>
                     <div class=" col-md-6 ">
-                        <h:outputLabel value="CEP: "/>
-                        <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                        <h:outputLabel value="CEP: "/><br/>
+                        <p:inputMask mask="99999-999" style="width:100px" value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Estado: "/>
@@ -118,14 +120,14 @@
                        <p:column headerText="Horário Início">
                            <p:cellEditor>
                                <f:facet name="output"><h:outputText value="#{disponibilidade.horarioInicio}" /></f:facet>
-                               <f:facet name="input"><p:inputText value="#{disponibilidade.horarioInicio}" style="width:100%" label="Horario Início"/></f:facet>
+                               <f:facet name="input"><p:inputMask mask="99:99"  value="#{disponibilidade.horarioInicio}" style="width:100%" label="Horario Início"/></f:facet>
                            </p:cellEditor>
                        </p:column>
 
                        <p:column headerText="Horário Término">
                            <p:cellEditor>
                                <f:facet name="output"><h:outputText value="#{disponibilidade.horarioTermino}" /></f:facet>
-                               <f:facet name="input"><p:inputText value="#{disponibilidade.horarioTermino}" style="width:100%" label="Horario Início"/></f:facet>
+                               <f:facet name="input"><p:inputMask mask="99:99"  value="#{disponibilidade.horarioTermino}" style="width:100%" label="Horario Início"/></f:facet>
                            </p:cellEditor>
                        </p:column>
 
@@ -150,6 +152,16 @@
                 <p:commandButton id="btnAdicionaMarcador" value="Add" action="#{bean.adicionarMarcador}" update="@none" oncomplete="btnAdicionaMarcador_Complete()" style="display:none"/>
 
                 <script type="text/javascript">
+                    function setTelefoneMask(txt){
+                        var t = PF('txtTelefone'); 
+                        
+                        if(txt.value.length &lt;= 13)
+                            t.jq.mask('(99)9999-9999');
+                        else
+                            t.jq.mask('(99)99999-9999');           
+
+                    }
+                    
                     var currentMarker = null;
                     <c:choose>
                         <c:when test='#{bean.incluindo}'>

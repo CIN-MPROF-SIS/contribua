@@ -56,7 +56,7 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
     
     @PostConstruct
     public void inicializar(){
-        this.limpar();
+        super.inicializar();
         this.usuario = new Usuario();
         
         geoModel = new DefaultMapModel();
@@ -87,6 +87,7 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
         this.estados = estadoManager.findAll();
         this.estado = this.model.getPessoa().getCidade().getEstado();
         
+        this.selecionarEstado();
         
         geoModel = new DefaultMapModel();
         adicionarMarcador();
