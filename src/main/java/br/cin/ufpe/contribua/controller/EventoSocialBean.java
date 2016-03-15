@@ -14,6 +14,11 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
+import com.google.maps.model.GeocodingResult;
+
 import br.cin.ufpe.contribua.manager.AbstractManager;
 import br.cin.ufpe.contribua.manager.CausaManager;
 import br.cin.ufpe.contribua.manager.DiaSemanaManager;
@@ -81,6 +86,11 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
         this.montarDisponibilidades();
 		
 		geoModel = new DefaultMapModel();
+		
+		
+		
+	
+		
 
 		return retorno;
 	}
@@ -98,6 +108,24 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	        geoModel = new DefaultMapModel();
 	        adicionarMarcador();
 	        centerGeoMap = this.model.getLatitude() + ", " + this.model.getLongitude();
+	        
+	        
+	        GeocodingResult geoCodeResult; 
+	        
+	      
+	        
+	        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCCXuxQpgClaoUzVeW9C8S0PqQpegU4cz8");
+			GeocodingApiRequest results;
+			try {
+				 
+
+				results = GeocodingApi.reverseGeocode(context,new com.google.maps.model.LatLng(this.model.getLatitude(), this.model.getLongitude())) ;
+				System.out.println(results.await());
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        
 	        return retorno;
 	    }
@@ -120,7 +148,16 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	 
 	 public String adicionarMarcador() {
 	        Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
+	        
+	        
 	        geoModel.addOverlay(marker);
+	        
+	     
+	        
+	    
+	        
+	        
+	        
 	        
 	        System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
 	        
@@ -133,12 +170,17 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	        if (results != null && !results.isEmpty()) {
 	            LatLng center = results.get(0).getLatLng();
 	            centerGeoMap = center.getLat() + "," + center.getLng();
+	            
+	         
 	             
 	            for (GeocodeResult result : results) {
 	                geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
 	            }
 	        }
 	    }
+	 
+	 
+	 
 	 
 	 private void montarDisponibilidades(){
 	        this.disponibilidades = new ArrayList<Disponibilidade>();
