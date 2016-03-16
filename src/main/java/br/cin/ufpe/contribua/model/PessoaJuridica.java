@@ -26,7 +26,7 @@ public class PessoaJuridica extends AbstractModel {
     private String sigla;
     
     @Column(nullable=false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataFundacao;
     
     @Column(length = 500, nullable=false)

@@ -1,12 +1,15 @@
 package br.cin.ufpe.contribua.controller;
 
 import br.cin.ufpe.contribua.manager.AbstractManager;
+import br.cin.ufpe.contribua.manager.CausaManager;
 import br.cin.ufpe.contribua.manager.CidadeManager;
 import br.cin.ufpe.contribua.manager.DiaSemanaManager;
 import br.cin.ufpe.contribua.manager.EstadoManager;
 import br.cin.ufpe.contribua.manager.HabilidadeManager;
 import br.cin.ufpe.contribua.manager.PessoaFisicaManager;
+import br.cin.ufpe.contribua.manager.PublicoAlvoManager;
 import br.cin.ufpe.contribua.manager.QualificacaoManager;
+import br.cin.ufpe.contribua.model.Causa;
 import br.cin.ufpe.contribua.model.Cidade;
 
 import javax.ejb.EJB;
@@ -18,18 +21,24 @@ import br.cin.ufpe.contribua.model.Disponibilidade;
 import br.cin.ufpe.contribua.model.Estado;
 import br.cin.ufpe.contribua.model.Habilidade;
 import br.cin.ufpe.contribua.model.PessoaFisica;
+import br.cin.ufpe.contribua.model.PublicoAlvo;
 import br.cin.ufpe.contribua.model.Qualificacao;
 import br.cin.ufpe.contribua.model.Usuario;
 import br.cin.ufpe.contribua.util.Utils;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+
+
 
 @ManagedBean
 @ViewScoped
@@ -43,6 +52,12 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     
     @EJB
     QualificacaoManager qualificacaoManager;
+    
+    @EJB
+    CausaManager causaManager;
+    
+    @EJB
+    PublicoAlvoManager publicoAlvoManager;
     
     @EJB
     DiaSemanaManager diaSemanaManager;
@@ -60,6 +75,10 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     
     private List<Qualificacao> qualificacoes;
     
+    private List<Causa> causas;
+    
+    private List<PublicoAlvo> publicos;
+    
     private List<Disponibilidade> disponibilidades;
     
     private List<DiaSemana> diasSemana;
@@ -73,19 +92,31 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     
     private String confirmacaoSenha;
     
+    private UploadedFile imagem;
+    
+    private ArrayList<String> exts;
+            
+    
     public PessoaFisicaBean(){
-
+        exts = new ArrayList<String>();
+        exts.add("png");
+        exts.add("jpg");
+        exts.add("gif");
+        exts.add("jpeg");
     }
     
     @PostConstruct
     public void inicializar(){
         super.inicializar();
         this.usuario = new Usuario();
+        this.model = new PessoaFisica();
         
         geoModel = new DefaultMapModel();
         
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
+        this.causas = causaManager.findAll();
+        this.publicos = publicoAlvoManager.findAll();
         this.estados = estadoManager.findAll();
         this.estado = null;
         this.cidades = new ArrayList<Cidade>();
@@ -101,6 +132,8 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
         
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
+        this.causas = causaManager.findAll();
+        this.publicos = publicoAlvoManager.findAll();
         this.estados = estadoManager.findAll();
         this.estado = null;
         this.cidades = new ArrayList<Cidade>();
@@ -116,6 +149,8 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
         
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
+        this.causas = causaManager.findAll();
+        this.publicos = publicoAlvoManager.findAll();
         this.estados = estadoManager.findAll();
         this.estado = this.model.getPessoa().getCidade().getEstado();
         
@@ -148,10 +183,37 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
                 this.model.getDisponibilidades().add(disponibilidade);
         }
         
+        if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
+
+            String[] file = this.imagem.getFileName().split("\\.");
+
+            if(exts.contains(file[file.length - 1]))
+                this.model.getPessoa().setImagem(this.imagem.getContents());
+            else{
+                Utils.adicionarMensagem("Tipo de arquivo não permitido.", null, Utils.FATAL);
+                return null;
+            }
+                
+        }
+        
         return super.gravar();
     }
     
     public String gravarUsuario(){
+        
+        
+        if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
+
+            String[] file = this.imagem.getFileName().split("\\.");
+
+            if(exts.contains(file[file.length - 1]))
+                this.model.getPessoa().setImagem(this.imagem.getContents());
+            else{
+                Utils.adicionarMensagem("Tipo de arquivo não permitido.", null, Utils.FATAL);
+                return null;
+            }
+                
+        }
         
         if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
             Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
@@ -207,6 +269,19 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
         
         if(this.estado != null)
             this.cidades = this.cidadeManager.findByEstado(this.estado);
+    }
+    
+    public String mostrarImagem() throws IOException {
+        if(this.model.getPessoa().getImagem() != null){
+            //HttpServletResponse response = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getR‌esponse();
+            //response.setContentType("image");
+            //response.setContentLength(this.model.getPessoa().getImagem().length);
+            //response.getOutputStream().write(this.model.getPessoa().getImagem());
+            //return StringUtils.newStringUtf8(Base64.encodeToString(this.model.getPessoa().getImagem(), false));
+            //return Base64.encodeBase64URLSafeString(this.model.getPessoa().getImagem());
+            return Base64.getEncoder().encodeToString(this.model.getPessoa().getImagem());
+        }
+        return "";
     }
     
     public List<Disponibilidade> getDisponibilidades() {
@@ -308,6 +383,30 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
 
     public void setConfirmacaoSenha(String confirmacaoSenha) {
         this.confirmacaoSenha = confirmacaoSenha;
+    }
+
+    public List<Causa> getCausas() {
+        return causas;
+    }
+
+    public void setCausas(List<Causa> causas) {
+        this.causas = causas;
+    }
+
+    public List<PublicoAlvo> getPublicos() {
+        return publicos;
+    }
+
+    public void setPublicos(List<PublicoAlvo> publicos) {
+        this.publicos = publicos;
+    }
+
+    public UploadedFile getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(UploadedFile imagem) {
+        this.imagem = imagem;
     }
     
     

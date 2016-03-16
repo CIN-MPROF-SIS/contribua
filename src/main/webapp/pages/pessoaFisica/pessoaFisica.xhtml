@@ -17,7 +17,12 @@
 
                 <div class=" col-md-12 ">
                     <legend>Dados Básicos</legend>
-                        <div class=" col-md-12 ">
+                    <div class=" col-md-6 ">
+                        <p:fileUpload value="#{bean.imagem}" mode="simple" label="Escolher Foto" skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileLimit="1" sizeLimit="1000000" style="width:150px"/>
+                        <br/>
+                        <h:graphicImage value="data:image/jpg;base64,#{bean.mostrarImagem()}" width="150" rendered="#{bean.model.pessoa.imagem != null}" />
+                    </div>
+                    <div class=" col-md-6 ">
                         <h:outputLabel value="Nome: "/>
                         <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
                     </div>
@@ -32,6 +37,10 @@
                             <f:selectItem itemLabel="Masculino" itemValue="M" />
                             <f:selectItem itemLabel="Feminino" itemValue="F" />
                         </p:selectOneMenu>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <p:selectBooleanCheckbox value="#{bean.model.pessoa.aceitaReceberNoticias}" />
+                        <h:outputLabel value="Aceito receber notificações "/>
                     </div>
                 </div>
                 <div class=" col-md-12 ">
@@ -101,6 +110,36 @@
                                 required="true" requiredMessage="Campo Habilidades obrigatório.">
                                 <f:selectItems
                                         value="#{bean.qualificacoes}" var="item"
+                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Público de Interesse "/>
+                        <p:selectManyCheckbox
+                                value="#{bean.model.publicos}"
+                                id="publicos"
+                                converter="DefaultConverter"
+                                layout="grid" columns="3"
+                                collectionType="java.util.ArrayList"
+                                required="true" requiredMessage="Campo Público de Interesse obrigatório.">
+                                <f:selectItems
+                                        value="#{bean.publicos}" var="item"
+                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Causas de Interesse "/>
+                        <p:selectManyCheckbox
+                                value="#{bean.model.causas}"
+                                id="causas"
+                                converter="DefaultConverter"
+                                layout="grid" columns="3"
+                                collectionType="java.util.ArrayList"
+                                required="true" requiredMessage="Campo Causas de Interesse obrigatório.">
+                                <f:selectItems
+                                        value="#{bean.causas}" var="item"
                                         itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectManyCheckbox>
                     </div>

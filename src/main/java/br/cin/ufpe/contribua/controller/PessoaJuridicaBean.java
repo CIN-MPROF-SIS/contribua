@@ -6,7 +6,6 @@ import br.cin.ufpe.contribua.manager.DiaSemanaManager;
 import br.cin.ufpe.contribua.manager.EstadoManager;
 import br.cin.ufpe.contribua.manager.PessoaJuridicaManager;
 import br.cin.ufpe.contribua.model.Cidade;
-import br.cin.ufpe.contribua.model.Disponibilidade;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,10 +15,13 @@ import br.cin.ufpe.contribua.model.Estado;
 import br.cin.ufpe.contribua.model.PessoaJuridica;
 import br.cin.ufpe.contribua.model.Usuario;
 import br.cin.ufpe.contribua.util.Utils;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
@@ -54,10 +56,23 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
     
     private List<Cidade> cidades;
     
+    private UploadedFile imagem;
+    
+    private ArrayList<String> exts;
+    
+    public PessoaJuridicaBean(){
+        exts = new ArrayList<String>();
+        exts.add("png");
+        exts.add("jpg");
+        exts.add("gif");
+        exts.add("jpeg");
+    }
+    
     @PostConstruct
     public void inicializar(){
         super.inicializar();
         this.usuario = new Usuario();
+        this.model = new PessoaJuridica();
         
         geoModel = new DefaultMapModel();
         
@@ -106,7 +121,39 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
         return "Pessoa Jurídica";
     }
     
+    @Override
+    public String gravar() {
+        
+        if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
+
+            String[] file = this.imagem.getFileName().split("\\.");
+
+            if(exts.contains(file[file.length - 1]))
+                this.model.getPessoa().setImagem(this.imagem.getContents());
+            else{
+                Utils.adicionarMensagem("Tipo de arquivo não permitido.", null, Utils.FATAL);
+                return null;
+            }
+                
+        }
+        
+        return super.gravar();
+    }
+    
     public String gravarUsuario(){
+        
+        if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
+
+            String[] file = this.imagem.getFileName().split("\\.");
+
+            if(exts.contains(file[file.length - 1]))
+                this.model.getPessoa().setImagem(this.imagem.getContents());
+            else{
+                Utils.adicionarMensagem("Tipo de arquivo não permitido.", null, Utils.FATAL);
+                return null;
+            }
+                
+        }
         
         if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
             Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
@@ -129,6 +176,14 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
         System.out.println("lat " + this.model.getPessoa().getLatitude() + " - log " + this.model.getPessoa().getLongitude());
         
         return null;
+    }
+    
+    public String mostrarImagem() throws IOException {
+        if(this.model.getPessoa().getImagem() != null){
+
+            return Base64.getEncoder().encodeToString(this.model.getPessoa().getImagem());
+        }
+        return "";
     }
     
     public void selecionarEstado(){
@@ -206,6 +261,14 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
 
     public void setConfirmacaoSenha(String confirmacaoSenha) {
         this.confirmacaoSenha = confirmacaoSenha;
+    }
+
+    public UploadedFile getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(UploadedFile imagem) {
+        this.imagem = imagem;
     }
     
     
