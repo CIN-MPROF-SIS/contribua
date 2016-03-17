@@ -69,23 +69,30 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
     }
     
     public void excluirSelecionados() {
-        if(entidadesSelecionadas != null){
-            for(Entidade entidade : entidadesSelecionadas)
-                this.getManager().remove(entidade);
-            
-            this.listaModel= getManager().findAll();
-            
-            Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        try {
+            if(entidadesSelecionadas != null){
+                for(Entidade entidade : entidadesSelecionadas)
+                    this.getManager().remove(entidade);
+
+                this.listaModel= getManager().findAll();
+
+                Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+            }
+        } catch (Exception e) {
+            Utils.adicionarMensagem("Erro ao realizar exclusao.", null, Utils.FATAL);
         }
     }
     
     public void excluir() {
-        
-        this.getManager().remove(this.model);
-        
-        this.listaModel= getManager().findAll();
-            
-        Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        try {
+            this.getManager().remove(this.model);
+
+            this.listaModel= getManager().findAll();
+
+            Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        } catch (Exception e) {
+            Utils.adicionarMensagem("Erro ao realizar exclusao.", null, Utils.FATAL);
+        }
     }
     
     public String exibirLista(){
