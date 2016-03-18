@@ -182,7 +182,7 @@
                         <p:inputText id="address" />
                         <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
                     </h:panelGrid>
-                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
+                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{bean.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
                         <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
                     </p:gmap>
                 </div>

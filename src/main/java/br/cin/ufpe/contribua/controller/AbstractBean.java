@@ -63,7 +63,8 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
             this.limpar();
             return this.exibirLista();
         } catch (Exception e) {
-            Utils.adicionarMensagem("Erro ao Cadastrar Qualificação.", null, Utils.FATAL);
+            Utils.adicionarMensagem("Erro ao Cadastrar Qualificação." + e.getMessage(), null, Utils.FATAL);
+            e.printStackTrace();
         }
         return null;
     }
@@ -79,7 +80,8 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
                 Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
             }
         } catch (Exception e) {
-            Utils.adicionarMensagem("Erro ao realizar exclusao.", null, Utils.FATAL);
+            Utils.adicionarMensagem("Não é possível excluir registro pois ele está sendo utilizado.", null, Utils.FATAL);
+            e.printStackTrace();
         }
     }
     
@@ -91,7 +93,8 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
 
             Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
         } catch (Exception e) {
-            Utils.adicionarMensagem("Erro ao realizar exclusao.", null, Utils.FATAL);
+            Utils.adicionarMensagem("Não é possível excluir registro pois ele está sendo utilizado.", null, Utils.FATAL);
+            e.printStackTrace();
         }
     }
     

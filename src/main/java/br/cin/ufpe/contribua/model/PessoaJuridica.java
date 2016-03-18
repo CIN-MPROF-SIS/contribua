@@ -32,8 +32,14 @@ public class PessoaJuridica extends AbstractModel {
     @Column(length = 500, nullable=false)
     private String diretoria;
     
-    @Column(length = 500, nullable=false)
-    private String titulo;
+    @Column(nullable=false)
+    private boolean tituloMunicipal;
+    
+    @Column(nullable=false)
+    private boolean tituloEstadual;
+    
+    @Column(nullable=false)
+    private boolean tituloFederal;
     
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Pessoa pessoa;
@@ -90,14 +96,6 @@ public class PessoaJuridica extends AbstractModel {
     public void setDiretoria(String diretoria) {
         this.diretoria = diretoria;
     }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
     
     public Pessoa getPessoa() {
         return pessoa;
@@ -105,6 +103,30 @@ public class PessoaJuridica extends AbstractModel {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public boolean isTituloMunicipal() {
+        return tituloMunicipal;
+    }
+
+    public void setTituloMunicipal(boolean tituloMunicipal) {
+        this.tituloMunicipal = tituloMunicipal;
+    }
+
+    public boolean isTituloEstadual() {
+        return tituloEstadual;
+    }
+
+    public void setTituloEstadual(boolean tituloEstadual) {
+        this.tituloEstadual = tituloEstadual;
+    }
+
+    public boolean isTituloFederal() {
+        return tituloFederal;
+    }
+
+    public void setTituloFederal(boolean tituloFederal) {
+        this.tituloFederal = tituloFederal;
     }
     
 }
