@@ -14,12 +14,25 @@ public class PessoaFisicaManager extends AbstractManager<PessoaFisica> {
     @Override
     public void create(PessoaFisica pessoaFisica) {
         pessoaFisica.getPessoa().setDataCadastro(new Date());
+        
+        String telefone = pessoaFisica.getPessoa().getTelefone().replaceAll("\\(", "").replaceAll("\\)", "");
+        String cep = pessoaFisica.getPessoa().getCep().replaceAll("\\-", "");
+        
+        pessoaFisica.getPessoa().setTelefone(telefone);
+        pessoaFisica.getPessoa().setCep(cep);
+        
         getEntityManager().persist(pessoaFisica.getPessoa());
         getEntityManager().persist(pessoaFisica);
     }
 
     @Override
     public void edit(PessoaFisica pessoaFisica) {
+        String telefone = pessoaFisica.getPessoa().getTelefone().replaceAll("\\(", "").replaceAll("\\)", "");
+        String cep = pessoaFisica.getPessoa().getCep().replaceAll("\\-", "");
+        
+        pessoaFisica.getPessoa().setTelefone(telefone);
+        pessoaFisica.getPessoa().setCep(cep);
+        
         getEntityManager().merge(pessoaFisica.getPessoa());
         getEntityManager().merge(pessoaFisica);
     }
@@ -31,6 +44,12 @@ public class PessoaFisicaManager extends AbstractManager<PessoaFisica> {
     }
     
     public void gravarUsuario(PessoaFisica pessoaFisica, Usuario usuario) {
+        String telefone = pessoaFisica.getPessoa().getTelefone().replaceAll("\\(", "").replaceAll("\\)", "");
+        String cep = pessoaFisica.getPessoa().getCep().replaceAll("\\-", "");
+        
+        pessoaFisica.getPessoa().setTelefone(telefone);
+        pessoaFisica.getPessoa().setCep(cep);
+        
         pessoaFisica.getPessoa().setDataCadastro(new Date());
         getEntityManager().persist(pessoaFisica.getPessoa());
         getEntityManager().persist(pessoaFisica);

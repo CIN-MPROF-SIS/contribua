@@ -8,14 +8,14 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <f:view contentType="text/html">
+        <ui:param name="bean" value="#{PessoaJuridicaBean}" />
         <h:head>
             <title>.:: CONTRIBUA ::.</title>
             <link href="../../css/estilo.css" type="text/css" rel="stylesheet" />
             <script type="text/javascript" src="../../js/calendar.js"/>  
         </h:head>
 
-        <h:body>
-            <ui:param name="bean" value="#{PessoaJuridicaBean}" />
+        <h:body onload="#{bean.inicializar()}">
             <div id="geral">
                 <ui:include src="../../incs/topo.xhtml" />
 
@@ -30,7 +30,7 @@
 
                 <div id="conteudo">
                     <fieldset>
-                        <h:form id="form">
+                        <h:form id="form" enctype="multipart/form-data">
                             <legend>#{bean.titulo}</legend>
                             <fieldset>
 
@@ -56,23 +56,26 @@
                                 <div class=" col-md-12 ">
                                     <legend>Dados Básicos</legend>
                                     <div class=" col-md-6 ">
+                                        <p:fileUpload value="#{bean.imagem}" mode="simple" label="Escolher Foto" skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileLimit="1" sizeLimit="1000000" style="width:150px"/>
+                                    </div>
+                                    <div class=" col-md-6 ">
                                         <h:outputLabel value="Nome: "/>
                                         <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
                                     </div>
                                     <div class=" col-md-6 ">
                                         <h:outputLabel value="Data Fundação "/><br/>
-                                        <p:calendar id="inline" value="#{bean.model.dataFundacao}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                                        <p:calendar id="inline" value="#{bean.model.dataFundacao}" mask="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
                                     </div>
                                     <div class=" col-md-6 ">
                                         <h:outputLabel value="CNPJ: "/>
-                                        <p:inputText value="#{bean.model.cnpj}" /><br/>
+                                        <p:inputMask mask="99.999.999/9999-99" value="#{bean.model.cnpj}" /><br/>
                                     </div>
                                     <div class=" col-md-6 ">
                                         <h:outputLabel value="Sigla: "/>
                                         <p:inputText value="#{bean.model.sigla}" /><br/>
                                     </div>
                                     <div class=" col-md-6 ">
-                                        <h:outputLabel value="Diretoria: "/>
+                                        <h:outputLabel value="Presidente/Responsável "/>
                                         <p:inputText value="#{bean.model.diretoria}" required="true" requiredMessage="Campo Diretoria obrigatório."/><br/>
                                     </div>
                                     <div class=" col-md-6 ">
@@ -80,8 +83,10 @@
                                         <p:inputText value="#{bean.model.descricao}" required="true" requiredMessage="Campo Descrição Resumida obrigatório."/><br/>
                                     </div>
                                     <div class=" col-md-6 ">
-                                        <h:outputLabel value="Título: "/>
-                                        <p:inputText value="#{bean.model.titulo}" required="true" requiredMessage="Campo Título obrigatório."/><br/>
+                                        <h:outputLabel value="Título de Utilidade Publica: "/> <br/>
+                                        <p:selectBooleanCheckbox value="#{bean.model.tituloMunicipal}" /><h:outputLabel value="Municipal "/> <br/>
+                                        <p:selectBooleanCheckbox value="#{bean.model.tituloEstadual}" /><h:outputLabel value="Estadual "/> <br/>
+                                        <p:selectBooleanCheckbox value="#{bean.model.tituloFederal}" /><h:outputLabel value="Federal"/> <br/>
                                     </div>
                                     <div class=" col-md-6 ">
                                         <h:outputLabel value="Página: "/>
@@ -92,11 +97,13 @@
                                     <legend>Contato</legend>
                                     <div class=" col-md-6 ">
                                         <h:outputLabel value="Email: "/>
-                                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório." validatorMessage="Email inválido">
+                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        </p:inputText><br/>
                                     </div>
                                     <div class=" col-md-6 ">
-                                        <h:outputLabel value="Telefone: "/>
-                                        <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                                        <h:outputLabel value="Telefone: "/><br/>
+                                        <p:inputMask mask="(99)9999-9999" style="width:150px" widgetVar="txtTelefone" value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
                                     </div>
                                 </div>
                                 <div class=" col-md-12 ">
@@ -106,8 +113,8 @@
                                         <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
                                     </div>
                                     <div class=" col-md-6 ">
-                                        <h:outputLabel value="CEP: "/>
-                                        <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                                        <h:outputLabel value="CEP: "/><br/>
+                                        <p:inputMask mask="99999-999" value="#{bean.model.pessoa.cep}" style="width:100px"  required="true" requiredMessage="Campo CEP obrigatório."/><br/>
                                     </div>
                                     <div class=" col-md-6 ">
                                         <h:outputLabel value="Estado: "/>
@@ -132,7 +139,7 @@
                                         <p:inputText id="address" />
                                         <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
                                     </h:panelGrid>
-                                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
+                                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{bean.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
                                         <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
                                     </p:gmap>
                                 </div>

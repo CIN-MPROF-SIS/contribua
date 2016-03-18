@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class PessoaFisica extends AbstractModel {
     
     @Column(nullable=false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataNascimento;
     
     @Column(length = 1, nullable = false)
@@ -44,6 +44,14 @@ public class PessoaFisica extends AbstractModel {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="pessoa_fisica_qualificacao", joinColumns={@JoinColumn(name="pessoa_fisica_id")}, inverseJoinColumns={@JoinColumn(name="qualificacao_id")})
     private List<Qualificacao> qualificacoes;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="pessoa_fisica_causa", joinColumns={@JoinColumn(name="pessoa_fisica_id")}, inverseJoinColumns={@JoinColumn(name="qualificacao_id")})
+    private List<Causa> causas;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="pessoa_fisica_publico", joinColumns={@JoinColumn(name="pessoa_fisica_id")}, inverseJoinColumns={@JoinColumn(name="qualificacao_id")})
+    private List<PublicoAlvo> publicos;
     
     public PessoaFisica() {
         this.disponibilidades = new ArrayList<Disponibilidade>();
@@ -108,4 +116,22 @@ public class PessoaFisica extends AbstractModel {
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
+
+    public List<Causa> getCausas() {
+        return causas;
+    }
+
+    public void setCausas(List<Causa> causas) {
+        this.causas = causas;
+    }
+
+    public List<PublicoAlvo> getPublicos() {
+        return publicos;
+    }
+
+    public void setPublicos(List<PublicoAlvo> publicos) {
+        this.publicos = publicos;
+    }
+    
+    
 }

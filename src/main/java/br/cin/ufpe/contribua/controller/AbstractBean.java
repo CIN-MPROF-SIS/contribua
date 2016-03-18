@@ -63,29 +63,39 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
             this.limpar();
             return this.exibirLista();
         } catch (Exception e) {
-            Utils.adicionarMensagem("Erro ao Cadastrar Qualificação.", null, Utils.FATAL);
+            Utils.adicionarMensagem("Erro ao Cadastrar Qualificação." + e.getMessage(), null, Utils.FATAL);
+            e.printStackTrace();
         }
         return null;
     }
     
     public void excluirSelecionados() {
-        if(entidadesSelecionadas != null){
-            for(Entidade entidade : entidadesSelecionadas)
-                this.getManager().remove(entidade);
-            
-            this.listaModel= getManager().findAll();
-            
-            Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        try {
+            if(entidadesSelecionadas != null){
+                for(Entidade entidade : entidadesSelecionadas)
+                    this.getManager().remove(entidade);
+
+                this.listaModel= getManager().findAll();
+
+                Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+            }
+        } catch (Exception e) {
+            Utils.adicionarMensagem("Não é possível excluir registro pois ele está sendo utilizado.", null, Utils.FATAL);
+            e.printStackTrace();
         }
     }
     
     public void excluir() {
-        
-        this.getManager().remove(this.model);
-        
-        this.listaModel= getManager().findAll();
-            
-        Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        try {
+            this.getManager().remove(this.model);
+
+            this.listaModel= getManager().findAll();
+
+            Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+        } catch (Exception e) {
+            Utils.adicionarMensagem("Não é possível excluir registro pois ele está sendo utilizado.", null, Utils.FATAL);
+            e.printStackTrace();
+        }
     }
     
     public String exibirLista(){

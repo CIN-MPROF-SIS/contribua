@@ -1,5 +1,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box;}
 
+.ui-fileupload-simple .ui-button-text{
+    width:150px !important;
+}
+
 .hasDatepicker{
     width: 100px !important;
 }

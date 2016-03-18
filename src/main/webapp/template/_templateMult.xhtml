@@ -13,7 +13,7 @@
             <script type="text/javascript" src="../../js/calendar.js"/>  
         </h:head>
 
-        <h:body onload="#{bean.inicializar()}">
+        <h:body>
             <div id="geral">
                 <ui:include src="../incs/topo.xhtml" />
 
@@ -28,37 +28,27 @@
 
                 <div id="conteudo">
                     <fieldset>
-                        <h:form id="form" >
+                        <h:form id="form" enctype="multipart/form-data" accept-charset="utf-8">
                             <legend>#{bean.titulo}</legend>
-                            <p:commandButton value="Incluir" styleClass="incluir" action="#{bean.exibirInclusao()}" ajax='false'/>
-                            <br/>
-                            <br/>
-                        
-                            <p:dataTable id="lista" var="item" value="#{bean.listaModel}" selection="#{bean.entidadesSelecionadas}" rowKey="#{item.id}" style="margin-bottom:0">
-                                <p:column style="width:32px;text-align: center" selectionMode="multiple"/>
-                                
-                                <ui:insert name="colunas" />
-                                
-                                <p:column style="width:80px;text-align: center">
-                                    <p:commandButton action="#{bean.exibirAlteracao()}" title="Editar" value="Editar" ajax="false">
-                                       <f:setPropertyActionListener value="#{item}" target="#{bean.model}" />
-                                   </p:commandButton>
-                               </p:column>
-                                
-                                <f:facet name="footer">
-                                    <p:commandButton process="lista" update="@form :growl" value="Excluir Selecionados" action="#{bean.excluirSelecionados()}" />
-                                </f:facet>
-                            </p:dataTable>
-                            
+                            <fieldset>
                             <ui:insert name="corpo" />
+                            </fieldset>
                             
+                            <div class="submit-row">
+                                <p:commandButton value="Excluir" styleClass="excluir" action="#{bean.excluir()}" ajax='false' rendered="#{!bean.incluindo}"/>
+                                <p:commandButton value="Salvar" styleClass="salvar" action="#{bean.gravar()}" ajax='false'/>
+                            </div>
                         </h:form>
                     </fieldset>
                 </div>
+            </div>
+            <div>
+                <h:form prependId="false" id="formSecundario">
+                    <ui:insert name="corpoForaForm" />
+                </h:form>
             </div>
 
             <ui:include src="../incs/rodape.xhtml" />
         </h:body>
     </f:view>
 </html>
-

@@ -6,8 +6,10 @@ import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "pessoa")
@@ -35,7 +37,15 @@ public class Pessoa extends AbstractModel  implements Serializable {
     private String cep;
     
     @Column(nullable=false)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dataCadastro;
+    
+    @Column(nullable=false)
+    private boolean aceitaReceberNoticias;
+    
+    @Lob
+    @Column
+    private byte[] imagem;
     
     @ManyToOne(fetch = FetchType.EAGER)
     private Cidade cidade;
@@ -112,6 +122,23 @@ public class Pessoa extends AbstractModel  implements Serializable {
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+
+    public boolean isAceitaReceberNoticias() {
+        return aceitaReceberNoticias;
+    }
+
+    public void setAceitaReceberNoticias(boolean aceitaReceberNoticias) {
+        this.aceitaReceberNoticias = aceitaReceberNoticias;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
     
+
    
 }

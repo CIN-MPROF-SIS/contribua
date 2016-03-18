@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html template="/template/_template.xhtml"
+<html template="/template/_templateMult.xhtml"
                     xmlns="http://www.w3.org/1999/xhtml"
                     xmlns:h="http://java.sun.com/jsf/html"
                     xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -17,13 +17,18 @@
 
                 <div class=" col-md-12 ">
                     <legend>Dados Básicos</legend>
-                        <div class=" col-md-12 ">
+                    <div class=" col-md-6 ">
+                        <p:fileUpload value="#{bean.imagem}" mode="simple" label="Escolher Foto" skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileLimit="1" sizeLimit="1000000" style="width:150px"/>
+                        <br/>
+                        <h:graphicImage value="data:image/jpg;base64,#{bean.mostrarImagem()}" width="150" rendered="#{bean.model.pessoa.imagem != null}" />
+                    </div>
+                    <div class=" col-md-6 ">
                         <h:outputLabel value="Nome: "/>
                         <p:inputText value="#{bean.model.pessoa.nome}" required="true" requiredMessage="Campo Nome obrigatório."/><br/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Data Nascimento: "/><br/>
-                        <p:calendar id="inline" value="#{bean.model.dataNascimento}" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
+                        <p:calendar id="inline" value="#{bean.model.dataNascimento}" mask="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo Data Nascimento obrigatório."/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Sexo: "/><br/>
@@ -33,16 +38,22 @@
                             <f:selectItem itemLabel="Feminino" itemValue="F" />
                         </p:selectOneMenu>
                     </div>
+                    <div class=" col-md-6 ">
+                        <p:selectBooleanCheckbox value="#{bean.model.pessoa.aceitaReceberNoticias}" />
+                        <h:outputLabel value="Aceito receber notificações "/>
+                    </div>
                 </div>
                 <div class=" col-md-12 ">
                     <legend>Contato</legend>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Email: "/>
-                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório."/><br/>
+                        <p:inputText value="#{bean.model.pessoa.email}" required="true" requiredMessage="Campo Email obrigatório." validatorMessage="Email inválido">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText><br/>
                     </div>
                     <div class=" col-md-6 ">
-                        <h:outputLabel value="Telefone: "/>
-                        <p:inputText value="#{bean.model.pessoa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
+                        <h:outputLabel value="Telefone: "/><br/>
+                        <p:inputMask mask="(99)9999-9999" widgetVar="txtTelefone" value="#{bean.model.pessoa.telefone}" style="width:150px" required="true" requiredMessage="Campo Telefone obrigatório."/><br/>
                     </div>
                 </div>
                 <div class=" col-md-12 ">
@@ -52,8 +63,8 @@
                         <p:inputText value="#{bean.model.pessoa.endereco}" required="true" requiredMessage="Campo Endereço obrigatório."/><br/>
                     </div>
                     <div class=" col-md-6 ">
-                        <h:outputLabel value="CEP: "/>
-                        <p:inputText value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
+                        <h:outputLabel value="CEP: "/><br/>
+                        <p:inputMask mask="99999-999" style="width:100px" value="#{bean.model.pessoa.cep}" required="true" requiredMessage="Campo CEP obrigatório."/><br/>
                     </div>
                     <div class=" col-md-6 ">
                         <h:outputLabel value="Estado: "/>
@@ -102,6 +113,36 @@
                                         itemLabel="#{item.descricao}" itemValue="#{item}" />
                         </p:selectManyCheckbox>
                     </div>
+                    
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Público de Interesse "/>
+                        <p:selectManyCheckbox
+                                value="#{bean.model.publicos}"
+                                id="publicos"
+                                converter="DefaultConverter"
+                                layout="grid" columns="3"
+                                collectionType="java.util.ArrayList"
+                                required="true" requiredMessage="Campo Público de Interesse obrigatório.">
+                                <f:selectItems
+                                        value="#{bean.publicos}" var="item"
+                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
+                    </div>
+
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Causas de Interesse "/>
+                        <p:selectManyCheckbox
+                                value="#{bean.model.causas}"
+                                id="causas"
+                                converter="DefaultConverter"
+                                layout="grid" columns="3"
+                                collectionType="java.util.ArrayList"
+                                required="true" requiredMessage="Campo Causas de Interesse obrigatório.">
+                                <f:selectItems
+                                        value="#{bean.causas}" var="item"
+                                        itemLabel="#{item.descricao}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
+                    </div>
                 </div>
 
                 <div class=" col-md-12" style="padding-top:20px">
@@ -118,14 +159,14 @@
                        <p:column headerText="Horário Início">
                            <p:cellEditor>
                                <f:facet name="output"><h:outputText value="#{disponibilidade.horarioInicio}" /></f:facet>
-                               <f:facet name="input"><p:inputText value="#{disponibilidade.horarioInicio}" style="width:100%" label="Horario Início"/></f:facet>
+                               <f:facet name="input"><p:inputMask mask="99:99"  value="#{disponibilidade.horarioInicio}" style="width:100%" label="Horario Início"/></f:facet>
                            </p:cellEditor>
                        </p:column>
 
                        <p:column headerText="Horário Término">
                            <p:cellEditor>
                                <f:facet name="output"><h:outputText value="#{disponibilidade.horarioTermino}" /></f:facet>
-                               <f:facet name="input"><p:inputText value="#{disponibilidade.horarioTermino}" style="width:100%" label="Horario Início"/></f:facet>
+                               <f:facet name="input"><p:inputMask mask="99:99"  value="#{disponibilidade.horarioTermino}" style="width:100%" label="Horario Início"/></f:facet>
                            </p:cellEditor>
                        </p:column>
 
@@ -141,7 +182,7 @@
                         <p:inputText id="address" />
                         <p:commandButton value="Localizar" icon="ui-icon-search" onclick="geocode()" type="button" />
                     </h:panelGrid>
-                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{geocodeView.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
+                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{bean.geoModel}" onPointClick="handlePointClick(event);" style="width:100%;height:400px">
                         <p:ajax event="geocode" listener="#{bean.onGeocode}" update="@this" />
                     </p:gmap>
                 </div>
@@ -150,6 +191,16 @@
                 <p:commandButton id="btnAdicionaMarcador" value="Add" action="#{bean.adicionarMarcador}" update="@none" oncomplete="btnAdicionaMarcador_Complete()" style="display:none"/>
 
                 <script type="text/javascript">
+                    function setTelefoneMask(txt){
+                        var t = PF('txtTelefone'); 
+                        
+                        if(txt.value.length &lt;= 13)
+                            t.jq.mask('(99)9999-9999');
+                        else
+                            t.jq.mask('(99)99999-9999');           
+
+                    }
+                    
                     var currentMarker = null;
                     <c:choose>
                         <c:when test='#{bean.incluindo}'>
