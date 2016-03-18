@@ -18,10 +18,7 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.connection.characterEncoding" value="utf8" />
-            <property name="hibernate.connection.defaultNChar" value = "true"/>
-            <property name="hibernate.connection.charSet" value="utf8" />
-
+            
         </properties>
   </persistence-unit>
   
