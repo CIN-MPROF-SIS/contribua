@@ -111,7 +111,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
         circle3.setStrokeOpacity(0.15);
         circle3.setFillOpacity(0.15);
         
-        Circle circle4 = new Circle(coord, 5000);
+        Circle circle4 = new Circle(coord, 10000);
         circle4.setStrokeColor("#00ff00");
         circle4.setFillColor("#00ff00");
         circle4.setStrokeOpacity(0.05);
@@ -159,7 +159,8 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	
 	 @Override
 	    public String exibirAlteracao(){
-	        String retorno = super.exibirAlteracao();	        
+	        String retorno = super.exibirAlteracao();	
+                this.montarDisponibilidades();
 	        
 	        this.causas = causaManager.findAll();
 	        this.publicoAlvos = publicoAlvoManager.findAll();
@@ -175,19 +176,18 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	    }
 	 
 	 @Override
-	    public String gravar() {
-	  
-	        this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
-	  
-	        
-	        for(Disponibilidade disponibilidade : this.disponibilidades){
-	            if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
-	                    !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
-	                this.model.getDisponibilidades().add(disponibilidade);
-	        }
-	        
-	        return super.gravar();
-	    }
+        public String gravar() {
+
+            this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
+
+            for(Disponibilidade disponibilidade : this.disponibilidades){
+                if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
+                        !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
+                    this.model.getDisponibilidades().add(disponibilidade);
+            }
+
+            return super.gravar();
+        }
 
 	 
 	 public String adicionarMarcador() {
