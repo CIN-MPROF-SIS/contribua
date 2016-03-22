@@ -9,8 +9,8 @@
     <f:view contentType="text/html">
         <h:head>
             <title>.:: CONTRIBUA ::.</title>
-            <link href="../../css/estilo.css" type="text/css" rel="stylesheet" />
-            <script type="text/javascript" src="../../js/calendar.js"/>  
+            <link href="../../../css/estilo.css" type="text/css" rel="stylesheet" />
+            <script type="text/javascript" src="../../../js/calendar.js"/>  
         </h:head>
 
         <h:body>
@@ -19,7 +19,7 @@
 
                 <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
                           draggable="false" closable="false">  
-                    <p:graphicImage value="../../images/ajax-loading-bar.gif" />  
+                   <!--  <p:graphicImage value="../../images/ajax-loading-bar.gif" />   -->
                 </p:dialog>
                 
                 <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  

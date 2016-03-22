@@ -37,13 +37,42 @@ public class UsuarioBean extends AbstractBean<Usuario> {
         return usuarios;
     }
     
+    public String cadastrarVoluntario(){    	
+    	
+    	return "/pages/public/pessoaFisica/usuario.xhtml?faces-redirect=true";
+    }
+    
+    public String cadastrarOrganizacao(){
+    	
+    	
+    	
+    	return "pages/public/pessoaJuridica/usuario.xhtml?faces-redirect=true";
+    }
+    
     @Override
     public String gravar() {
         if(!this.model.getSenha().equals(this.confirmacaoSenha)){
             Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
             return null;
         }
-        return super.gravar();
+        
+        try {
+            if (this.model.getId() != null) {
+                getManager().edit(this.model);
+            } else {
+                getManager().create(this.model);
+            }
+            Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+            this.limpar();
+           return "Home";
+        } catch (Exception e) {
+            Utils.adicionarMensagem("Erro ao Cadastrar Qualificação." + e.getMessage(), null, Utils.FATAL);
+            e.printStackTrace();
+        }
+        
+        
+        
+        return "Home";
     }
 
     public String getConfirmacaoSenha() {

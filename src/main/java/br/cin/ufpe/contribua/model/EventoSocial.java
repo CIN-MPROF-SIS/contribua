@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 @Entity
 public class EventoSocial extends AbstractModel {
@@ -32,8 +33,10 @@ public class EventoSocial extends AbstractModel {
 	@JoinColumn(name = "publico_alvo_id")
 	private PublicoAlvo publicoAlvo;
 
+        @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataInicio;
 
+        @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataFim;
 
 	@OneToMany(mappedBy = "eventoSocial", fetch = FetchType.EAGER)

@@ -166,7 +166,7 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
         this.limpar();
             
                 
-        return this.exibirLista();
+       return "/pages/private/home?faces-redirect=true";
     }
     
     public String adicionarMarcador() {

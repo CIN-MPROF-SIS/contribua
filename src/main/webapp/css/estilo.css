@@ -144,6 +144,10 @@ body { background: #FFF url(../images/bg.gif) repeat-x; font: 12px Arial, Verdan
 #conteudo .containerLogin input { width: 220px; font-size: 1.2em; _line-height: 1.2em; -height: 30px; padding: 5px; border: 1px solid #ccc; background: url(../images/bg-input.gif) 0 -2px repeat-x; letter-spacing: -.02em; }
 #conteudo .containerLogin .entrar { margin-top: 15px; }
 #conteudo .containerLogin .entrar input { width: 125px; height: 38px; margin:3px 5px 0 0; border: 0; background: url(../images/submit-entrar.gif) no-repeat; cursor: pointer; }
+#conteudo .containerLogin .ong input { width: 300px; height: 38px; margin:15px 5px 0 0; border: 0; background: url(../images/ong.gif) no-repeat; cursor: pointer; }
+#conteudo .containerLogin .voluntario input { width: 300px; height: 38px; margin:15px 5px 0 0; border: 0; background: url(../images/voluntario.gif) no-repeat; cursor: pointer; }
+
+
 #conteudo .containerLogin a{font-weight: bold; color: #555; }
 
 table td { margin: 5px 0; }

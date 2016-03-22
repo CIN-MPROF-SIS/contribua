@@ -232,7 +232,7 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
         this.limpar();
             
                 
-        return this.exibirLista();
+        return "/pages/private/home?faces-redirect=true";
     }
     
     private void montarDisponibilidades(){

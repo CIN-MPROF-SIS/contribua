@@ -11,6 +11,9 @@
                 <div class="login-form">
                     <p class="lead"></p>
                     <div class="clear"></div>
+                    
+                    
+                    <ui:param name="beanUsuaurio" value="#{usuarioBean}" />
 
                     <h:form styleClass="containerLogin">
                         <p:messages autoUpdate="true"/>
@@ -26,6 +29,13 @@
 
                         <div class="entrar">
                             <h:commandButton id="goin" value=" " onclick="" tabindex="3" action="#{loginBean.doLogin()}"/>
+                        </div>
+                        <div class="clear"></div>
+                         <div class="voluntario">
+                            <h:commandButton id="incluirVoluntario" onclick="" tabindex="3" action="#{beanUsuaurio.cadastrarVoluntario()}" ajax='false'/>
+                        </div>
+                         <div class="ong">
+                            <h:commandButton id="incluirONG"  onclick="" tabindex="3" action="#{beanUsuaurio.cadastrarOrganizacao()}" ajax='false'/>
                         </div>
                     </h:form>
                 </div>

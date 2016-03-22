@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <title>.:: CONTRIBUA ::.</title>
+            <link href="../../css/estilo.css" type="text/css" rel="stylesheet" />
+            <script type="text/javascript" src="../../js/calendar.js"/>  
+        </h:head>
+
+        <h:body>
+            <div id="geral">
+                <ui:include src="../../incs/topo.xhtml" />
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
+                          draggable="false" closable="false">  
+                    <p:graphicImage value=".././images/ajax-loading-bar.gif" />  
+                </p:dialog>
+                
+                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+                <p:growl id="growl"/>
+              
+                <div id="conteudo">
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+              <ui:include src="../../incs/rodape.xhtml" />
+        </h:body>
+    </f:view>
+</html>
+

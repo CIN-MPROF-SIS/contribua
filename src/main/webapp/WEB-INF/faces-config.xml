@@ -17,55 +17,55 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>QualificacaoListar</from-outcome>
-			<to-view-id>/pages/qualificacao/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/qualificacao/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>QualificacaoManter</from-outcome>
-			<to-view-id>/pages/qualificacao/qualificacao.xhtml</to-view-id>
+			<to-view-id>/pages/private/qualificacao/qualificacao.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>HabilidadeListar</from-outcome>
-			<to-view-id>/pages/habilidade/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/habilidade/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>HabilidadeManter</from-outcome>
-			<to-view-id>/pages/habilidade/habilidade.xhtml</to-view-id>
+			<to-view-id>/pages/private/habilidade/habilidade.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>DiaSemanaListar</from-outcome>
-			<to-view-id>/pages/diaSemana/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/diaSemana/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>DiaSemanaManter</from-outcome>
-			<to-view-id>/pages/diaSemana/diaSemana.xhtml</to-view-id>
+			<to-view-id>/pages/private/diaSemana/diaSemana.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>EventoSocialListar</from-outcome>
-			<to-view-id>/pages/eventoSocial/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/eventoSocial/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>EventoSocialManter</from-outcome>
-			<to-view-id>/pages/eventoSocial/eventoSocial.xhtml</to-view-id>
+			<to-view-id>/pages/private/eventoSocial/eventoSocial.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>CausaListar</from-outcome>
-			<to-view-id>/pages/causa/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/causa/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>CausaManter</from-outcome>
-			<to-view-id>/pages/causa/causa.xhtml</to-view-id>
+			<to-view-id>/pages/private/causa/causa.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -73,33 +73,33 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>PublicoAlvoListar</from-outcome>
-			<to-view-id>/pages/publicoAlvo/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/publicoAlvo/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>PublicoAlvoManter</from-outcome>
-			<to-view-id>/pages/publicoAlvo/publicoAlvo.xhtml</to-view-id>
+			<to-view-id>/pages/private/publicoAlvo/publicoAlvo.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
         
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>PessoaFisicaListar</from-outcome>
-			<to-view-id>/pages/pessoaFisica/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/pessoaFisica/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>PessoaFisicaManter</from-outcome>
-			<to-view-id>/pages/pessoaFisica/pessoaFisica.xhtml</to-view-id>
+			<to-view-id>/pages/private/pessoaFisica/pessoaFisica.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
         
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>PessoaJuridicaListar</from-outcome>
-			<to-view-id>/pages/pessoaJuridica/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/pessoaJuridica/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>PessoaJuridicaManter</from-outcome>
-			<to-view-id>/pages/pessoaJuridica/pessoaJuridica.xhtml</to-view-id>
+			<to-view-id>/pages/private/pessoaJuridica/pessoaJuridica.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
         
@@ -107,14 +107,21 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>UsuarioListar</from-outcome>
-			<to-view-id>/pages/usuario/lista.xhtml</to-view-id>
+			<to-view-id>/pages/private/usuario/lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>UsuarioManter</from-outcome>
-			<to-view-id>/pages/usuario/usuario.xhtml</to-view-id>
+			<to-view-id>/pages/public/usuario/usuario.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>Home</from-outcome>
+			<to-view-id>/pages/home.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<managed-bean>
 		<managed-bean-name>QualificacaoBean</managed-bean-name>

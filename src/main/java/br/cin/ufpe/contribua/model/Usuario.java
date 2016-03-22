@@ -2,15 +2,21 @@ package br.cin.ufpe.contribua.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 @Entity(name = "usuario")
+@NamedQuery(name = "Usuario.logar", query = "SELECT u FROM usuario u  WHERE u.login =:login and u.senha =:senha")
 public class Usuario extends AbstractModel {
     
-    @Column(length = 50, nullable=false)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5870803304069447561L;
+
+	@Column(length = 50, nullable=false)
     private String login;
     
     @Column(length = 500, nullable=false)

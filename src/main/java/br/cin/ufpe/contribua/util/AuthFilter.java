@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.cin.ufpe.contribua.model.Usuario;
+
 public class AuthFilter implements Filter {
 
 	private static final boolean debug = true;
@@ -37,14 +39,30 @@ public class AuthFilter implements Filter {
 																												// Verificar
 																												// solução
 																												// melhor
-				&& (paginaAtual.contains("/pages/")) // TODO: Verificar solução
-														// melhor
+				&& ((paginaAtual.contains("/pages/private/") || paginaAtual.contains("/pages/admin/"))) // TODO:
+																										// Verificar
+				// solução
+				// melhor
 				&& (paginaAtual.endsWith(".xhtml"))) {
 			request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
 
 			Object logged = null;
 			if ((session.getAttribute("autenticado")) != null) {
 				logged = (session.getAttribute("autenticado"));
+				Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+				if (usuario.getLogin() != "admin") {
+
+					if (paginaAtual.contains("/pages/admin/")) {
+						String contextPath = ((HttpServletRequest) request).getContextPath();
+						((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
+
+						return;
+					}
+				} else {
+					session.setAttribute("isAdmin", true);
+				}
+
 			}
 			if ((logged == null) || ((Boolean) logged) == false) {
 				String contextPath = ((HttpServletRequest) request).getContextPath();
@@ -85,4 +103,5 @@ public class AuthFilter implements Filter {
 	public void log(String msg) {
 		filterConfig.getServletContext().log(msg);
 	}
+
 }
