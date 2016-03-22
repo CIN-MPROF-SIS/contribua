@@ -28,12 +28,15 @@
 
         <div id="nav">
             <ul>
-                <c:if test="#{loginBean.log != false}">
-                    <li><a href="#"><img src="images/home.png" alt="Página Inicial" border="0" align="left"/>P&aacute;gina Inicial</a></li>
-                    <li><a href="instituicao.xhtml">Institui&ccedil;&atilde;o</a></li>                        
-                    <li><a href="#">Evento Social</a></li>                        
-                    <li><a href="#">Volunt&aacute;rios</a></li>                        
-                    <li><a href="#">Divulga&ccedil;&atilde;o</a></li>  
+                <c:if test="#{sessionScope['isAdmin']}">
+                    <li><a href="#{request.contextPath}/pages/private/home.xhtml"><img src="../../images/home.png" alt="Página Inicial" border="0" align="left"/>P&aacute;gina Inicial</a></li>
+                    <li><a href="#{request.contextPath}/pages/admin/causa/lista.xhtml">Causa</a></li>                        
+                    <li><a href="#{request.contextPath}/pages/admin/publicoAlvo/lista.xhtml">Público</a></li>
+                    <li><a href="#{request.contextPath}/pages/admin/qualificacao/lista.xhtml">Qualificações</a></li>
+                    <li><a href="#{request.contextPath}/pages/admin/hablidades/lista.xhtml">Habilidades</a></li>
+                    <li><a href="#{request.contextPath}/pages/admin/diaSemana/lista.xhtml">Dias da Semana</a></li>
+                    <li><a href="#{request.contextPath}/pages/admin/usuario/lista.xhtml">Usuários</a></li>
+                    <li><a href="#{request.contextPath}/pages/private/eventoSocial/lista.xhtml">Eventos</a></li>                      
                 </c:if>
                 <li class="link">
                     <h:outputText rendered="#{loginBean.log != false}" value="Logado como: #{loginBean.logon}"/>

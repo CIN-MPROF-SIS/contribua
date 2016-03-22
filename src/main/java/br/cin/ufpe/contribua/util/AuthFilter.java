@@ -51,7 +51,7 @@ public class AuthFilter implements Filter {
 				logged = (session.getAttribute("autenticado"));
 				Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-				if (usuario.getLogin() != "admin") {
+				if (!usuario.getLogin().equals("admin")) {
 
 					if (paginaAtual.contains("/pages/admin/")) {
 						String contextPath = ((HttpServletRequest) request).getContextPath();
