@@ -55,7 +55,7 @@ public class MainGlassfish {
         String database = matcher.group(4);
         String user = matcher.group(1);
         String password = matcher.group(2);
-        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":characterEncoding=utf8:loglevel=4:servername=" + host;
+        String properties = "user=" + user + ":password=" + password + ":databasename=" + database + ":loglevel=4:servername=" + host;
 
 //Fim heroku        
       
