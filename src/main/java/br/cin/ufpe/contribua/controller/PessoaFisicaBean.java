@@ -200,39 +200,43 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     }
     
     public String gravarUsuario(){
-        
-        
-        if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
+        try {
+            if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
 
-            String[] file = this.imagem.getFileName().split("\\.");
+                String[] file = this.imagem.getFileName().split("\\.");
 
-            if(exts.contains(file[file.length - 1]))
-                this.model.getPessoa().setImagem(this.imagem.getContents());
-            else{
-                Utils.adicionarMensagem("Tipo de arquivo não permitido.", null, Utils.FATAL);
+                if(exts.contains(file[file.length - 1]))
+                    this.model.getPessoa().setImagem(this.imagem.getContents());
+                else{
+                    Utils.adicionarMensagem("Tipo de arquivo não permitido.", null, Utils.FATAL);
+                    return null;
+                }
+
+            }
+
+            if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
+                Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
                 return null;
             }
-                
-        }
-        
-        if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
-            Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
-            return null;
-        }
-        
-        for(Disponibilidade disponibilidade : this.disponibilidades){
-            if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
-                    !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
-                this.model.getDisponibilidades().add(disponibilidade);
-        }
-        
-        this.pessoaFisicaManager.gravarUsuario(this.model, this.usuario);
-        
-        Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
-        this.limpar();
+
+            for(Disponibilidade disponibilidade : this.disponibilidades){
+                if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
+                        !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
+                    this.model.getDisponibilidades().add(disponibilidade);
+            }
+
+            this.pessoaFisicaManager.gravarUsuario(this.model, this.usuario);
+
+            Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+            this.limpar();
             
-                
-        return "/pages/private/home?faces-redirect=true";
+            return "Home";
+        } catch (Exception e) {
+            Utils.adicionarMensagem("Erro ao salvar usuário. " + e.getMessage(), null, Utils.ERROR);
+            e.printStackTrace();
+        }
+        return null;
+
     }
     
     private void montarDisponibilidades(){
