@@ -33,7 +33,7 @@ input[type="text"], input[type="email"], input[type="password"], select, textare
 }
 
 .submit-row {
-    background: white url("../img/nav-bg.gif") repeat-x scroll 0 100%;
+    background: white url("../resources/images/nav-bg.gif") repeat-x scroll 0 100%;
     border: 1px solid #ccc;
     margin: 15px 0 5px;
     overflow: hidden;
@@ -99,11 +99,11 @@ a:hover{text-decoration: underline;}
 
 /* ESTRUTURA
 --------------------------------------- */
-body { background: #FFF url(../images/bg.gif) repeat-x; font: 12px Arial, Verdana, Helvetica, sans-serif; text-align: center; color:#000;}
+body { background: #FFF url(../resources/images/bg.gif) repeat-x; font: 12px Arial, Verdana, Helvetica, sans-serif; text-align: center; color:#000;}
 
 #geral { width: 1000px; margin: 0 auto; text-align: left; }
 
-#topo { background: url(../images/topo.jpg) no-repeat; height: 117px; position: relative;}
+#topo { background: url(../resources/images/topo.jpg) no-repeat; height: 117px; position: relative;}
 #topo .links, #topo .links2 {font-size: .8em; position: absolute; }
 #topo .links { top: 10px; left: 35px; }
 #topo .links2 { top: 10px; right: 10px; }
@@ -123,7 +123,7 @@ body { background: #FFF url(../images/bg.gif) repeat-x; font: 12px Arial, Verdan
 #banner-top{ margin-bottom: 10px; }
 
 #menu { float: left; }
-#menu #sub { background: url(../images/bg-menu.jpg) no-repeat; width: 160px; padding: 20px;}
+#menu #sub { background: url(../resources/images/bg-menu.jpg) no-repeat; width: 160px; padding: 20px;}
 #menu #sub li { padding: 5px 0; border-bottom: .1em solid #dadada; font-weight: bold; font-size: 1.1em; }
 #menu #sub li a, #menu #sub li a:visited{color: #000;}
 #menu li a:hover { text-decoration: none; color: #5b9c0d; }
@@ -141,11 +141,11 @@ body { background: #FFF url(../images/bg.gif) repeat-x; font: 12px Arial, Verdan
 
 #conteudo .containerLogin div { float: left; margin-right: 25px;  }
 #conteudo .containerLogin label { display:block; font-size: 1.45em; letter-spacing: -.01em; font-weight: bold; /*color: #1975c5;*/color: #666; margin-bottom: 3px; }
-#conteudo .containerLogin input { width: 220px; font-size: 1.2em; _line-height: 1.2em; -height: 30px; padding: 5px; border: 1px solid #ccc; background: url(../images/bg-input.gif) 0 -2px repeat-x; letter-spacing: -.02em; }
+#conteudo .containerLogin input { width: 220px; font-size: 1.2em; _line-height: 1.2em; -height: 30px; padding: 5px; border: 1px solid #ccc; background: url(../resources/images/bg-input.gif) 0 -2px repeat-x; letter-spacing: -.02em; }
 #conteudo .containerLogin .entrar { margin-top: 15px; }
-#conteudo .containerLogin .entrar input { width: 125px; height: 38px; margin:3px 5px 0 0; border: 0; background: url(../images/submit-entrar.gif) no-repeat; cursor: pointer; }
-#conteudo .containerLogin .ong input { width: 300px; height: 38px; margin:15px 5px 0 0; border: 0; background: url(../images/ong.gif) no-repeat; cursor: pointer; }
-#conteudo .containerLogin .voluntario input { width: 300px; height: 38px; margin:15px 5px 0 0; border: 0; background: url(../images/voluntario.gif) no-repeat; cursor: pointer; }
+#conteudo .containerLogin .entrar input { width: 125px; height: 38px; margin:3px 5px 0 0; border: 0; background: url(../resources/images/submit-entrar.gif) no-repeat; cursor: pointer; }
+#conteudo .containerLogin .ong input { width: 300px; height: 38px; margin:15px 5px 0 0; border: 0; background: url(../resources/images/ong.gif) no-repeat; cursor: pointer; }
+#conteudo .containerLogin .voluntario input { width: 300px; height: 38px; margin:15px 5px 0 0; border: 0; background: url(../resources/images/voluntario.gif) no-repeat; cursor: pointer; }
 
 
 #conteudo .containerLogin a{font-weight: bold; color: #555; }
@@ -156,7 +156,7 @@ table td { margin: 5px 0; }
 .no-menu { width: 100% !important; }
 .no-menu fieldset { padding: 20px; }
 
-#rodape { /*background: url(../images/bg-rodape.gif) repeat-x;*/ margin-top: 20px; padding: 8px 0; text-align: center; border-top: 5px solid #88ab79; }
+#rodape { /*background: url(../resources/images/bg-rodape.gif) repeat-x;*/ margin-top: 20px; padding: 8px 0; text-align: center; border-top: 5px solid #88ab79; }
 #rodape p { color: #999; font-weight: bold;  }
 
 /* Primefaces
@@ -174,10 +174,10 @@ fieldset legend, form h3 { font-size: 1.1em; letter-spacing: -.03em;  padding: 5
 #panel { padding: 5px 0 0 10px; }
 /*.ui-dialog { width: 320px !important; }*/
 
-.btn_excluir { background-image: url("../images/excluir.png"); margin: 0px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
-.btn_alterar { background-image: url("../images/alterar.png"); margin: 0px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
-.btn_habilita { background-image: url("../images/habilita.png"); margin: 0px 5px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
-.btn_desabilita { background-image: url("../images/desabilita.png"); margin: 0px 5px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
+.btn_excluir { background-image: url("../resources/images/excluir.png"); margin: 0px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
+.btn_alterar { background-image: url("../resources/images/alterar.png"); margin: 0px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
+.btn_habilita { background-image: url("../resources/images/habilita.png"); margin: 0px 5px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
+.btn_desabilita { background-image: url("../resources/images/desabilita.png"); margin: 0px 5px auto; width: 22px; height: 22px; display: block; text-indent: -9999px; float: left;  }
 
 /* RELATORIO
 --------------------------------------- */
@@ -209,7 +209,7 @@ ul.ui-widget-content { border: none; }
 
 .lista { margin: 0px 0 ; }
 
-form.lista input,.lista select,form.lista textarea { width: 270px; font-size: 1em; _line-height: 1.1em; _height: 20px; margin: 2px 5px; padding: 5px; border: 1px solid #aed2f3; background: url(../images/bg-input.gif) 0 -3px repeat-x; letter-spacing: -.02em; }
+form.lista input,.lista select,form.lista textarea { width: 270px; font-size: 1em; _line-height: 1.1em; _height: 20px; margin: 2px 5px; padding: 5px; border: 1px solid #aed2f3; background: url(../resources/images/bg-input.gif) 0 -3px repeat-x; letter-spacing: -.02em; }
 form.lista label { display: block; width: 150px; float: left; font-size: 1em; letter-spacing: -.01em; font-weight: bold; margin: 5px 5px 5px 0; }
 
 .ui-inputfield { box-shadow: 0px 0px 0px #8F8F8F inset!important;}
