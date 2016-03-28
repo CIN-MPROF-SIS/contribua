@@ -6,8 +6,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.Circle;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
@@ -24,14 +28,11 @@ import br.cin.ufpe.contribua.manager.QualificacaoManager;
 import br.cin.ufpe.contribua.manager.UsuarioManager;
 import br.cin.ufpe.contribua.model.Causa;
 import br.cin.ufpe.contribua.model.DiaSemana;
-import br.cin.ufpe.contribua.model.Disponibilidade;
 import br.cin.ufpe.contribua.model.EventoSocial;
 import br.cin.ufpe.contribua.model.Habilidade;
 import br.cin.ufpe.contribua.model.PublicoAlvo;
 import br.cin.ufpe.contribua.model.Qualificacao;
 import br.cin.ufpe.contribua.model.Usuario;
-import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.model.map.Circle;
 
 @ManagedBean
 @ViewScoped
@@ -59,12 +60,13 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     
     @EJB
     UsuarioManager usuarioManager;
+    
+    private Usuario usuario;
 	
     private List<Causa> causas;
     
     private List<PublicoAlvo> publicoAlvos;
     
-    private List<Disponibilidade> disponibilidades;
     
     private List<Qualificacao> qualificacoes;
     
@@ -83,10 +85,15 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     private EventoSocial eventoSocial;
     
     public void inicializarSelecao(){
-        //Trocar pelo usuário logado
-        Usuario usuario = usuarioManager.find(1);
+    	FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		
+		usuario = (Usuario) session.getAttribute("usuario");
         
         this.geoModel = new DefaultMapModel();
+        
+        
+        
         
         this.centerGeoMap = usuario.getPessoa().getLatitude() + ", " + usuario.getPessoa().getLongitude();
         LatLng coord = new LatLng(usuario.getPessoa().getLatitude(), usuario.getPessoa().getLongitude());
@@ -145,13 +152,19 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	public String exibirInclusao() {
 		String retorno = super.exibirInclusao();
 		
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		
+		usuario = (Usuario) session.getAttribute("usuario");
+		
+		this.model.setMobilizador(usuario);
 		this.causas = causaManager.findAll();
         this.publicoAlvos = publicoAlvoManager.findAll();
         this.habilidades = habilidadeManager.findAll();
         this.qualificacoes = qualificacaoManager.findAll();
         
-        this.montarDisponibilidades();
-		
+   		
 		geoModel = new DefaultMapModel();
 
 		return retorno;
@@ -160,7 +173,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	 @Override
 	    public String exibirAlteracao(){
 	        String retorno = super.exibirAlteracao();	
-                this.montarDisponibilidades();
+           
 	        
 	        this.causas = causaManager.findAll();
 	        this.publicoAlvos = publicoAlvoManager.findAll();
@@ -178,13 +191,8 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	 @Override
         public String gravar() {
 
-            this.model.getDisponibilidades().removeAll(this.model.getDisponibilidades());
-
-            for(Disponibilidade disponibilidade : this.disponibilidades){
-                if(disponibilidade.getHorarioInicio() != null && disponibilidade.getHorarioTermino() != null && 
-                        !disponibilidade.getHorarioInicio().equals("") && !disponibilidade.getHorarioTermino().equals(""))
-                    this.model.getDisponibilidades().add(disponibilidade);
-            }
+          
+           
 
             return super.gravar();
         }
@@ -212,26 +220,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	        }
 	    }
 	 
-	 private void montarDisponibilidades(){
-	        this.disponibilidades = new ArrayList<Disponibilidade>();
-	        this.diasSemana = diaSemanaManager.findAll();
-	        
-	        for(DiaSemana diaSemana : this.diasSemana){
-	            Disponibilidade disponibilidade = new Disponibilidade();
-	            disponibilidade.setEventoSocial(this.model);
-	            for(Disponibilidade disponibilidadeModel : this.model.getDisponibilidades()){
-	                if(disponibilidadeModel.getDiaSemana().equals(diaSemana)){
-	                    disponibilidade = disponibilidadeModel;
-	                    break;
-	                }
-	            }
-	            
-	            disponibilidade.setDiaSemana(diaSemana);
-	            
-	            this.disponibilidades.add(disponibilidade);
-	        }
-	    }
-	 
+	
 	@Override
 	public AbstractManager getManager() {
 		return eventoSocialManager;
@@ -272,14 +261,6 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 
 	public void setPublicoAlvos(List<PublicoAlvo> publicoAlvos) {
 		this.publicoAlvos = publicoAlvos;
-	}
-
-	public List<Disponibilidade> getDisponibilidades() {
-		return disponibilidades;
-	}
-
-	public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
-		this.disponibilidades = disponibilidades;
 	}
 
 	public List<DiaSemana> getDiasSemana() {
@@ -329,5 +310,13 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     public void setEventoSocial(EventoSocial eventoSocial) {
         this.eventoSocial = eventoSocial;
     }
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

@@ -9,7 +9,11 @@
         <ui:composition template="/template/_template.xhtml">
             <ui:param name="bean" value="#{DiaSemanaBean}" />
             <ui:define name="corpo">
-                    <div class=" col-md-12 ">
+                    <div class=" col-md-6 ">
+                        <h:outputLabel value="Ordem "/>
+                        <p:inputText value="#{bean.model.ordem}" required="true" requiredMessage="Campo Ordem obrigatório."/><br/>
+                    </div> 
+                    <div class=" col-md-6 ">
                         <h:outputLabel value="Descrição: "/>
                         <p:inputText value="#{bean.model.descricao}" required="true" requiredMessage="Campo Descriçao obrigatório."/><br/>
                     </div>              

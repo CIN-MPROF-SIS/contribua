@@ -19,9 +19,30 @@
 			<div class=" col-md-12 ">
 				<p:outputLabel value="Nome : " />
 				<p:inputText value="#{bean.model.nome}" required="true"
-					requiredMessage="Campo Nome obrigatório." />
+					requiredMessage="Campo Nome é obrigatório." />
 				<br />
 			</div>
+			
+			<div class=" col-md-12 ">
+				<p:outputLabel value="Descrição : " />
+				<p:inputText value="#{bean.model.descricao}" required="true"
+					requiredMessage="Campo Descrição é obrigatório." />
+				<br />
+			</div>
+			
+			<div class=" col-md-12 ">
+				<p:outputLabel value="Beneficiado : " />
+				<p:inputText value="#{bean.model.beneficiado}"  />
+				<br />
+			</div>	
+			 
+			
+			<div class=" col-md-12 ">
+				<p:outputLabel value="Características : " />
+				<p:inputText value="#{bean.model.caracteristicas}" required="true"
+					requiredMessage="Campo Características é obrigatório." />
+				<br />
+			</div> 
 
 			<div class=" col-md-3 ">
 				<p:outputLabel for="causa" value="Causa :  " />
@@ -56,12 +77,31 @@
 					style="width:150px" pattern="dd/MM/yyyy" mask="true"
 					required="true" requiredMessage="Campo Data Fim é obrigatório." />
 			</div>
+			
+			<div class=" col-md-3 ">
+				<p:outputLabel for="horarioInicio" value="Hora de Início : " />
+				<p:calendar id="horarioInicio" value="#{bean.model.horarioInicio}"
+					pattern="HH:mm" timeOnly="true"  />
+			</div>
+			<div class=" col-md-3 ">
+				<p:outputLabel for="horarioTermino" value="Hora Término :  " />
+				<p:calendar id="horarioTermino" value="#{bean.model.horarioTermino}"
+					style="width:150px" pattern="HH:mm" timeOnly="true"  />
+			</div>
+			
+			<div class=" col-md-6 ">
+				<p:outputLabel value="Meta : " />
+				<p:inputText value="#{bean.model.meta}" />
+				<br />
+			</div>
+			
+			 
 			<div class=" col-md-6 ">
 				<p:outputLabel value="Habilidades: " />
 				<p:selectManyCheckbox value="#{bean.model.habilidades}"
 					id="habilidades" converter="DefaultConverter" layout="grid"
 					columns="3" collectionType="java.util.ArrayList" required="true"
-					requiredMessage="Campo Habilidades obrigatório.">
+					requiredMessage="Campo Habilidades é obrigatório.">
 					<f:selectItems value="#{bean.habilidades}" var="item"
 						itemLabel="#{item.descricao}" itemValue="#{item}" />
 				</p:selectManyCheckbox>
@@ -75,55 +115,14 @@
                             converter="DefaultConverter"
                             layout="grid" columns="3"
                             collectionType="java.util.ArrayList"
-                            required="true" requiredMessage="Campo Habilidades obrigatório.">
+                            required="true" requiredMessage="Campo Qualificações é obrigatório.">
                             <f:selectItems
                                     value="#{bean.qualificacoes}" var="item"
                                     itemLabel="#{item.descricao}" itemValue="#{item}" />
                     </p:selectManyCheckbox>
                 </div>
 		
-			<div class=" col-md-12" style="padding-top: 20px">
-				<legend>Disponibilidade</legend>
-				<p:dataTable id="disponibilidades" var="disponibilidade"
-					value="#{bean.disponibilidades}" editable="true"
-					style="margin-bottom:20px">
-					<f:facet name="header">
-                           Disponibilidade
-                       </f:facet>
-
-					<p:column headerText="Dia">
-						<h:outputText value="#{disponibilidade.diaSemana.descricao}" />
-					</p:column>
-
-					<p:column headerText="Horário Início">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{disponibilidade.horarioInicio}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{disponibilidade.horarioInicio}"
-									style="width:100%" label="Horario Início" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-
-					<p:column headerText="Horário Término">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{disponibilidade.horarioTermino}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{disponibilidade.horarioTermino}"
-									style="width:100%" label="Horario Início" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-
-					<p:column style="width:32px">
-						<p:rowEditor />
-					</p:column>
-				</p:dataTable>
-			</div>
+			
 
 			<div class=" col-md-12 ">
 				<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">

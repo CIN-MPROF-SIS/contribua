@@ -1,7 +1,7 @@
 package br.cin.ufpe.contribua.model;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -24,6 +23,24 @@ public class EventoSocial extends AbstractModel {
 
 	@Column(length = 150, nullable = false)
 	private String nome;
+	
+	@Column(length = 150, nullable = false)
+	private String descricao; 
+	
+	@Column(length = 150)
+	private String beneficiado; 
+	
+	@Column(length = 150)
+	private String meta; 
+	
+	@Column(length = 150)
+	private String caracteristicas; 
+	
+	 @Temporal(javax.persistence.TemporalType.TIME)
+	private Date horarioInicio;
+
+	 @Temporal(javax.persistence.TemporalType.TIME)
+	private Date horarioTermino;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "causa_id")
@@ -32,15 +49,16 @@ public class EventoSocial extends AbstractModel {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "publico_alvo_id")
 	private PublicoAlvo publicoAlvo;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "mobilizador_id")
+	private Usuario mobilizador;
 
         @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataInicio;
 
         @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataFim;
-
-	@OneToMany(mappedBy = "eventoSocial", fetch = FetchType.EAGER)
-	private List<Disponibilidade> disponibilidades;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "eventoSocial_habilidade", joinColumns = {
@@ -54,7 +72,6 @@ public class EventoSocial extends AbstractModel {
 	
 	
 	 public EventoSocial() {
-	        this.disponibilidades = new ArrayList<Disponibilidade>();
 	        this.habilidades = new ArrayList<Habilidade>();
 	        this.qualificacoes = new ArrayList<Qualificacao>();
 	    }
@@ -121,13 +138,6 @@ public class EventoSocial extends AbstractModel {
 		this.dataFim = dataFim;
 	}
 
-	public List<Disponibilidade> getDisponibilidades() {
-		return disponibilidades;
-	}
-
-	public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
-		this.disponibilidades = disponibilidades;
-	}
 
 	public List<Habilidade> getHabilidades() {
 		return habilidades;
@@ -144,7 +154,61 @@ public class EventoSocial extends AbstractModel {
 	public void setQualificacoes(List<Qualificacao> qualificacoes) {
 		this.qualificacoes = qualificacoes;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 	
+	public String getBeneficiado() {
+		return beneficiado;
+	}
+
+	public void setBeneficiado(String beneficiado) {
+		this.beneficiado = beneficiado;
+	}
+
+	public Date getHorarioInicio() {
+		return horarioInicio;
+	}
+
+	public void setHorarioInicio(Date horarioInicio) {
+		this.horarioInicio = horarioInicio;
+	}
+
+	public Date getHorarioTermino() {
+		return horarioTermino;
+	}
+
+	public void setHorarioTermino(Date horarioTermino) {
+		this.horarioTermino = horarioTermino;
+	}
 	
+	public String getMeta() {
+		return meta;
+	}
+
+	public void setMeta(String meta) {
+		this.meta = meta;
+	}
+	
+	public String getCaracteristicas() {
+		return caracteristicas;
+	}
+
+	public void setCaracteristicas(String caracteristicas) {
+		this.caracteristicas = caracteristicas;
+	}
+
+	public Usuario getMobilizador() {
+		return mobilizador;
+	}
+
+	public void setMobilizador(Usuario mobilizador) {
+		this.mobilizador = mobilizador;
+	}
 
 }

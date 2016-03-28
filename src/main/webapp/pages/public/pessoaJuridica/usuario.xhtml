@@ -11,8 +11,8 @@
         <ui:param name="bean" value="#{PessoaJuridicaBean}" />
         <h:head>
             <title>.:: CONTRIBUA ::.</title>
-            <link href="../../../css/estilo.css" type="text/css" rel="stylesheet" />
-            <script type="text/javascript" src="../../../js/calendar.js"/>  
+           <h:outputStylesheet library="css" name="estilo.css" />
+            <h:outputScript library="js" name="calendar.js" /> 
         </h:head>
 
         <h:body onload="#{bean.inicializar()}">

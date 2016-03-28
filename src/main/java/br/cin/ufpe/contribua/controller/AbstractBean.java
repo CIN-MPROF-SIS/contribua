@@ -52,7 +52,8 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
         }
     }
 
-    public String gravar() {
+    @SuppressWarnings("unchecked")
+	public String gravar() {
         try {
             if (this.model.getId() != null) {
                 getManager().edit(this.model);

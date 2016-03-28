@@ -16,9 +16,6 @@ public class Disponibilidade extends AbstractModel {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private PessoaFisica pessoaFisica;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	private EventoSocial eventoSocial;
-
 	@Column(length = 5, nullable = false)
 	private String horarioInicio;
 
@@ -55,14 +52,6 @@ public class Disponibilidade extends AbstractModel {
 
 	public void setHorarioTermino(String horarioTermino) {
 		this.horarioTermino = horarioTermino;
-	}
-
-	public EventoSocial getEventoSocial() {
-		return eventoSocial;
-	}
-
-	public void setEventoSocial(EventoSocial eventoSocial) {
-		this.eventoSocial = eventoSocial;
 	}
 
 	public Disponibilidade() {

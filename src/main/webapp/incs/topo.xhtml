@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
         <div id="topo">
@@ -28,19 +29,30 @@
 
         <div id="nav">
             <ul>
+            	<c:if test="#{loginBean.log != false and !sessionScope['isAdmin']}">
+            	    <h:form>      
+            	     <ui:param name="beanEvento" value="#{EventoSocialBean}" />
+            		 	<li><h:commandLink value="Criar evento" action="#{beanEvento.exibirInclusao()}" ajax='false'/></li>
+            		 	 
+            		 </h:form>	
+            		 <li><a href="#{request.contextPath}/pages/private/eventoSocial/selecao.xhtml">Localizar Eventos</a></li> 
+            		
+            	</c:if>  	
                 <c:if test="#{sessionScope['isAdmin']}">
-                    <li><a href="#{request.contextPath}/pages/private/home.xhtml"><img src="../../images/home.png" alt="Página Inicial" border="0" align="left"/>P&aacute;gina Inicial</a></li>
+                    <li><a href="#{request.contextPath}/pages/private/home.xhtml"><h:graphicImage library="images" name="home.png" /></a></li>
                     <li><a href="#{request.contextPath}/pages/admin/causa/lista.xhtml">Causa</a></li>                        
                     <li><a href="#{request.contextPath}/pages/admin/publicoAlvo/lista.xhtml">Público</a></li>
                     <li><a href="#{request.contextPath}/pages/admin/qualificacao/lista.xhtml">Qualificações</a></li>
                     <li><a href="#{request.contextPath}/pages/admin/habilidade/lista.xhtml">Habilidades</a></li>
                     <li><a href="#{request.contextPath}/pages/admin/diaSemana/lista.xhtml">Dias da Semana</a></li>
                     <li><a href="#{request.contextPath}/pages/admin/pessoaFisica/lista.xhtml">Voluntários</a></li>
-                    <li><a href="#{request.contextPath}/pages/admin/pessoaJurdica/lista.xhtml">Organizações</a></li>
-                    <li><a href="#{request.contextPath}/pages/private/eventoSocial/lista.xhtml">Eventos</a></li>                      
+                    <li><a href="#{request.contextPath}/pages/admin/pessoaJuridica/lista.xhtml">Organizações</a></li>
+                    <li><a href="#{request.contextPath}/pages/private/eventoSocial/lista.xhtml">Eventos</a></li>                                        
                 </c:if>
                 <li class="link">
-                    <h:outputText rendered="#{loginBean.log != false}" value="Logado como: #{loginBean.logon}"/>
+                    <h:outputText rendered="#{loginBean.log != false}" value="#{loginBean.logon}"/>
+                                       
+                    
                     <h:form><h:commandLink rendered="#{loginBean.log != false}" value="Sair" action="#{logoutBean.doLogout}" /></h:form>
                 </li>
             </ul>
