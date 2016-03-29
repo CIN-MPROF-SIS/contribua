@@ -14,12 +14,6 @@
                     <p:inputText value="#{bean.model.login}" required="true" requiredMessage="Campo Descriçao obrigatório."/><br/>
                 </div>
                 <div class=" col-md-6 ">
-                    <h:outputLabel value="Pessoa: "/>
-                    <p:autoComplete id="pessoa" value="#{bean.model.pessoa}" completeMethod="#{bean.listarUsuarios}"
-                        var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="DefaultConverter" forceSelection="true" style="width:100%" />
-
-                </div>
-                <div class=" col-md-6 ">
                     <h:outputLabel value="Senha: "/>
                     <h:inputSecret value="#{bean.model.senha}" required="true" requiredMessage="Campo Descriçao obrigatório."/><br/>
                 </div>
