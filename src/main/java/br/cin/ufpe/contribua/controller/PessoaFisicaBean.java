@@ -200,6 +200,9 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
     }
     
     public String gravarUsuario(){
+    	
+    	System.out.println("Inicio gravar");
+    	
         try {
             if(this.imagem != null && !this.imagem.getFileName().isEmpty()){
 
@@ -213,6 +216,8 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
                 }
 
             }
+            
+            System.out.println("Anexar gravar");     
 
             if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
                 Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
