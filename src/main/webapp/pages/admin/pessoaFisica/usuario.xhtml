@@ -11,18 +11,18 @@
         <ui:param name="bean" value="#{PessoaFisicaBean}" />
         <h:head>
             <title>.:: CONTRIBUA ::.</title>
-            <link href="../../css/estilo.css" type="text/css" rel="stylesheet" />
-            <script type="text/javascript" src="../../js/calendar.js"/>  
+            <h:outputStylesheet library="css" name="estilo.css" />
+            <h:outputScript library="js" name="calendar.js" /> 
         </h:head>
 
         <h:body onload="#{bean.inicializar()}">
             
             <div id="geral">
-                <ui:include src="../../incs/topo.xhtml" />
+                <ui:include src="../../../incs/topo.xhtml" />
 
                 <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
                           draggable="false" closable="false">  
-                    <p:graphicImage value="../../images/ajax-loading-bar.gif" />  
+                   <h:graphicImage library="images" name="ajax-loading-bar.gif" /> 
                 </p:dialog>
                 
                 <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
@@ -300,7 +300,7 @@
                 </div>
             </div>
 
-            <ui:include src="../../incs/rodape.xhtml" />
+            <ui:include src="../../../incs/rodape.xhtml" />
         </h:body>
     </f:view>
 </html>
