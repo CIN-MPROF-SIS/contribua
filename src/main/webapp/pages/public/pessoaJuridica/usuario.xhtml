@@ -21,7 +21,7 @@
 
                 <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
                           draggable="false" closable="false">  
-                    <p:graphicImage value="../../../images/ajax-loading-bar.gif" />  
+                    <h:graphicImage library="images" name="ajax-loading-bar.gif" /> 
                 </p:dialog>
                 
                 <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
