@@ -235,7 +235,7 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
             Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
             this.limpar();
             
-            return "Home";
+            return "/pages/private/home?faces-redirect=true";
         } catch (Exception e) {
             Utils.adicionarMensagem("Erro ao salvar usuário. " + e.getMessage(), null, Utils.ERROR);
             e.printStackTrace();
