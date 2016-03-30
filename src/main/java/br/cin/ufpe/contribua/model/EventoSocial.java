@@ -36,10 +36,10 @@ public class EventoSocial extends AbstractModel {
 	@Column(length = 150)
 	private String caracteristicas; 
 	
-	 @Temporal(javax.persistence.TemporalType.TIME)
+	@Temporal(javax.persistence.TemporalType.TIME)
 	private Date horarioInicio;
 
-	 @Temporal(javax.persistence.TemporalType.TIME)
+	@Temporal(javax.persistence.TemporalType.TIME)
 	private Date horarioTermino;
 
 	@ManyToOne(fetch = FetchType.EAGER)

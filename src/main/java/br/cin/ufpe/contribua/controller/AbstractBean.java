@@ -20,7 +20,7 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
 	   
     protected Entidade model;
     
-    protected List<AbstractModel> listaModel;
+    protected List<Entidade> listaModel;
     
     protected List<Entidade> entidadesSelecionadas;
     
@@ -167,11 +167,11 @@ public abstract class AbstractBean<Entidade extends AbstractModel> implements Se
         this.model = model;
     }
 
-    public List<AbstractModel> getListaModel() {
+    public List<Entidade> getListaModel() {
         return listaModel;
     }
 
-    public void setListaModel(List<AbstractModel> listaModel) {
+    public void setListaModel(List<Entidade> listaModel) {
         this.listaModel = listaModel;
     }
 }

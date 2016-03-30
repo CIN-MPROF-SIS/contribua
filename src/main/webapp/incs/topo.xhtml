@@ -32,7 +32,7 @@
             	<c:if test="#{loginBean.log != false and !sessionScope['isAdmin']}">
             	    <h:form id="usuario">      
             	     <ui:param name="beanEvento" value="#{EventoSocialBean}" />
-            		 	<li><h:commandLink value="Criar evento" action="#{beanEvento.exibirInclusao()}" ajax='false'/></li>
+            		 	<li><h:commandLink value="Criar evento" action="EventoSocialListar" ajax='false'/></li>
             		 	 
             		 </h:form>	
             		 <li><a href="#{request.contextPath}/pages/private/eventoSocial/selecao.xhtml">Localizar Eventos</a></li> 

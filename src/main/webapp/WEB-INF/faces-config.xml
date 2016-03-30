@@ -56,6 +56,14 @@
 			<from-outcome>EventoSocialManter</from-outcome>
 			<to-view-id>/pages/private/eventoSocial/eventoSocial.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>EventoSocialSelecao</from-outcome>
+			<to-view-id>/pages/private/eventoSocial/selecao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>EventoSocialVincular</from-outcome>
+			<to-view-id>/pages/private/eventoSocial/vincular.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>

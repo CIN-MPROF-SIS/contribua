@@ -30,16 +30,16 @@
 
                 <div id="conteudo">
                     <fieldset>
-                        <h:form id="form" enctype="multipart/form-data">
-                            <legend>Eventos</legend>
+                        <h:form id="form" >
+                            <legend>Mapa</legend>
                             <fieldset>
 
                                 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA2RzRgG-9yk86PFuS6LKoPUAKsGpuTUjM&amp;sensor=false"></script>
                                 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
                                 <div class=" col-md-12 " style="padding-top:20px">
-                                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{bean.geoModel}" style="width:100%;height:400px">
-                                        <p:ajax event="overlaySelect" listener="#{bean.onMarkerSelect}" />
+                                    <p:gmap id="geoGmap" widgetVar="geoMap" center="#{bean.centerGeoMap}" zoom="13" type="ROADMAP" model="#{bean.geoModel}" style="width:100%;height:400px" fitBounds="true">
+                                        <p:ajax event="overlaySelect" listener="#{bean.onMarkerSelect}" oncomplete="calcularDistancia()" update="lat,lng"/>
                                         
                                         <p:gmapInfoWindow id="infoWindow">
                                             <p:outputPanel style="text-align: center; display: block; margin: auto">
@@ -58,9 +58,18 @@
                                                             </h:outputText>
                                                         </p>
                                                         <p>
-                                                            <p:commandLink action="#{bean.exibirAlteracao()}" target="_blink" title="Ver Detalhes" value="Ver Detalhes" ajax="false">
+                                                            <b style="font-weight: bold">Características do evento: </b>
+                                                            <h:outputText value="#{bean.eventoSocial.causa.descricao}" />
+                                                        </p>
+                                                        <p>
+                                                            
+                                                            <div id="output"></div>
+
+                                                        </p>
+                                                        <p style="margin-top: 30px">
+                                                            <h:commandLink action="#{bean.exibirVinculacao()}" target="_blank" title="Ver Detalhes" value="Ver Detalhes" >
                                                                <f:setPropertyActionListener value="#{bean.eventoSocial}" target="#{bean.model}" />
-                                                           </p:commandLink>
+                                                            </h:commandLink>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -68,12 +77,130 @@
                                             </p:outputPanel>
                                         </p:gmapInfoWindow>
                                     </p:gmap>
+                                    <h:inputHidden id="lat" value="#{bean.eventoSocial.latitude}" />
+                                    <h:inputHidden id="lng" value="#{bean.eventoSocial.longitude}" />
                                 </div>
                             </fieldset>
+                            <legend style="margin-top:50px">Eventos</legend>
+                            <fieldset>
+                                <ui:repeat value="#{bean.eventosAbertos}" var="eventoSocial">
+                                    <div class=" col-md-12 " style="padding-top:20px">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="80%">
+                                                    <p>
+                                                        <b style="font-weight: bold">#{eventoSocial.nome}</b>
+                                                    </p>
+                                                    <p>
+                                                        <b style="font-weight: bold">Período: </b>
+                                                        <h:outputText value="#{eventoSocial.dataInicio}">
+                                                            <f:convertDateTime pattern="dd/MM/YYYY" />
+                                                        </h:outputText> a
+                                                        <h:outputText value="#{eventoSocial.dataFim}">
+                                                            <f:convertDateTime pattern="dd/MM/YYYY" />
+                                                        </h:outputText>
+                                                    </p>
+                                                    <p>
+                                                        <b style="font-weight: bold">Características do evento: </b>
+                                                        <h:outputText value="#{eventoSocial.causa.descricao}" />
+                                                    </p>
+                                                </td>
+                                                <td width="20%">
+                                                    <h:commandLink action="#{bean.exibirVinculacao()}" target="_blank" title="Ver Detalhes" value="Ver Detalhes">
+                                                        <f:setPropertyActionListener value="#{eventoSocial}" target="#{bean.model}" />
+                                                    </h:commandLink>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </ui:repeat>
+                            </fieldset>
+                            
                         </h:form>
                     </fieldset>
                 </div>
             </div>
+            
+                <f:verbatim escape="true">
+                    <script>//<![CDATA[ 
+                        var directionsDisplay;
+                        var directionsService 
+                        $(document).ready(
+                                function(){
+                                    directionsDisplay = new google.maps.DirectionsRenderer;
+                                    directionsService = new google.maps.DirectionsService;
+                                }
+                                );
+                        function calcularDistancia(){
+
+                            var origin = new google.maps.LatLng(#{bean.centerGeoMap });
+                            var lat = document.getElementById('form:lat').value;
+                            var lng = document.getElementById('form:lng').value;
+                            var destination = new google.maps.LatLng(lat, lng);
+
+                            var service = new google.maps.DistanceMatrixService();
+                            calculateAndDisplayRoute();
+                            service.getDistanceMatrix(
+                              {
+                                origins: [origin],
+                                destinations: [destination],
+                                travelMode: google.maps.TravelMode.DRIVING,
+                                unitSystem: google.maps.UnitSystem.METRIC,
+                                avoidHighways: false,
+                                avoidTolls: false,
+                              }, callback);
+
+                            function callback(response, status) {
+                                var originList = response.originAddresses;
+                                var destinationList = response.destinationAddresses;
+                                var outputDiv = document.getElementById('output');
+                                outputDiv.innerHTML = '';
+
+                                for (var i = 0; i < originList.length; i++) {
+                                    var results = response.rows[i].elements;
+
+                                    for (var j = 0; j < results.length; j++) {
+                                        if(results[j].status == "OK")
+                                            outputDiv.innerHTML = '<b style="font-weight: bold">Distância: </b>' + results[j].distance.text + ' ( ' + results[j].duration.text + ')<br>';
+                                    }
+
+                                }
+                            }
+                        }
+                        
+                        function calculateAndDisplayRoute() {
+                            directionsDisplay.setMap(null);
+
+                            directionsDisplay.setMap(PF('geoMap').getMap());
+                            //PF('geoMap').getMap()
+                            
+                            var origin = new google.maps.LatLng(#{bean.centerGeoMap });
+                            var lat = document.getElementById('form:lat').value;
+                            var lng = document.getElementById('form:lng').value;
+                            var destination = new google.maps.LatLng(lat, lng);
+                                
+                              var selectedMode = "DRIVING";
+                              directionsService.route({
+                                origin: {lat: origin.lat(), lng: origin.lng()},  // Haight.
+                                destination: {lat: destination.lat(), lng: destination.lng()},
+                                // Note that Javascript allows us to access the constant
+                                // using square brackets and a string value as its
+                                // "property."
+                                travelMode: google.maps.TravelMode[selectedMode]
+                              }, function(response, status) {
+                                if (status == google.maps.DirectionsStatus.OK) {
+                                  directionsDisplay.setDirections(response);
+                                } else {
+                                  window.alert('Directions request failed due to ' + status);
+                                }
+                              });
+                            }
+                        
+
+                    // ]]>
+                    </script>
+                </f:verbatim>
+            
 
             <ui:include src="../../../incs/rodape.xhtml" />
         </h:body>
