@@ -7,7 +7,7 @@
 
     <h:body>
         <ui:composition template="/template/_lista.xhtml">
-            <ui:param name="bean" value="#{usuarioBean}" />
+           <ui:param name="bean" value="#{UsuarioBean}" />
             <ui:define name="colunas">
                 <p:column headerText="Nome">
                     <h:outputText value="#{item.pessoa.nome}" />
