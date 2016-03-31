@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <title>.:: CONTRIBUA ::.</title>
+            <h:outputStylesheet library="css" name="estilo.css" />            
+            <h:outputScript library="js" name="calendar.js" />  
+        </h:head>
+
+        <h:body>
+            <div id="geral">
+                <ui:include src="../incs/topo.xhtml" />
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Carregando"   
+                          draggable="false" closable="false">  
+                    <h:graphicImage library="images" name="ajax-loading-bar.gif" /> 
+                </p:dialog>
+                
+                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+                <p:growl id="growl"/>
+                <!--ui:include src="../incs/menu.xhtml"/-->
+
+                <div id="conteudo">
+                    <fieldset>
+                        <h:form id="form" accept-charset="utf-8">
+                            
+                            <fieldset>
+                            <ui:insert name="corpo" />
+                            </fieldset>
+                            
+                        </h:form>
+                    </fieldset>
+                </div>
+            </div>
+            <div>
+                <h:form prependId="false" id="formSecundario">
+                    <ui:insert name="corpoForaForm" />
+                </h:form>
+            </div>
+
+            <ui:include src="../incs/rodape.xhtml" />
+        </h:body>
+    </f:view>
+</html>
+

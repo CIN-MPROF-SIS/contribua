@@ -44,418 +44,434 @@ import br.cin.ufpe.contribua.util.Utils;
 @ViewScoped
 public class EventoSocialBean extends AbstractBean<EventoSocial> {
 
+	private static final long serialVersionUID = -6957865892901186766L;
+	@EJB
+	EventoSocialManager eventoSocialManager;
 
-    private static final long serialVersionUID = -6957865892901186766L;
-    @EJB
-    EventoSocialManager eventoSocialManager;
+	@EJB
+	HabilidadeManager habilidadeManager;
 
-    @EJB
-    HabilidadeManager habilidadeManager;
+	@EJB
+	PublicoAlvoManager publicoAlvoManager;
 
-    @EJB
-    PublicoAlvoManager publicoAlvoManager;
+	@EJB
+	QualificacaoManager qualificacaoManager;
 
-    @EJB
-    QualificacaoManager qualificacaoManager;
+	@EJB
+	CausaManager causaManager;
 
-    @EJB
-    CausaManager causaManager;
+	@EJB
+	DiaSemanaManager diaSemanaManager;
 
-    @EJB
-    DiaSemanaManager diaSemanaManager;
-    
-    @EJB
-    UsuarioManager usuarioManager;
-    
-    @EJB
-    ParticipacaoManager participacaoManager;
-    
-    @EJB
-    PessoaJuridicaManager pessoaJuridicaManager;
-    
-    private Usuario usuario;
-	
-    private List<Causa> causas;
-    
-    private List<PublicoAlvo> publicoAlvos;
-    
-    
-    private List<Qualificacao> qualificacoes;
-    
-    private List<Habilidade> habilidades;
-    
-    private List<DiaSemana> diasSemana;
+	@EJB
+	UsuarioManager usuarioManager;
 
-    private MapModel geoModel;
-    
-    private MapModel geoModelVinculacao;
+	@EJB
+	ParticipacaoManager participacaoManager;
 
-    private String centerGeoMap = "41.850033, -87.6500523";
-    
-    private String centerGeoMapVinculacao = "41.850033, -87.6500523";
-    
-    private List<EventoSocial> eventosAbertos;
-    
-    private Marker marker;
-    
-    private EventoSocial eventoSocial;
-    
-    private boolean vinculado;
-    
-    private boolean mostrarVincular;
-    
-    @PostConstruct
-    @Override
-    public void inicializar(){
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	@EJB
+	PessoaJuridicaManager pessoaJuridicaManager;
 
-        usuario = (Usuario) session.getAttribute("usuario");
-        
-        this.limpar();
-        incluindo = false;
-        this.listaModel= eventoSocialManager.findByUsuario(this.usuario);
-    }
-    
-    public void inicializarSelecao(){
-    	FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	private Usuario usuario;
 
-        usuario = (Usuario) session.getAttribute("usuario");
-        
-        this.geoModel = new DefaultMapModel();
+	private List<Causa> causas;
 
-        
-        this.centerGeoMap = usuario.getPessoa().getLatitude() + ", " + usuario.getPessoa().getLongitude();
-        LatLng coord = new LatLng(usuario.getPessoa().getLatitude(), usuario.getPessoa().getLongitude());
-        //1km
-        Circle circle1 = new Circle(coord, 1000);
-        circle1.setStrokeColor("yellow");
-        circle1.setFillColor("yellow");
-        circle1.setStrokeOpacity(0.35);
-        circle1.setFillOpacity(0.35);
- 
-        //3km
-        Circle circle2 = new Circle(coord, 3000);
-        circle2.setStrokeColor("green");
-        circle2.setFillColor("green");
-        circle2.setStrokeOpacity(0.25);
-        circle2.setFillOpacity(0.25);
-        
-        //5km
-        Circle circle3 = new Circle(coord, 5000);
-        circle3.setStrokeColor("blue");
-        circle3.setFillColor("blue");
-        circle3.setStrokeOpacity(0.15);
-        circle3.setFillOpacity(0.15);
-        
-        Circle circle4 = new Circle(coord, 10000);
-        circle4.setStrokeColor("red");
-        circle4.setFillColor("red");
-        circle4.setStrokeOpacity(0.05);
-        circle4.setFillOpacity(0.05);
-        
-        this.geoModel.addOverlay(circle1);
-        this.geoModel.addOverlay(circle2);
-        //this.geoModel.addOverlay(circle3);
-        //this.geoModel.addOverlay(circle4);
-        
-        
-        //Buscar eventos abertos
-        this.eventosAbertos = new ArrayList<EventoSocial>();
-        this.eventosAbertos = this.eventoSocialManager.findAbertos();
-        
-        this.geoModel.addOverlay(new Marker(coord, "Eu", "0", "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png"));
-        
-        for(EventoSocial eventoSocial : this.eventosAbertos){
-            LatLng coordMarker = new LatLng(eventoSocial.getLatitude(), eventoSocial.getLongitude());
-            
-            if(eventoSocial.getMobilizador().equals(usuario))
-                this.geoModel.addOverlay(new Marker(coordMarker, "Meu Evento: " + eventoSocial.getNome(), eventoSocial.getId(), "http://maps.google.com/mapfiles/ms/micons/green-dot.png"));
-            else if( this.participacaoManager.findByUsuarioEvento(eventoSocial, this.usuario) != null)
-                this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId(), "http://maps.google.com/mapfiles/ms/micons/red-pushpin.png"));
-            else
-                this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId()));
-        }
-        
-    }
-    
-    public void onMarkerSelect(OverlaySelectEvent event) {
-        marker = (Marker) event.getOverlay();
-        this.eventoSocial = eventoSocialManager.find(marker.getData());
-    }
+	private List<PublicoAlvo> publicoAlvos;
 
-    @Override
-    public String exibirInclusao() {
-        String retorno = super.exibirInclusao();
+	private List<Qualificacao> qualificacoes;
 
+	private List<Habilidade> habilidades;
 
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	private List<DiaSemana> diasSemana;
 
-        usuario = (Usuario) session.getAttribute("usuario");
+	private MapModel geoModel;
 
-        this.model.setMobilizador(usuario);
-        this.causas = causaManager.findAll();
-        this.publicoAlvos = publicoAlvoManager.findAll();
-        this.habilidades = habilidadeManager.findAll();
-        this.qualificacoes = qualificacaoManager.findAll();
+	private MapModel geoModelVinculacao;
 
+	private String centerGeoMap = "41.850033, -87.6500523";
 
-        geoModel = new DefaultMapModel();
+	private String centerGeoMapVinculacao = "41.850033, -87.6500523";
 
-        return retorno;
-    }
-	
-    @Override
-    public String exibirAlteracao(){
-        String retorno = super.exibirAlteracao();	
+	private List<EventoSocial> eventosAbertos;
 
+	private Marker marker;
 
-        this.causas = causaManager.findAll();
-        this.publicoAlvos = publicoAlvoManager.findAll();
-        this.habilidades = habilidadeManager.findAll();
-        this.qualificacoes = qualificacaoManager.findAll();
+	private EventoSocial eventoSocial;
 
+	private boolean vinculado;
 
-        geoModel = new DefaultMapModel();
-        adicionarMarcador();
-        centerGeoMap = this.model.getLatitude() + ", " + this.model.getLongitude();
+	private boolean mostrarVincular;
 
-        return retorno;
-    }
+	@PostConstruct
+	@Override
+	public void inicializar() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
 
-    public String exibirVinculacao(){
-        super.exibirAlteracao();
-        vinculado = false;
-        mostrarVincular = true;
-        this.geoModelVinculacao = new DefaultMapModel();
+		usuario = (Usuario) session.getAttribute("usuario");
 
-        this.causas = causaManager.findAll();
-        this.publicoAlvos = publicoAlvoManager.findAll();
-        this.habilidades = habilidadeManager.findAll();
-        this.qualificacoes = qualificacaoManager.findAll();
-        adicionarMarcadorVinculacao();
-        this.centerGeoMapVinculacao = this.model.getLatitude() + ", " + this.model.getLongitude();
-        
-        //Busca participacao
-        this.vinculado = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario) != null;
+		this.limpar();
+		incluindo = false;
+		this.listaModel = eventoSocialManager.findByUsuario(this.usuario);
+	}
 
-        if(pessoaJuridicaManager.findByPessoa(this.usuario.getPessoa()) != null || this.model.getMobilizador().equals(this.usuario))
-            this.mostrarVincular = false;
-        
-        return "EventoSocialVincular";
-    }
-    
-    public void vincular(){
-        Participacao participacao = null;
-        
-        if(!this.vinculado){
-            System.out.println("incluindo");
-            participacao = new Participacao();
-            participacao.setEventoSocial(this.model);
-            participacao.setUsuario(this.usuario);
+	public void inicializarSelecao() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
 
-            participacaoManager.create(participacao);
+		usuario = (Usuario) session.getAttribute("usuario");
 
-            vinculado = true;
-        }
-        else{
-            System.out.println("excluindo");
-            participacao = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario);
-            participacaoManager.remove(participacao);
-            vinculado = false;
-        }
-        
-        Utils.adicionarMensagem("Operação realizada com sucesso.", null, Utils.SUCESSO);
-    }
+		this.geoModel = new DefaultMapModel();
 
-    @Override
-    public String gravar() {
+		this.centerGeoMap = usuario.getPessoa().getLatitude() + ", " + usuario.getPessoa().getLongitude();
+		LatLng coord = new LatLng(usuario.getPessoa().getLatitude(), usuario.getPessoa().getLongitude());
+		// 1km
+		Circle circle1 = new Circle(coord, 1000);
+		circle1.setStrokeColor("yellow");
+		circle1.setFillColor("yellow");
+		circle1.setStrokeOpacity(0.35);
+		circle1.setFillOpacity(0.35);
 
-        return super.gravar();
-    }
+		// 3km
+		Circle circle2 = new Circle(coord, 3000);
+		circle2.setStrokeColor("green");
+		circle2.setFillColor("green");
+		circle2.setStrokeOpacity(0.25);
+		circle2.setFillOpacity(0.25);
 
-	 
-    public String adicionarMarcador() {
-        Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
-        geoModel.addOverlay(marker);
+		// 5km
+		Circle circle3 = new Circle(coord, 5000);
+		circle3.setStrokeColor("blue");
+		circle3.setFillColor("blue");
+		circle3.setStrokeOpacity(0.15);
+		circle3.setFillOpacity(0.15);
 
-        System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
+		Circle circle4 = new Circle(coord, 10000);
+		circle4.setStrokeColor("red");
+		circle4.setFillColor("red");
+		circle4.setStrokeOpacity(0.05);
+		circle4.setFillOpacity(0.05);
 
-        return null;
-    }
-    
-    public String adicionarMarcadorVinculacao() {
-        Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
-        geoModelVinculacao.addOverlay(marker);
+		this.geoModel.addOverlay(circle1);
+		this.geoModel.addOverlay(circle2);
+		// this.geoModel.addOverlay(circle3);
+		// this.geoModel.addOverlay(circle4);
 
-        System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
+		// Buscar eventos abertos
+		this.eventosAbertos = new ArrayList<EventoSocial>();
+		this.eventosAbertos = this.eventoSocialManager.findAbertos();
 
-        return null;
-    }
-    
-public void prepararInserirMeta() {
-		
+		this.geoModel
+				.addOverlay(new Marker(coord, "Eu", "0", "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png"));
+
+		for (EventoSocial eventoSocial : this.eventosAbertos) {
+			LatLng coordMarker = new LatLng(eventoSocial.getLatitude(), eventoSocial.getLongitude());
+
+			if (eventoSocial.getMobilizador().equals(usuario))
+				this.geoModel.addOverlay(new Marker(coordMarker, "Meu Evento: " + eventoSocial.getNome(),
+						eventoSocial.getId(), "http://maps.google.com/mapfiles/ms/micons/green-dot.png"));
+			else if (this.participacaoManager.findByUsuarioEvento(eventoSocial, this.usuario) != null)
+				this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId(),
+						"http://maps.google.com/mapfiles/ms/micons/red-pushpin.png"));
+			else
+				this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId()));
+		}
+
+	}
+
+	public void onMarkerSelect(OverlaySelectEvent event) {
+		marker = (Marker) event.getOverlay();
+		this.eventoSocial = eventoSocialManager.find(marker.getData());
+	}
+
+	@Override
+	public String exibirInclusao() {
+		String retorno = super.exibirInclusao();
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+
+		usuario = (Usuario) session.getAttribute("usuario");
+
+		this.model.setMobilizador(usuario);
+		this.causas = causaManager.findAll();
+		this.publicoAlvos = publicoAlvoManager.findAll();
+		this.habilidades = habilidadeManager.findAll();
+		this.qualificacoes = qualificacaoManager.findAll();
+
+		geoModel = new DefaultMapModel();
+
+		return retorno;
+	}
+
+	@Override
+	public String exibirAlteracao() {
+		String retorno = super.exibirAlteracao();
+
+		this.causas = causaManager.findAll();
+		this.publicoAlvos = publicoAlvoManager.findAll();
+		this.habilidades = habilidadeManager.findAll();
+		this.qualificacoes = qualificacaoManager.findAll();
+
+		geoModel = new DefaultMapModel();
+		adicionarMarcador();
+		centerGeoMap = this.model.getLatitude() + ", " + this.model.getLongitude();
+
+		return retorno;
+	}
+
+	public String exibirVinculacao() {
+		super.exibirAlteracao();
+		vinculado = false;
+		mostrarVincular = true;
+		this.geoModelVinculacao = new DefaultMapModel();
+
+		this.causas = causaManager.findAll();
+		this.publicoAlvos = publicoAlvoManager.findAll();
+		this.habilidades = habilidadeManager.findAll();
+		this.qualificacoes = qualificacaoManager.findAll();
+		adicionarMarcadorVinculacao();
+		this.centerGeoMapVinculacao = this.model.getLatitude() + ", " + this.model.getLongitude();
+
+		// Busca participacao
+		this.vinculado = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario) != null;
+
+		if (pessoaJuridicaManager.findByPessoa(this.usuario.getPessoa()) != null
+				|| this.model.getMobilizador().equals(this.usuario))
+			this.mostrarVincular = false;
+
+		return "EventoSocialVincular";
+	}
+
+	public void vincular() {
+		Participacao participacao = null;
+
+		if (!this.vinculado) {
+			System.out.println("incluindo");
+			participacao = new Participacao();
+			participacao.setEventoSocial(this.model);
+			participacao.setUsuario(this.usuario);
+
+			participacaoManager.create(participacao);
+
+			vinculado = true;
+		} else {
+			System.out.println("excluindo");
+			participacao = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario);
+			participacaoManager.remove(participacao);
+			vinculado = false;
+		}
+
+		Utils.adicionarMensagem("Operação realizada com sucesso.", null, Utils.SUCESSO);
+	}
+
+	public String prepararFecharEvento() {
+
+		return "/pages/private/eventoSocial/prestacaoContas.xhtml";
+	}
+
+	public String fecharEvento() {
+
+		this.model.setFechado(true);
+
+		Utils.adicionarMensagem("Operação realizada com sucesso.", null, Utils.SUCESSO);
+
+		try {
+				getManager().edit(this.model);
+			
+			Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
+			return "/pages/public/eventoSocial/resumo.xhtml";
+		} catch (Exception e) {
+			Utils.adicionarMensagem("Erro ao Cadastrar Evento." + e.getMessage(), null, Utils.FATAL);
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	@Override
+	public String gravar() {
+
+		return super.gravar();
+	}
+
+	public String adicionarMarcador() {
+		Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
+		geoModel.addOverlay(marker);
+
+		System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
+
+		return null;
+	}
+
+	public String adicionarMarcadorVinculacao() {
+		Marker marker = new Marker(new LatLng(this.model.getLatitude(), this.model.getLongitude()), "Marcador");
+		geoModelVinculacao.addOverlay(marker);
+
+		System.out.println("lat " + this.model.getLatitude() + " - log " + this.model.getLongitude());
+
+		return null;
+	}
+
+	public void prepararInserirMeta() {
+
 		Meta novaMeta = new Meta();
 		novaMeta.setQuantidadeNecessaria(1);
 		novaMeta.setQuantidadeObtida(0);
-		novaMeta.setEvento(this.model);	
+		novaMeta.setEvento(this.model);
 
 		this.getModel().getMetas().add(novaMeta);
 
 	}
 
-	public void removeMeta(Meta meta){
-		 
-		 this.getModel().getMetas().remove(meta);		 
-		 
-	 }
-	 
-    public void onGeocode(GeocodeEvent event) {
-        List<GeocodeResult> results = event.getResults();
+	public void removeMeta(Meta meta) {
 
-        if (results != null && !results.isEmpty()) {
-            LatLng center = results.get(0).getLatLng();
-            centerGeoMap = center.getLat() + "," + center.getLng();
+		this.getModel().getMetas().remove(meta);
 
-            for (GeocodeResult result : results) {
-                geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-            }
-        }
-    }
-	 
-	
-    @Override
-    public AbstractManager getManager() {
-            return eventoSocialManager;
-    }
+	}
 
-    @Override
-    public String getTitulo() {
-            return "Eventos";
-    }
+	public void onGeocode(GeocodeEvent event) {
+		List<GeocodeResult> results = event.getResults();
 
-    public MapModel getGeoModel() {
-            return geoModel;
-    }
+		if (results != null && !results.isEmpty()) {
+			LatLng center = results.get(0).getLatLng();
+			centerGeoMap = center.getLat() + "," + center.getLng();
 
-    public void setGeoModel(MapModel geoModel) {
-            this.geoModel = geoModel;
-    }
+			for (GeocodeResult result : results) {
+				geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
+			}
+		}
+	}
 
-    public String getCenterGeoMap() {
-            return centerGeoMap;
-    }
+	@Override
+	public AbstractManager getManager() {
+		return eventoSocialManager;
+	}
 
-    public void setCenterGeoMap(String centerGeoMap) {
-            this.centerGeoMap = centerGeoMap;
-    }
+	@Override
+	public String getTitulo() {
+		return "Eventos";
+	}
 
-    public List<Causa> getCausas() {
-            return causas;
-    }
+	public MapModel getGeoModel() {
+		return geoModel;
+	}
 
-    public void setCausas(List<Causa> causas) {
-            this.causas = causas;
-    }
+	public void setGeoModel(MapModel geoModel) {
+		this.geoModel = geoModel;
+	}
 
-    public List<PublicoAlvo> getPublicoAlvos() {
-            return publicoAlvos;
-    }
+	public String getCenterGeoMap() {
+		return centerGeoMap;
+	}
 
-    public void setPublicoAlvos(List<PublicoAlvo> publicoAlvos) {
-            this.publicoAlvos = publicoAlvos;
-    }
+	public void setCenterGeoMap(String centerGeoMap) {
+		this.centerGeoMap = centerGeoMap;
+	}
 
-    public List<DiaSemana> getDiasSemana() {
-            return diasSemana;
-    }
+	public List<Causa> getCausas() {
+		return causas;
+	}
 
-    public void setDiasSemana(List<DiaSemana> diasSemana) {
-            this.diasSemana = diasSemana;
-    }
+	public void setCausas(List<Causa> causas) {
+		this.causas = causas;
+	}
 
-    public List<Habilidade> getHabilidades() {
-            return habilidades;
-    }
+	public List<PublicoAlvo> getPublicoAlvos() {
+		return publicoAlvos;
+	}
 
-    public void setHabilidades(List<Habilidade> habilidades) {
-            this.habilidades = habilidades;
-    }
+	public void setPublicoAlvos(List<PublicoAlvo> publicoAlvos) {
+		this.publicoAlvos = publicoAlvos;
+	}
 
-    public List<Qualificacao> getQualificacoes() {
-            return qualificacoes;
-    }
+	public List<DiaSemana> getDiasSemana() {
+		return diasSemana;
+	}
 
-    public void setQualificacoes(List<Qualificacao> qualificacoes) {
-            this.qualificacoes = qualificacoes;
-    }
+	public void setDiasSemana(List<DiaSemana> diasSemana) {
+		this.diasSemana = diasSemana;
+	}
 
-    public List<EventoSocial> getEventosAbertos() {
-        return eventosAbertos;
-    }
+	public List<Habilidade> getHabilidades() {
+		return habilidades;
+	}
 
-    public void setEventosAbertos(List<EventoSocial> eventosAbertos) {
-        this.eventosAbertos = eventosAbertos;
-    }
+	public void setHabilidades(List<Habilidade> habilidades) {
+		this.habilidades = habilidades;
+	}
 
-    public Marker getMarker() {
-        return marker;
-    }
+	public List<Qualificacao> getQualificacoes() {
+		return qualificacoes;
+	}
 
-    public void setMarker(Marker marker) {
-        this.marker = marker;
-    }
+	public void setQualificacoes(List<Qualificacao> qualificacoes) {
+		this.qualificacoes = qualificacoes;
+	}
 
-    public EventoSocial getEventoSocial() {
-        return eventoSocial;
-    }
+	public List<EventoSocial> getEventosAbertos() {
+		return eventosAbertos;
+	}
 
-    public void setEventoSocial(EventoSocial eventoSocial) {
-        this.eventoSocial = eventoSocial;
-    }
+	public void setEventosAbertos(List<EventoSocial> eventosAbertos) {
+		this.eventosAbertos = eventosAbertos;
+	}
 
-    public Usuario getUsuario() {
-            return usuario;
-    }
+	public Marker getMarker() {
+		return marker;
+	}
 
-    public void setUsuario(Usuario usuario) {
-            this.usuario = usuario;
-    }
+	public void setMarker(Marker marker) {
+		this.marker = marker;
+	}
 
-    public boolean isVinculado() {
-        return vinculado;
-    }
+	public EventoSocial getEventoSocial() {
+		return eventoSocial;
+	}
 
-    public void setVinculado(boolean vinculado) {
-        this.vinculado = vinculado;
-    }
+	public void setEventoSocial(EventoSocial eventoSocial) {
+		this.eventoSocial = eventoSocial;
+	}
 
-    public MapModel getGeoModelVinculacao() {
-        return geoModelVinculacao;
-    }
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-    public void setGeoModelVinculacao(MapModel geoModelVinculacao) {
-        this.geoModelVinculacao = geoModelVinculacao;
-    }
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-    public String getCenterGeoMapVinculacao() {
-        return centerGeoMapVinculacao;
-    }
+	public boolean isVinculado() {
+		return vinculado;
+	}
 
-    public void setCenterGeoMapVinculacao(String centerGeoMapVinculacao) {
-        this.centerGeoMapVinculacao = centerGeoMapVinculacao;
-    }
+	public void setVinculado(boolean vinculado) {
+		this.vinculado = vinculado;
+	}
 
-    public boolean isMostrarVincular() {
-        return mostrarVincular;
-    }
+	public MapModel getGeoModelVinculacao() {
+		return geoModelVinculacao;
+	}
 
-    public void setMostrarVincular(boolean mostrarVincular) {
-        this.mostrarVincular = mostrarVincular;
-    }
-    
-    
+	public void setGeoModelVinculacao(MapModel geoModelVinculacao) {
+		this.geoModelVinculacao = geoModelVinculacao;
+	}
+
+	public String getCenterGeoMapVinculacao() {
+		return centerGeoMapVinculacao;
+	}
+
+	public void setCenterGeoMapVinculacao(String centerGeoMapVinculacao) {
+		this.centerGeoMapVinculacao = centerGeoMapVinculacao;
+	}
+
+	public boolean isMostrarVincular() {
+		return mostrarVincular;
+	}
+
+	public void setMostrarVincular(boolean mostrarVincular) {
+		this.mostrarVincular = mostrarVincular;
+	}
 
 }

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:body>
+	<ui:composition template="/template/_templateSemBotao.xhtml">
+		<ui:param name="bean" value="#{EventoSocialBean}" />
+		<ui:define name="corpo">
+
+		   
+                <div class=" col-md-12" style="padding-top:20px">
+                 <legend>Prestação de contas</legend>
+                
+                          <legend>Metas</legend>
+                         <h:panelGroup id="panel"> 
+                          <p:dataTable id="metas" var="meta" value="#{bean.model.metas}" editable="true" style="margin-bottom:20px">
+                             <f:facet name="header">
+                                 Metas
+                             </f:facet>
+
+                             <p:column headerText="Descrição">
+                                     <h:outputText value="#{meta.descricao}" />
+                             </p:column>
+                               <p:column headerText="Quantidade Necessária">
+                                     <h:outputText value="#{meta.quantidadeNecessaria}" />
+                             </p:column>
+                             <p:column headerText="Quantidade Obtida">
+                                           <p:cellEditor>
+                                               <f:facet name="output"><h:outputText value="#{meta.quantidadeObtida}" /></f:facet>
+                                               <f:facet name="input"><p:inputText value="#{meta.quantidadeObtida}" style="width:100%" label="Quantidade Necessária"/></f:facet>
+                                           </p:cellEditor>
+                             </p:column>
+                             <p:column style="width:15px">
+                                 <p:rowEditor />
+                             </p:column>
+                         
+                         </p:dataTable>
+                         
+						</h:panelGroup>
+            </div>
+            
+            	<div class="submit-row">
+                    <p:commandButton value="Fechar Evento" styleClass="salvar" action="#{bean.fecharEvento()}" ajax='false'/>
+                </div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

@@ -59,6 +59,8 @@ public class EventoSocial extends AbstractModel {
         @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataFim;
         
+    private Boolean fechado;    
+        
     @OneToMany(mappedBy = "evento",fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	private List<Meta> metas;
 
@@ -212,6 +214,14 @@ public class EventoSocial extends AbstractModel {
 
 	public void setMetas(List<Meta> metas) {
 		this.metas = metas;
+	}
+
+	public Boolean getFechado() {
+		return fechado;
+	}
+
+	public void setFechado(Boolean fechado) {
+		this.fechado = fechado;
 	}
 
 }

@@ -259,6 +259,14 @@
                     }
 
                 </script>
+                
+                
+			<div class=" col-md-12 ">
+			 <p:commandButton action="#{bean.prepararFecharEvento()}" title="Fechar Evento" value="Fechar Evento" ajax="false">
+                                       <f:setPropertyActionListener value="#{bean.model}" target="#{bean.model}" />
+             </p:commandButton>
+			</div>
+              
 		</ui:define>
 	</ui:composition>
 </h:body>
