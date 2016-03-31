@@ -1,9 +1,12 @@
 package br.cin.ufpe.contribua.manager;
 
+import br.cin.ufpe.contribua.model.Pessoa;
 import br.cin.ufpe.contribua.model.PessoaJuridica;
 import br.cin.ufpe.contribua.model.Usuario;
 import java.util.Date;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 @Stateless
 public class PessoaJuridicaManager extends AbstractManager<PessoaJuridica> {
@@ -55,5 +58,21 @@ public class PessoaJuridicaManager extends AbstractManager<PessoaJuridica> {
         
         usuario.setPessoa(pessoaJuridica.getPessoa());
         getEntityManager().merge(usuario);
+    }
+    
+    public PessoaJuridica findByPessoa(Pessoa pessoa){
+        try{
+            String sql = "SELECT pj "
+                    + "FROM PessoaJuridica pj "
+                    + "WHERE pj.pessoa = :pessoa ";
+
+            Query query = this.getEntityManager().createQuery(sql);
+            query.setParameter("pessoa", pessoa);
+
+            return (PessoaJuridica) query.getSingleResult();
+        
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

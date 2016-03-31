@@ -24,15 +24,16 @@ import br.cin.ufpe.contribua.manager.DiaSemanaManager;
 import br.cin.ufpe.contribua.manager.EventoSocialManager;
 import br.cin.ufpe.contribua.manager.HabilidadeManager;
 import br.cin.ufpe.contribua.manager.ParticipacaoManager;
+import br.cin.ufpe.contribua.manager.PessoaJuridicaManager;
 import br.cin.ufpe.contribua.manager.PublicoAlvoManager;
 import br.cin.ufpe.contribua.manager.QualificacaoManager;
 import br.cin.ufpe.contribua.manager.UsuarioManager;
-import br.cin.ufpe.contribua.model.AbstractModel;
 import br.cin.ufpe.contribua.model.Causa;
 import br.cin.ufpe.contribua.model.DiaSemana;
 import br.cin.ufpe.contribua.model.EventoSocial;
 import br.cin.ufpe.contribua.model.Habilidade;
 import br.cin.ufpe.contribua.model.Participacao;
+import br.cin.ufpe.contribua.model.PessoaJuridica;
 import br.cin.ufpe.contribua.model.PublicoAlvo;
 import br.cin.ufpe.contribua.model.Qualificacao;
 import br.cin.ufpe.contribua.model.Usuario;
@@ -69,6 +70,9 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     @EJB
     ParticipacaoManager participacaoManager;
     
+    @EJB
+    PessoaJuridicaManager pessoaJuridicaManager;
+    
     private Usuario usuario;
 	
     private List<Causa> causas;
@@ -97,6 +101,8 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     private EventoSocial eventoSocial;
     
     private boolean vinculado;
+    
+    private boolean mostrarVincular;
     
     @PostConstruct
     @Override
@@ -177,8 +183,6 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
         this.eventoSocial = eventoSocialManager.find(marker.getData());
-        
-        System.out.println("---------" + this.eventoSocial.getLatitude() + "," + this.eventoSocial.getLongitude());
     }
 
     @Override
@@ -224,6 +228,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     public String exibirVinculacao(){
         super.exibirAlteracao();
         vinculado = false;
+        mostrarVincular = true;
         this.geoModelVinculacao = new DefaultMapModel();
 
         this.causas = causaManager.findAll();
@@ -234,22 +239,33 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
         this.centerGeoMapVinculacao = this.model.getLatitude() + ", " + this.model.getLongitude();
         
         //Busca participacao
-        this.vinculado = this.model.getMobilizador().equals(this.usuario);
-                
-        if(!this.vinculado)
-            this.vinculado = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario) != null;
+        this.vinculado = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario) != null;
 
+        if(pessoaJuridicaManager.findByPessoa(this.usuario.getPessoa()) != null || this.model.getMobilizador().equals(this.usuario))
+            this.mostrarVincular = false;
+        
         return "EventoSocialVincular";
     }
     
     public void vincular(){
-        Participacao participacao = new Participacao();
-        participacao.setEventoSocial(this.model);
-        participacao.setUsuario(this.usuario);
+        Participacao participacao = null;
         
-        participacaoManager.create(participacao);
-        
-        vinculado = true;
+        if(!this.vinculado){
+            System.out.println("incluindo");
+            participacao = new Participacao();
+            participacao.setEventoSocial(this.model);
+            participacao.setUsuario(this.usuario);
+
+            participacaoManager.create(participacao);
+
+            vinculado = true;
+        }
+        else{
+            System.out.println("excluindo");
+            participacao = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario);
+            participacaoManager.remove(participacao);
+            vinculado = false;
+        }
         
         Utils.adicionarMensagem("Operação realizada com sucesso.", null, Utils.SUCESSO);
     }
@@ -414,5 +430,15 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
     public void setCenterGeoMapVinculacao(String centerGeoMapVinculacao) {
         this.centerGeoMapVinculacao = centerGeoMapVinculacao;
     }
+
+    public boolean isMostrarVincular() {
+        return mostrarVincular;
+    }
+
+    public void setMostrarVincular(boolean mostrarVincular) {
+        this.mostrarVincular = mostrarVincular;
+    }
+    
+    
 
 }

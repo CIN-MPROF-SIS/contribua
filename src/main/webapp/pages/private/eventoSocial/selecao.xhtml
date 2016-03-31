@@ -77,8 +77,8 @@
                                             </p:outputPanel>
                                         </p:gmapInfoWindow>
                                     </p:gmap>
-                                    <h:inputHidden id="lat" value="#{bean.eventoSocial.latitude}" />
-                                    <h:inputHidden id="lng" value="#{bean.eventoSocial.longitude}" />
+                                    <h:inputHidden id="lat" value="#{bean.eventoSocial.latitude}" rendered="#{bean.eventoSocial != null}"/>
+                                    <h:inputHidden id="lng" value="#{bean.eventoSocial.longitude}" rendered="#{bean.eventoSocial != null}"/>
                                 </div>
                             </fieldset>
                             <legend style="margin-top:50px">Eventos</legend>
@@ -108,6 +108,7 @@
                                                 <td width="20%">
                                                     <h:commandLink action="#{bean.exibirVinculacao()}" target="_blank" title="Ver Detalhes" value="Ver Detalhes">
                                                         <f:setPropertyActionListener value="#{eventoSocial}" target="#{bean.model}" />
+                                                        <f:setPropertyActionListener value="#{eventoSocial}" target="#{bean.eventoSocial}" />
                                                     </h:commandLink>
                                                 </td>
                                             </tr>
@@ -127,8 +128,12 @@
                         var directionsService 
                         $(document).ready(
                                 function(){
-                                    directionsDisplay = new google.maps.DirectionsRenderer;
-                                    directionsService = new google.maps.DirectionsService;
+                                    setTimeout(
+                                        function(){
+                                            directionsDisplay = new google.maps.DirectionsRenderer;
+                                            directionsService = new google.maps.DirectionsService;
+                                        }, 500
+                                    );
                                 }
                                 );
                         function calcularDistancia(){
@@ -172,6 +177,7 @@
                             directionsDisplay.setMap(null);
 
                             directionsDisplay.setMap(PF('geoMap').getMap());
+                            directionsDisplay.setOptions( { suppressMarkers: true } );
                             //PF('geoMap').getMap()
                             
                             var origin = new google.maps.LatLng(#{bean.centerGeoMap });

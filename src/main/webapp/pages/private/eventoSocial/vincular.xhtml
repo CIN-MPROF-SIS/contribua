@@ -130,7 +130,7 @@
                             </div>
 
                             <div class="submit-row">
-                                <p:commandButton value="#{bean.vinculado ? 'Vinculado' : 'Vincular'}" id="btnVincular" styleClass="salvar" action="#{bean.vincular()}" disabled="#{bean.vinculado}" update="form"/>
+                                <p:commandButton value="#{bean.vinculado ? 'Desvincular' : 'Vincular'}" id="btnVincular" styleClass="salvar" action="#{bean.vincular()}" disabled="#{!bean.mostrarVincular}" update="form"/>
                             </div>
                         </h:form>
                     </fieldset>
