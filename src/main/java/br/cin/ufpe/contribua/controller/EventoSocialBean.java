@@ -352,9 +352,9 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 			LatLng center = results.get(0).getLatLng();
 			centerGeoMap = center.getLat() + "," + center.getLng();
 
-			for (GeocodeResult result : results) {
+			/*for (GeocodeResult result : results) {
 				geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-			}
+			}*/
 		}
 	}
 

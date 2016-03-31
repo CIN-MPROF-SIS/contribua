@@ -166,7 +166,7 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
         this.limpar();
             
                 
-       return "/pages/private/home?faces-redirect=true";
+       return "index";
     }
     
     public String adicionarMarcador() {
@@ -217,9 +217,9 @@ public class PessoaJuridicaBean extends AbstractBean<PessoaJuridica> {
             LatLng center = results.get(0).getLatLng();
             centerGeoMap = center.getLat() + "," + center.getLng();
              
-            for (GeocodeResult result : results) {
+            /*for (GeocodeResult result : results) {
                 geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-            }
+            }*/
         }
     }
 
