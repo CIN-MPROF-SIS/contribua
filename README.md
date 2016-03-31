@@ -1,16 +1,11 @@
-# TryHeroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+Contribua
 
-1 - para executar cole isso no seu terminal
-java -jar target/dependency/webapp-runner.jar target/*.war
+Alessandro Borges Rodrigues - abr@cin.ufpe.br
+Daniel Félix de Souza - dfs6@cin.ufpe.br
+Dante Aurélio Dantas de Menezes Barros - dadmb@cin.ufpe.br
+Gislene Albuquerque Pires da Silva - gaps@cin.ufpe.br
+Vivian Facundes Dantas - vfd2@cin.ufpe.br
 
-2 - para publicar basta clicar no botao do heroku
-java -jar target/dependency/webapp-runner.jar target/*.war
 
-Execucao
-C:\Projects\java\maven-jsf-primefaces-heroku>java -jar target/dependency/webapp-runner.jar target/*.war
-=======
-
-Aprendendo a fazer deploy no heroku
-https://devcenter.heroku.com/articles/getting-started-with-java
+Este trabalho é requisito da disciplina Tópicos Avançados em Engenharia de Software 2 ministrada pelo Prof. Kiev Gama.
