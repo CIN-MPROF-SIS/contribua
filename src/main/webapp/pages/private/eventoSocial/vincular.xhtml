@@ -97,10 +97,28 @@
                                 </h:outputText>
                             </div>
 
-                            <div class=" col-md-6 ">
-                                <p:outputLabel style="font-weight:bold" value="Meta : " />
-                                <p:outputLabel value="#{bean.model.meta}" />
-                                <br />
+                            <div class=" col-md-12 ">
+                           
+                                        
+                          <legend>Metas</legend>
+               
+		                          <p:dataTable id="metas" var="meta" value="#{bean.model.metas}" editable="true" style="margin-bottom:20px">
+		                             <f:facet name="header">
+		                                 Metas
+		                             </f:facet>
+		
+		                             <p:column headerText="Descrição">
+		                                     <h:outputText value="#{meta.descricao}" />
+		                             </p:column>
+		                             <p:column headerText="Quantidade Necessária">
+		                                     <h:outputText value="#{meta.quantidadeNecessaria}" />
+		                             </p:column>
+		                             <p:column headerText="Quantidade Obtida">
+		                                       <h:outputText value="#{meta.quantidadeObtida}" />
+		                             </p:column>
+		                         
+		                         </p:dataTable>
+           		
                             </div>
 
 

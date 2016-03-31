@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:body>
         <ui:composition template="/template/_lista.xhtml">
@@ -11,6 +12,11 @@
             <ui:define name="colunas">
                 <p:column headerText="nome">
                     <h:outputText value="#{item.nome}" />
+                </p:column>
+                <p:column>
+                 <p:commandButton action="#{bean.detalheEvento()}" title="Detalhe Evento" value="Detalhe Evento" ajax="false">
+                                       <f:setPropertyActionListener value="#{item}" target="#{bean.model}" />
+                 </p:commandButton>
                 </p:column>             
             </ui:define>
         </ui:composition>

@@ -101,6 +101,8 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	private boolean vinculado;
 
 	private boolean mostrarVincular;
+	
+	private List<Participacao> participacoes;
 
 	@PostConstruct
 	@Override
@@ -113,6 +115,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 		this.limpar();
 		incluindo = false;
 		this.listaModel = eventoSocialManager.findByUsuario(this.usuario);
+		participacoes = new ArrayList<Participacao>();
 	}
 
 	public void inicializarSelecao() {
@@ -266,10 +269,12 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	}
 
 	public String prepararFecharEvento() {
+		
+		
 
 		return "/pages/private/eventoSocial/prestacaoContas.xhtml";
 	}
-
+	
 	public String fecharEvento() {
 
 		this.model.setFechado(true);
@@ -289,6 +294,15 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 		return null;
 
 	}
+	
+	public String detalheEvento() {
+
+		participacoes = participacaoManager.findByEvento(this.model);
+		
+		return "/pages/public/eventoSocial/detalhe.xhtml";
+
+	}
+	
 
 	@Override
 	public String gravar() {
@@ -472,6 +486,14 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 
 	public void setMostrarVincular(boolean mostrarVincular) {
 		this.mostrarVincular = mostrarVincular;
+	}
+
+	public List<Participacao> getParticipacoes() {
+		return participacoes;
+	}
+
+	public void setParticipacoes(List<Participacao> participacoes) {
+		this.participacoes = participacoes;
 	}
 
 }
