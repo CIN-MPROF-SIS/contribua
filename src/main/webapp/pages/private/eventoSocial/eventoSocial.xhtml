@@ -90,13 +90,6 @@
 			</div>
 			
 			<div class=" col-md-6 ">
-				<p:outputLabel value="Meta : " />
-				<p:inputText value="#{bean.model.meta}" />
-				<br />
-			</div>
-			
-			 
-			<div class=" col-md-6 ">
 				<p:outputLabel value="Habilidades: " />
 				<p:selectManyCheckbox value="#{bean.model.habilidades}"
 					id="habilidades" converter="DefaultConverter" layout="grid"
@@ -121,6 +114,49 @@
                                     itemLabel="#{item.descricao}" itemValue="#{item}" />
                     </p:selectManyCheckbox>
                 </div>
+                
+                <div class=" col-md-12" style="padding-top:20px">
+                          <legend>Metas</legend>
+                         <h:panelGroup id="panel"> 
+                          <p:dataTable id="metas" var="meta" value="#{bean.model.metas}" editable="true" style="margin-bottom:20px">
+                             <f:facet name="header">
+                                 Metas
+                             </f:facet>
+
+                             <p:column headerText="Descrição">
+                                           <p:cellEditor>
+                                               <f:facet name="output"><h:outputText value="#{meta.descricao}" /></f:facet>
+                                               <f:facet name="input"><p:inputText value="#{meta.descricao}" style="width:100%" label="Descrição"/></f:facet>
+                                           </p:cellEditor>
+                             </p:column>
+                             <p:column headerText="Quantidade Necessária">
+                                           <p:cellEditor>
+                                               <f:facet name="output"><h:outputText value="#{meta.quantidadeNecessaria}" /></f:facet>
+                                               <f:facet name="input"><p:inputText value="#{meta.quantidadeNecessaria}" style="width:100%" label="Quantidade Necessária"/></f:facet>
+                                           </p:cellEditor>
+                             </p:column>
+                             <p:column>
+					                <h:commandLink value="X" action="#{bean.removeMeta(meta)}">
+					                    <f:ajax render=":form:panel" />
+					                </h:commandLink>
+					         </p:column>
+                              <p:column style="width:15px">
+                                 <p:rowEditor />
+                             </p:column>
+                           
+                             
+                         <f:facet name="footer">
+					         <h:column>
+					                <h:commandLink value="Adcionar Nova Meta" action="#{bean.prepararInserirMeta()}">
+					                    <f:ajax render=":form:panel" />
+					                </h:commandLink>
+					        </h:column>
+					        
+					     </f:facet>
+                         </p:dataTable>
+                         
+						</h:panelGroup>
+            </div>
 		
 			
 

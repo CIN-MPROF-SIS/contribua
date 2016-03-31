@@ -3,6 +3,7 @@ package br.cin.ufpe.contribua.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -32,13 +33,12 @@ import br.cin.ufpe.contribua.model.Causa;
 import br.cin.ufpe.contribua.model.DiaSemana;
 import br.cin.ufpe.contribua.model.EventoSocial;
 import br.cin.ufpe.contribua.model.Habilidade;
+import br.cin.ufpe.contribua.model.Meta;
 import br.cin.ufpe.contribua.model.Participacao;
-import br.cin.ufpe.contribua.model.PessoaJuridica;
 import br.cin.ufpe.contribua.model.PublicoAlvo;
 import br.cin.ufpe.contribua.model.Qualificacao;
 import br.cin.ufpe.contribua.model.Usuario;
 import br.cin.ufpe.contribua.util.Utils;
-import javax.annotation.PostConstruct;
 
 @ManagedBean
 @ViewScoped
@@ -294,6 +294,23 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 
         return null;
     }
+    
+public void prepararInserirMeta() {
+		
+		Meta novaMeta = new Meta();
+		novaMeta.setQuantidadeNecessaria(1);
+		novaMeta.setQuantidadeObtida(0);
+		novaMeta.setEvento(this.model);	
+
+		this.getModel().getMetas().add(novaMeta);
+
+	}
+
+	public void removeMeta(Meta meta){
+		 
+		 this.getModel().getMetas().remove(meta);		 
+		 
+	 }
 	 
     public void onGeocode(GeocodeEvent event) {
         List<GeocodeResult> results = event.getResults();

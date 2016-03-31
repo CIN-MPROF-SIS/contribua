@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -29,9 +31,6 @@ public class EventoSocial extends AbstractModel {
 	
 	@Column(length = 150)
 	private String beneficiado; 
-	
-	@Column(length = 150)
-	private String meta; 
 	
 	@Column(length = 150)
 	private String caracteristicas; 
@@ -59,6 +58,9 @@ public class EventoSocial extends AbstractModel {
 
         @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataFim;
+        
+    @OneToMany(mappedBy = "evento",fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	private List<Meta> metas;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "eventoSocial_habilidade", joinColumns = {
@@ -74,6 +76,7 @@ public class EventoSocial extends AbstractModel {
 	 public EventoSocial() {
 	        this.habilidades = new ArrayList<Habilidade>();
 	        this.qualificacoes = new ArrayList<Qualificacao>();
+	        this.metas = new ArrayList<Meta>();
 	    }
 
 	@Column(nullable = false)
@@ -187,14 +190,6 @@ public class EventoSocial extends AbstractModel {
 		this.horarioTermino = horarioTermino;
 	}
 	
-	public String getMeta() {
-		return meta;
-	}
-
-	public void setMeta(String meta) {
-		this.meta = meta;
-	}
-	
 	public String getCaracteristicas() {
 		return caracteristicas;
 	}
@@ -209,6 +204,14 @@ public class EventoSocial extends AbstractModel {
 
 	public void setMobilizador(Usuario mobilizador) {
 		this.mobilizador = mobilizador;
+	}
+	
+	public List<Meta> getMetas() {
+		return metas;
+	}
+
+	public void setMetas(List<Meta> metas) {
+		this.metas = metas;
 	}
 
 }
