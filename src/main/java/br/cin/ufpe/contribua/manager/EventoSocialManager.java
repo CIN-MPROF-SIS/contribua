@@ -27,7 +27,7 @@ public class EventoSocialManager extends AbstractManager<EventoSocial> {
     public List<EventoSocial> findAbertos(){
         String sql = "SELECT es "
                 + "FROM EventoSocial es "
-                + "WHERE :data < es.dataFim "
+                + "WHERE :data <= es.dataFim "
                 + "ORDER BY es.dataInicio ";
         
         Query query = this.getEntityManager().createQuery(sql);

@@ -215,9 +215,7 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
                     return null;
                 }
 
-            }
-            
-            System.out.println("Anexar gravar");     
+            } 
 
             if(!this.usuario.getSenha().equals(this.confirmacaoSenha)){
                 Utils.adicionarMensagem("Senhas não conferem.", null, Utils.FATAL);
@@ -235,7 +233,7 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
             Utils.adicionarMensagem("Operação Realizada Com Sucesso.", null, Utils.SUCESSO);
             this.limpar();
             
-            return "/pages/private/home?faces-redirect=true";
+            return "index";
         } catch (Exception e) {
             Utils.adicionarMensagem("Erro ao salvar usuário. " + e.getMessage(), null, Utils.ERROR);
             e.printStackTrace();
@@ -348,9 +346,9 @@ public class PessoaFisicaBean extends AbstractBean<PessoaFisica> {
             LatLng center = results.get(0).getLatLng();
             centerGeoMap = center.getLat() + "," + center.getLng();
              
-            for (GeocodeResult result : results) {
+            /*for (GeocodeResult result : results) {
                 geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-            }
+            }*/
         }
     }
 
