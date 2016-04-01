@@ -16,7 +16,7 @@
             <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
         </h:head>
 
-        <h:body>
+        <h:body onload="#{bean.inicializarVincular()}">
             
             <div id="geral">
                 <ui:include src="../../../incs/topo.xhtml" />
@@ -149,8 +149,9 @@
                             </div>
 
                             <div class="submit-row">
-                                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                                <iframe src="http://www.facebook.com/plugins/like.php?href=http://contribua.herokuapp.com/contribua/&amp;layout=button&amp;show_faces=false&amp;width=100&amp;share=true&amp;action=like&amp;colorscheme=light&amp;height=25&amp;locale=pt_BR" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:20px;" allowTransparency="true"></iframe>
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://contribua.herokuapp.com/contribua/pages/private/eventoSocial/vincular.xhtml?id=#{bean.model.id}">Tweet</a>
+                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                                <iframe src="http://www.facebook.com/plugins/like.php?href=http://contribua.herokuapp.com/contribua/pages/private/eventoSocial/vincular.xhtml?id=#{bean.model.id}&amp;layout=button&amp;show_faces=false&amp;width=100&amp;share=true&amp;action=like&amp;colorscheme=light&amp;height=25&amp;locale=pt_BR" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:20px;" allowTransparency="true"></iframe>
                                     
                                 <p:commandButton value="#{bean.vinculado ? 'Sair do Evento' : 'Participar do Evento'}" id="btnVincular" styleClass="salvar" action="#{bean.vincular()}" disabled="#{!bean.mostrarVincular}" update="form"/>
                             </div>

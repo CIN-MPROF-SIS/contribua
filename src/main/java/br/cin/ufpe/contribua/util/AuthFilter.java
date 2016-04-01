@@ -35,7 +35,7 @@ public class AuthFilter implements Filter {
 		String paginaAtual = new String(hreq.getRequestURL());
 
 		if ((request.getAttribute(FILTER_APPLIED) == null) && paginaAtual != null
-				&& (!paginaAtual.endsWith("index.xhtml")) && (!paginaAtual.contains("javax.faces.resource")) // TODO:
+				&& (!paginaAtual.endsWith("index.xhtml")) &&(!paginaAtual.contains("vincular.xhtml")) && (!paginaAtual.contains("javax.faces.resource")) // TODO:
 																												// Verificar
 																												// solução
 																												// melhor
