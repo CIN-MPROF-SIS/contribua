@@ -3,11 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      
+ 
 
-    <h:body>
+    <h:body >
         <ui:composition template="/_login.xhtml">
-            <ui:define name="corpo">
+            <ui:define name="corpo" >
+             <p:growl id="growl"/>
                 <div class="login-form">
                     <p class="lead"></p>
                     <div class="clear"></div>
@@ -15,7 +20,7 @@
                     
                     <ui:param name="beanUsuaurio" value="#{usuarioBean}" />
 
-                    <h:form styleClass="containerLogin">
+           <h:form styleClass="containerLogin">
                         <div class="clear"></div>
                         <div>
                             <h:outputLabel value="Login: " />
@@ -36,8 +41,71 @@
                          <div class="ong">
                             <h:commandButton id="incluirONG"  immediate="true" onclick="" tabindex="3" action="#{beanUsuaurio.cadastrarOrganizacao()}" ajax='false'/>
                         </div>
+                        
+                          
+                
+                  
+                        
+                        
                     </h:form>
                 </div>
+              
+          <ui:param name="beanEvento" value="#{EventoSocialBean}" />
+                <f:event listener="#{beanEvento.listarEventosInicial()}" type="preRenderView" /> 
+                
+                <p:dataGrid var="evento" value="#{beanEvento.listaModel}" columns="3" layout="grid"
+				        rows="12" paginator="true" id="eventos"
+				        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				        rowsPerPageTemplate="6,12,16">
+				 
+				        <f:facet name="header">
+				            Eventos
+				        </f:facet>
+				 
+				        <p:panel header="#{car.id}" style="text-align:center">
+				            <h:panelGrid columns="1" style="width:100%">
+				                <h:outputText value="#{evento.nome}" />
+				 
+				               <h:outputText style="font-weight:bold" value="Nome : " />
+                                <h:outputText value="#{evento.nome}" />
+                        		<br />
+                                <h:outputText style="font-weight:bold" value="Descrição : " />
+                                <h:outputText value="#{evento.descricao}" />
+                                <br />
+                                <h:outputText style="font-weight:bold" value="Beneficiado : " />
+                                <h:outputText value="#{evento.beneficiado}"  />
+                                <br />
+                                <h:outputText style="font-weight:bold"  value="Causa :  " />
+                                <h:outputText value="#{evento.causa.descricao}" />
+                            	<br />
+                                <h:outputText style="font-weight:bold" value="Público Alvo :  " />
+                                <h:outputText value="#{evento.publicoAlvo.descricao}" />
+                                <br />
+                                <h:outputText style="font-weight:bold"  value="Data Início : " />
+                                <h:outputText value="#{evento.dataInicio}">
+                                    <f:convertDateTime pattern="dd/MM/YYYY" />
+                               
+                                </h:outputText>
+                                <br />
+                                <h:outputText style="font-weight:bold" value="Data Fim :  " />
+                                <h:outputText value="#{evento.dataFim}">
+                                    <f:convertDateTime pattern="dd/MM/YYYY" />
+                                </h:outputText>
+                                <h:form>
+                                <!-- 
+                             	<h:commandLink action="#{beanEvento.exibirVinculacao()}" target="_blank" title="Ver Detalhes" value="Ver Detalhes" >
+                                                <f:setPropertyActionListener value="#{evento}" target="#{beanEvento.model}" />
+                                  </h:commandLink>
+                                   -->			 
+				                </h:form>
+				            </h:panelGrid>
+				        </p:panel>
+				 
+				    </p:dataGrid>
+				    
+                
+                
+                
             </ui:define>
         </ui:composition>
     </h:body>

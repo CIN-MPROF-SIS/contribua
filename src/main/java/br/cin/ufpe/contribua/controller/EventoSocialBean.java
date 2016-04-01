@@ -196,6 +196,12 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
             }
 
 	}
+	
+	public void listarEventosInicial(){
+		
+		this.listaModel = eventoSocialManager.findAll();		
+		
+	}
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
 		marker = (Marker) event.getOverlay();
@@ -253,12 +259,22 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 		this.centerGeoMapVinculacao = this.model.getLatitude() + ", " + this.model.getLongitude();
 
 		// Busca participacao
+		if(this.usuario!=null){
 		this.vinculado = this.participacaoManager.findByUsuarioEvento(this.model, this.usuario) != null;
 
 		if (pessoaJuridicaManager.findByPessoa(this.usuario.getPessoa()) != null
 				|| this.model.getMobilizador().equals(this.usuario))
 			this.mostrarVincular = false;
-
+		}else{
+			
+			Utils.adicionarMensagem("É necessário realizar o login.", null, Utils.ERROR);
+			
+			return "/index.xhtml?faces-redirect=true";
+			
+		}
+		
+		
+		
 		return "EventoSocialVincular";
 	}
 
