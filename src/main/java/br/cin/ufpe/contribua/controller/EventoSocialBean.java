@@ -128,7 +128,9 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
                 
                 this.model = eventoSocialManager.find(Integer.parseInt(request.getParameter("id")));
                 usuario = null;
-                this.centerGeoMap = "";
+                geoModel = new DefaultMapModel();
+		adicionarMarcador();
+		centerGeoMap = this.model.getLatitude() + ", " + this.model.getLongitude();
             }
         }
 
