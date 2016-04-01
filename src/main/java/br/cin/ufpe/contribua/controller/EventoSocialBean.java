@@ -39,6 +39,7 @@ import br.cin.ufpe.contribua.model.PublicoAlvo;
 import br.cin.ufpe.contribua.model.Qualificacao;
 import br.cin.ufpe.contribua.model.Usuario;
 import br.cin.ufpe.contribua.util.Utils;
+import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean
 @ViewScoped
@@ -117,68 +118,82 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 		this.listaModel = eventoSocialManager.findByUsuario(this.usuario);
 		participacoes = new ArrayList<Participacao>();
 	}
+        
+        public void inicializarVincular(){
+            //pegar variável da url
+            HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            if(request.getParameter("id") != null){
+                System.out.println("inicializarSelecao");
+                this.mostrarVincular = false;
+                
+                this.model = eventoSocialManager.find(Integer.parseInt(request.getParameter("id")));
+                usuario = null;
+                this.centerGeoMap = "";
+            }
+        }
 
 	public void inicializarSelecao() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
 
-		usuario = (Usuario) session.getAttribute("usuario");
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
 
-		this.geoModel = new DefaultMapModel();
+            usuario = (Usuario) session.getAttribute("usuario");
 
-		this.centerGeoMap = usuario.getPessoa().getLatitude() + ", " + usuario.getPessoa().getLongitude();
-		LatLng coord = new LatLng(usuario.getPessoa().getLatitude(), usuario.getPessoa().getLongitude());
-		// 1km
-		Circle circle1 = new Circle(coord, 1000);
-		circle1.setStrokeColor("yellow");
-		circle1.setFillColor("yellow");
-		circle1.setStrokeOpacity(0.35);
-		circle1.setFillOpacity(0.35);
+            this.centerGeoMap = usuario.getPessoa().getLatitude() + ", " + usuario.getPessoa().getLongitude();
 
-		// 3km
-		Circle circle2 = new Circle(coord, 3000);
-		circle2.setStrokeColor("green");
-		circle2.setFillColor("green");
-		circle2.setStrokeOpacity(0.25);
-		circle2.setFillOpacity(0.25);
+            this.geoModel = new DefaultMapModel();
+            LatLng coord = new LatLng(usuario.getPessoa().getLatitude(), usuario.getPessoa().getLongitude());
+            // 1km
+            Circle circle1 = new Circle(coord, 1000);
+            circle1.setStrokeColor("yellow");
+            circle1.setFillColor("yellow");
+            circle1.setStrokeOpacity(0.35);
+            circle1.setFillOpacity(0.35);
 
-		// 5km
-		Circle circle3 = new Circle(coord, 5000);
-		circle3.setStrokeColor("blue");
-		circle3.setFillColor("blue");
-		circle3.setStrokeOpacity(0.15);
-		circle3.setFillOpacity(0.15);
+            // 3km
+            Circle circle2 = new Circle(coord, 3000);
+            circle2.setStrokeColor("green");
+            circle2.setFillColor("green");
+            circle2.setStrokeOpacity(0.25);
+            circle2.setFillOpacity(0.25);
 
-		Circle circle4 = new Circle(coord, 10000);
-		circle4.setStrokeColor("red");
-		circle4.setFillColor("red");
-		circle4.setStrokeOpacity(0.05);
-		circle4.setFillOpacity(0.05);
+            // 5km
+            Circle circle3 = new Circle(coord, 5000);
+            circle3.setStrokeColor("blue");
+            circle3.setFillColor("blue");
+            circle3.setStrokeOpacity(0.15);
+            circle3.setFillOpacity(0.15);
 
-		this.geoModel.addOverlay(circle1);
-		this.geoModel.addOverlay(circle2);
-		// this.geoModel.addOverlay(circle3);
-		// this.geoModel.addOverlay(circle4);
+            Circle circle4 = new Circle(coord, 10000);
+            circle4.setStrokeColor("red");
+            circle4.setFillColor("red");
+            circle4.setStrokeOpacity(0.05);
+            circle4.setFillOpacity(0.05);
 
-		// Buscar eventos abertos
-		this.eventosAbertos = new ArrayList<EventoSocial>();
-		this.eventosAbertos = this.eventoSocialManager.findAbertos();
+            this.geoModel.addOverlay(circle1);
+            this.geoModel.addOverlay(circle2);
+            // this.geoModel.addOverlay(circle3);
+            // this.geoModel.addOverlay(circle4);
 
-		this.geoModel
-				.addOverlay(new Marker(coord, "Eu", "0", "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png"));
+            // Buscar eventos abertos
+            this.eventosAbertos = new ArrayList<EventoSocial>();
+            this.eventosAbertos = this.eventoSocialManager.findAbertos();
 
-		for (EventoSocial eventoSocial : this.eventosAbertos) {
-			LatLng coordMarker = new LatLng(eventoSocial.getLatitude(), eventoSocial.getLongitude());
+            this.geoModel
+                            .addOverlay(new Marker(coord, "Eu", "0", "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png"));
 
-			if (eventoSocial.getMobilizador().equals(usuario))
-				this.geoModel.addOverlay(new Marker(coordMarker, "Meu Evento: " + eventoSocial.getNome(),
-						eventoSocial.getId(), "http://maps.google.com/mapfiles/ms/micons/green-dot.png"));
-			else if (this.participacaoManager.findByUsuarioEvento(eventoSocial, this.usuario) != null)
-				this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId(),
-						"http://maps.google.com/mapfiles/ms/micons/red-pushpin.png"));
-			else
-				this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId()));
-		}
+            for (EventoSocial eventoSocial : this.eventosAbertos) {
+                    LatLng coordMarker = new LatLng(eventoSocial.getLatitude(), eventoSocial.getLongitude());
+
+                    if (eventoSocial.getMobilizador().equals(usuario))
+                            this.geoModel.addOverlay(new Marker(coordMarker, "Meu Evento: " + eventoSocial.getNome(),
+                                            eventoSocial.getId(), "http://maps.google.com/mapfiles/ms/micons/green-dot.png"));
+                    else if (this.participacaoManager.findByUsuarioEvento(eventoSocial, this.usuario) != null)
+                            this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId(),
+                                            "http://maps.google.com/mapfiles/ms/micons/red-pushpin.png"));
+                    else
+                            this.geoModel.addOverlay(new Marker(coordMarker, eventoSocial.getNome(), eventoSocial.getId()));
+            }
 
 	}
 
@@ -224,6 +239,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	}
 
 	public String exibirVinculacao() {
+            System.out.println("exibirVinculacao");
 		super.exibirAlteracao();
 		vinculado = false;
 		mostrarVincular = true;
@@ -481,6 +497,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	}
 
 	public boolean isMostrarVincular() {
+            System.out.println("this.mostrarVincular " + this.mostrarVincular);
 		return mostrarVincular;
 	}
 
