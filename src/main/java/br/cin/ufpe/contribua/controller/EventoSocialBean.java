@@ -124,7 +124,7 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
             HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
             if(request.getParameter("id") != null){
                 System.out.println("inicializarSelecao");
-                this.mostrarVincular = false;
+                this.mostrarVincular = true;
                 
                 this.model = eventoSocialManager.find(Integer.parseInt(request.getParameter("id")));
                 usuario = null;
@@ -279,6 +279,11 @@ public class EventoSocialBean extends AbstractBean<EventoSocial> {
 	}
 
 	public void vincular() {
+            
+            if(usuario == null){
+                Utils.adicionarMensagem("Você deve estar logado para participar desse evento.", null, Utils.FATAL);
+                return;
+            }
 		Participacao participacao = null;
 
 		if (!this.vinculado) {
